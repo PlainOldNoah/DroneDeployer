@@ -1,0 +1,17 @@
+[gd_scene load_steps=5 format=3 uid="uid://b8vr3jmcqq57m"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_0yjbx"]
+[ext_resource type="Script" path="res://ui/menus/MenuManager.gd" id="1_5bh5y"]
+[ext_resource type="PackedScene" uid="uid://xyinbcpdlhqm" path="res://ui/menus/main_menu.tscn" id="2_058dp"]
+[ext_resource type="PackedScene" uid="uid://cj0tslt5wg010" path="res://ui/gameboard.tscn" id="3_c4o2r"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_0yjbx")
+
+[node name="MenuManager" type="CanvasLayer" parent="."]
+script = ExtResource("1_5bh5y")
+
+[node name="MainMenu" parent="MenuManager" instance=ExtResource("2_058dp")]
+visible = false
+
+[node name="Gameboard" parent="MenuManager" instance=ExtResource("3_c4o2r")]
