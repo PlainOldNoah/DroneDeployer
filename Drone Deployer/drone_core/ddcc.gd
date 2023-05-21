@@ -20,9 +20,13 @@ func rotate_deployer():
 
 
 func deploy_drone(drone:Drone):
-	drone.global_position = deploy_pnt.global_position
-	drone.velocity = Vector2.from_angle(deployer.rotation) * 100 #LEFT OFF HERE
+	drone.deploy(deploy_pnt.global_position, deployer.rotation)
 
 
 func skip_drone():
 	pass
+
+
+func _on_collection_range_body_entered(body):
+	if body.is_in_group("drone"):
+		body.store()

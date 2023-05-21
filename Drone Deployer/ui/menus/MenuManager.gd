@@ -18,9 +18,9 @@ var menu_list:Dictionary = {
 
 #var unlocked_menus:Array = []
 
-func request_menu(new_menu:int):
-	pass
+#func request_menu(new_menu:int):
+#	pass
 
 
-func dismiss_menu():
-	pass
+#func dismiss_menu():
+#	pass

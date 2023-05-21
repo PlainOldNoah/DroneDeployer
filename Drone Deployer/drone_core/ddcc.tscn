@@ -37,12 +37,14 @@ texture = SubResource("AtlasTexture_luq3b")
 texture = SubResource("AtlasTexture_wcjxq")
 
 [node name="Deployer" type="Sprite2D" parent="Sprites"]
+z_index = 1
 texture = SubResource("AtlasTexture_c50b6")
 
 [node name="DeployPoint" type="Marker2D" parent="Sprites/Deployer"]
 position = Vector2(108, 0)
 
 [node name="Cover" type="Sprite2D" parent="Sprites"]
+z_index = 1
 texture = SubResource("AtlasTexture_usjbi")
 
 [node name="PhysicalArea" type="StaticBody2D" parent="."]
@@ -59,3 +61,5 @@ collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CollectionRange"]
 shape = SubResource("CircleShape2D_kmesp")
+
+[connection signal="body_entered" from="CollectionRange" to="." method="_on_collection_range_body_entered"]
