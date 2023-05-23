@@ -28,6 +28,6 @@ func add_node_to_lvl_obj(object:Node):
 
 func _input(event):
 	if event.is_action_pressed("deploy_drone"):
-		DroneManager.deploy_next_drone()
+		ddcc.deploy_next_drone()
 	elif event.is_action_pressed("skip_drone"):
 		pass

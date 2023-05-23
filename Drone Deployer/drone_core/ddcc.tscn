@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cee1i6r18g6ut"]
+[gd_scene load_steps=11 format=3 uid="uid://cee1i6r18g6ut"]
 
 [ext_resource type="Script" path="res://drone_core/ddcc.gd" id="1_g45i4"]
 [ext_resource type="Texture2D" uid="uid://vmkhwgme4i7l" path="res://assets/visual/ddcc_x256.png" id="2_avquc"]
@@ -15,15 +15,22 @@ region = Rect2(0, 264, 264, 264)
 atlas = ExtResource("2_avquc")
 region = Rect2(0, 528, 264, 264)
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fvfl8"]
+radius = 39.0
+height = 162.0
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_usjbi"]
 atlas = ExtResource("2_avquc")
 region = Rect2(0, 792, 264, 264)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_2ni5f"]
-radius = 80.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_yahjk"]
+radius = 18.0278
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qk2ho"]
+radius = 132.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kmesp"]
-radius = 128.0
+radius = 190.0
 
 [node name="DDCC" type="Node2D"]
 script = ExtResource("1_g45i4")
@@ -41,25 +48,51 @@ z_index = 1
 texture = SubResource("AtlasTexture_c50b6")
 
 [node name="DeployPoint" type="Marker2D" parent="Sprites/Deployer"]
-position = Vector2(108, 0)
+position = Vector2(80, 0)
+
+[node name="DeploymentClearing" type="Area2D" parent="Sprites/Deployer"]
+z_index = 1
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprites/Deployer/DeploymentClearing"]
+position = Vector2(132, 0)
+rotation = -1.57079
+shape = SubResource("CapsuleShape2D_fvfl8")
+debug_color = Color(0, 0.643137, 0.294118, 0.419608)
 
 [node name="Cover" type="Sprite2D" parent="Sprites"]
 z_index = 1
 texture = SubResource("AtlasTexture_usjbi")
 
-[node name="PhysicalArea" type="StaticBody2D" parent="."]
-collision_layer = 8
-collision_mask = 0
+[node name="CoreArea" type="Area2D" parent="."]
+z_index = 1
+collision_layer = 0
+collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PhysicalArea"]
-shape = SubResource("CircleShape2D_2ni5f")
-debug_color = Color(0.960784, 0, 0.505882, 0.419608)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CoreArea"]
+shape = SubResource("CircleShape2D_yahjk")
+debug_color = Color(0.764706, 0.172549, 1, 0.0980392)
+
+[node name="ArmingRange" type="Area2D" parent="."]
+z_index = 1
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ArmingRange"]
+shape = SubResource("CircleShape2D_qk2ho")
+debug_color = Color(0.835294, 0.388235, 0, 0.0980392)
 
 [node name="CollectionRange" type="Area2D" parent="."]
+z_index = 1
 collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CollectionRange"]
 shape = SubResource("CircleShape2D_kmesp")
+debug_color = Color(0, 0.6, 0.701961, 0.0980392)
 
+[connection signal="body_entered" from="CoreArea" to="." method="_on_core_area_body_entered"]
+[connection signal="body_exited" from="ArmingRange" to="." method="_on_arming_range_body_exited"]
 [connection signal="body_entered" from="CollectionRange" to="." method="_on_collection_range_body_entered"]
+[connection signal="body_exited" from="CollectionRange" to="." method="_on_collection_range_body_exited"]

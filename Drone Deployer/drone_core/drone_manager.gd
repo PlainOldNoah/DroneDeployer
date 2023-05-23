@@ -13,10 +13,6 @@ func create_new_drone():
 	emit_signal("drone_created", drone_inst)
 
 
-#func remove_drone():
-#	pass
-
-
 func add_drone_to_queue(drone:Drone):
 	drone_queue.append(drone)
 
@@ -30,10 +26,18 @@ func get_drone_queue():
 	return drone_queue
 
 
-func deploy_next_drone():
-	var focus_drone:Drone = drone_queue.pop_front()
-	if focus_drone != null:
-		emit_signal("drone_deployed", focus_drone)
+func get_next_drone():
+	return null if drone_queue.is_empty() else drone_queue[0]
+	
+#	var focus_drone:Drone = drone_queue.pop_front()
+#	if focus_drone != null:
+#		return focus_drone
+
+
+#func deploy_next_drone():
+#	var focus_drone:Drone = drone_queue.pop_front()
+#	if focus_drone != null:
+#		emit_signal("drone_deployed", focus_drone)
 
 
 func skip_next_drone():
