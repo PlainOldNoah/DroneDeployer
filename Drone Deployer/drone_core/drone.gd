@@ -1,7 +1,7 @@
 class_name Drone
 extends CharacterBody2D
 
-signal state_changed(new_state:int)
+signal state_changed(drone:Drone, new_state:int)
 
 enum STATES {STORED, DEPLOYED, RETURNING, ARMING} # PAUSED RETURNING
 var state:int = -1
@@ -33,7 +33,7 @@ func _physics_process(delta):
 # FOR INTERNAL CALLING ONLY
 # State machine for the Drone; enables/disables collisions, sprites, movement, etc.
 func set_state(new_state:int):
-	print(self.name, ": ", new_state)
+#	print(self.name, ": ", new_state)
 	if new_state == state:
 		print_debug("WARNING: Already in state <", state, ">")
 	
@@ -41,14 +41,14 @@ func set_state(new_state:int):
 	match state:
 			
 		STATES.DEPLOYED:
-			set_visible(true)
 			collision_shape.set_deferred("disabled", false)
+			set_visible(true)
+			collectable = false
 			
 		STATES.RETURNING:
 			pass
 		
 		STATES.STORED:
-			DroneManager.add_drone_to_queue(self)
 			collision_shape.set_deferred("disabled", true)
 			set_visible(false)
 			set_velocity_from_vector(Vector2i.ZERO, 0)
@@ -57,7 +57,7 @@ func set_state(new_state:int):
 			print_debug("ERROR: STATE NOT DEFINED <", new_state, ">")
 			return
 	
-#	emit_signal("state_changed", new_state)
+	emit_signal("state_changed", self, new_state)
 
 
 # Activates a Drone for the map with a starting point and angle (in radians)

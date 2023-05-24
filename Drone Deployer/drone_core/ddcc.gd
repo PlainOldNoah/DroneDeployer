@@ -28,28 +28,16 @@ func is_deployer_clear() -> bool:
 		return false
 
 
-#func deploy_drone(drone:Drone):
-#	drone.deploy(deploy_pnt.global_position, deployer.rotation)
-#	drone.set_home(self)
-
-
+# Deploy the drone next in queue if the deploy_clearing is open
 func deploy_next_drone():
 	if deploy_clearing.get_overlapping_bodies().size() == 0:
-		for i in 8:
-			print(DroneManager.get_next_drone())
-		
-		var drone:Drone = DroneManager.get_next_drone()
+
+		var drone:Drone = DroneManager.get_and_pop_next_drone()
 		if drone != null:
 			drone.deploy(deploy_pnt.global_position, deployer.rotation)
 			drone.set_home(self)
-			DroneManager.remove_drone_from_queue(drone)
-
-
-
-#func deploy(drone:Drone):
-#	print(drone)
-#	drone.deploy(deploy_pnt.global_position, deployer.rotation)
-#	drone.set_home(self)
+#		else:
+#			print_debug("WARNING: no drones left in queue")
 
 
 func _on_collection_range_body_entered(body):
@@ -62,11 +50,12 @@ func _on_collection_range_body_exited(body):
 		body.ddcc_collection_range_exited()
 
 
-#func _on_core_area_body_entered(body):
-#	if body.is_in_group("drone"):
-#		body.store()
+func _on_core_area_body_entered(body):
+	if body.is_in_group("drone"):
+		body.store()
 
 
-#func _on_arming_range_body_exited(_body):
+func _on_arming_range_body_exited(_body):
+	pass
 #	if body.is_in_group("drone"):
 #		body.ddcc_arming_range_exited()

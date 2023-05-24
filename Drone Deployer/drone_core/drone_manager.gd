@@ -9,40 +9,46 @@ var drone_queue:Array = []
 
 func create_new_drone():
 	var drone_inst := drone_scene.instantiate()
-	add_drone_to_queue(drone_inst)
+	var _ok = drone_inst.connect("state_changed", handle_drone_state_change)
 	emit_signal("drone_created", drone_inst)
 
 
+# Adds the drone to the drone_queue if it is not already present
 func add_drone_to_queue(drone:Drone):
-	drone_queue.append(drone)
+	if not drone_queue.has(drone):
+		drone_queue.append(drone)
+	else:
+		print_debug("WARNING: <",drone.name,"> already in queue")
 
 
+# Remove drone from the drone_queue if it exists
 func remove_drone_from_queue(drone:Drone):
 	if drone_queue.has(drone):
 		drone_queue.erase(drone)
 
 
+# Returns the drone_queue
 func get_drone_queue():
 	return drone_queue
 
 
-func get_next_drone():
-	return null if drone_queue.is_empty() else drone_queue[0]
-	
-#	var focus_drone:Drone = drone_queue.pop_front()
-#	if focus_drone != null:
-#		return focus_drone
+# Returns the next drone in the queue and removes it from the queue
+func get_and_pop_next_drone():
+	return null if drone_queue.is_empty() else drone_queue.pop_front()
 
 
-#func deploy_next_drone():
-#	var focus_drone:Drone = drone_queue.pop_front()
-#	if focus_drone != null:
-#		emit_signal("drone_deployed", focus_drone)
-
-
+# Moves the drone in position 0 to the end of the drone queue
 func skip_next_drone():
-	pass
+	drone_queue.push_back(drone_queue.pop_front())
 
 
 func handle_collected_drone():
 	pass
+
+
+func handle_drone_state_change(drone:Drone, state:int):
+	match state:
+		Drone.STATES.STORED:
+#			print_debug(drone, ": ", state)
+			add_drone_to_queue(drone)
+		
