@@ -53,6 +53,8 @@ func _on_collection_range_body_exited(body):
 func _on_core_area_body_entered(body):
 	if body.is_in_group("drone"):
 		body.store()
+	if body.is_in_group("enemy"):
+		body.queue_free() # TODO
 
 
 func _on_arming_range_body_exited(_body):

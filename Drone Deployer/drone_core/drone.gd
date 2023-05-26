@@ -97,6 +97,8 @@ func handle_collision(collision:KinematicCollision2D):
 		# Fixes two drones from colliding many times at once
 		collider.set_velocity_from_vector(velocity.bounce(collision.get_normal()))
 		collider.change_facing_direction()
+	elif collider.is_in_group("enemy"):
+		collider.queue_free()
 	else:
 		set_velocity_from_vector(velocity.bounce(collision.get_normal()))
 		

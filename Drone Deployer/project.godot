@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 DroneManager="*res://drone_core/drone_manager.gd"
+EnemyManager="*res://enemies/enemy_manager.gd"
 
 [display]
 
