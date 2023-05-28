@@ -15,6 +15,12 @@ var stats:Dictionary = {
 var collectable:bool = false
 var home_pos:Vector2 = Vector2.ZERO
 
+# Knockback
+var kb_velocity:Vector2 = Vector2.ZERO
+var kb_resist:float = 1.0
+var kb_recovery:float = 1.0
+var kb_cuttoff:float = 0.0
+
 
 func _ready():
 	add_to_group("drone")
@@ -22,9 +28,32 @@ func _ready():
 
 
 func _physics_process(delta):
-	var collision = move_and_collide(velocity * delta)
+	var collision:KinematicCollision2D
+	handle_knockback(delta)
+	
+	if kb_velocity != Vector2.ZERO:
+		collision = move_and_collide(kb_velocity * delta)
+	else:
+		collision = move_and_collide(velocity * delta)
+		
 	if collision:
 		handle_collision(collision)
+		
+
+
+func apply_knockback(dir:Vector2, force:int):
+	print("APPLY: ", Time.get_ticks_msec())
+	kb_velocity = (dir * force) / kb_resist
+
+# NOTE: kb_vel for some reason isn't being set to anything
+
+func handle_knockback(delta):
+	print(kb_velocity, ", ", kb_velocity.length())
+	if kb_cuttoff < kb_velocity.length():
+		var lerp_weight:float = kb_recovery * delta
+		kb_velocity.x = lerp(kb_velocity.x, 0.0, lerp_weight)
+		kb_velocity.y = lerp(kb_velocity.y, 0.0, lerp_weight)
+	
 
 
 # ===== STATE MACHINE =====
@@ -98,7 +127,9 @@ func handle_collision(collision:KinematicCollision2D):
 		collider.set_velocity_from_vector(velocity.bounce(collision.get_normal()))
 		collider.change_facing_direction()
 	elif collider.is_in_group("enemy"):
-		collider.queue_free()
+		print("HIT: ", Time.get_ticks_msec())
+		apply_knockback(collider.velocity.normalized(), 150)
+#		collider.queue_free()
 	else:
 		set_velocity_from_vector(velocity.bounce(collision.get_normal()))
 		

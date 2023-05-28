@@ -8,3 +8,4 @@ var roach_stats:Dictionary = {
 
 func _ready():
 	stats = roach_stats
+	super._ready()
