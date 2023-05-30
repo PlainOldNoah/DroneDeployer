@@ -15,10 +15,12 @@ var stats:Dictionary = {
 var collectable:bool = false
 var home_pos:Vector2 = Vector2.ZERO
 
+var acceleration:float = 5.0
 # Knockback
+var do_knockback:bool = false
 var kb_velocity:Vector2 = Vector2.ZERO
 var kb_resist:float = 1.0
-var kb_recovery:float = 1.0
+var kb_recovery:float = 0.01
 var kb_cuttoff:float = 0.0
 
 
@@ -27,32 +29,54 @@ func _ready():
 	set_state(STATES.STORED)
 
 
+#func _process(delta):
+#	print(velocity, "|", kb_velocity)
+
 func _physics_process(delta):
-	var collision:KinematicCollision2D
-	handle_knockback(delta)
+	handle_movement(delta)
+#	print(kb_velocity)
+#	var collision:KinematicCollision2D
+#	handle_knockback(delta)
+#
+#	if  kb_velocity.length() > 0.01:
+#		print(kb_velocity.length())
+#		collision = move_and_collide(kb_velocity * delta)
+#	else:
+#		collision = move_and_collide(velocity * delta)
+#
+#	if collision:
+#		handle_collision(collision)
+
+
+func handle_movement(delta):
+	var collision:KinematicCollision2D = null
 	
-	if kb_velocity != Vector2.ZERO:
-		collision = move_and_collide(kb_velocity * delta)
-	else:
-		collision = move_and_collide(velocity * delta)
-		
+	if do_knockback:
+		var lerp_weight:float = kb_recovery * delta
+#		print(kb_velocity.lerp(Vector2.ZERO, lerp_weight))
+#		kb_velocity -= kb_velocity.lerp(Vector2.ZERO, lerp_weight)
+#		collision = move_and_collide(kb_velocity * delta)
+#		velocity -= velocity.lerp(Vector2.ZERO, lerp_weight)
+#	else:
+	collision = move_and_collide(velocity * delta)
+	
 	if collision:
 		handle_collision(collision)
-		
 
 
 func apply_knockback(dir:Vector2, force:int):
-	print("APPLY: ", Time.get_ticks_msec())
-	kb_velocity = (dir * force) / kb_resist
+	do_knockback = true
+	set_velocity_from_vector(velocity.bounce(dir), force)
+#	kb_velocity = (dir * force) / kb_resist
 
 # NOTE: kb_vel for some reason isn't being set to anything
 
-func handle_knockback(delta):
-	print(kb_velocity, ", ", kb_velocity.length())
-	if kb_cuttoff < kb_velocity.length():
-		var lerp_weight:float = kb_recovery * delta
-		kb_velocity.x = lerp(kb_velocity.x, 0.0, lerp_weight)
-		kb_velocity.y = lerp(kb_velocity.y, 0.0, lerp_weight)
+#func handle_knockback(delta):
+#	print(kb_velocity, ", ", kb_velocity.length())
+#	if kb_cuttoff < kb_velocity.length():
+#		var lerp_weight:float = kb_recovery * delta
+#		kb_velocity.x = lerp(kb_velocity.x, 0.0, lerp_weight)
+#		kb_velocity.y = lerp(kb_velocity.y, 0.0, lerp_weight)
 	
 
 
@@ -70,6 +94,7 @@ func set_state(new_state:int):
 	match state:
 			
 		STATES.DEPLOYED:
+			set_physics_process(true)
 			collision_shape.set_deferred("disabled", false)
 			set_visible(true)
 			collectable = false
@@ -78,6 +103,7 @@ func set_state(new_state:int):
 			pass
 		
 		STATES.STORED:
+			set_physics_process(false)
 			collision_shape.set_deferred("disabled", true)
 			set_visible(false)
 			set_velocity_from_vector(Vector2i.ZERO, 0)
@@ -127,8 +153,9 @@ func handle_collision(collision:KinematicCollision2D):
 		collider.set_velocity_from_vector(velocity.bounce(collision.get_normal()))
 		collider.change_facing_direction()
 	elif collider.is_in_group("enemy"):
-		print("HIT: ", Time.get_ticks_msec())
-		apply_knockback(collider.velocity.normalized(), 150)
+		velocity = -velocity
+#		set_velocity_from_vector(velocity.bounce(collision.get_normal()), 500)
+#		apply_knockback(collision.get_normal(), 100)
 #		collider.queue_free()
 	else:
 		set_velocity_from_vector(velocity.bounce(collision.get_normal()))

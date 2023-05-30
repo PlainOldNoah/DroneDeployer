@@ -1,10 +1,11 @@
-extends CharacterBody2D
+extends Area2D
 
 var stats:Dictionary = {
 	"speed":0,
 	"max_hp":0
 }
 
+var velocity:Vector2 = Vector2()
 var target_pos = null
 
 
@@ -13,13 +14,15 @@ func _ready():
 
 
 func _physics_process(delta):
-	var collision = move_and_collide(velocity * delta)
-#	if collision:
-#		handle_collision(collision)
+	move(delta)
 
 
-#func handle_collision(_collision:KinematicCollision2D):
-#	var collider = collision.get_collider()
+# Heads towards target_pos by the velocity until point reached
+func move(delta):
+	velocity.move_toward(target_pos, delta)
+	
+	if int(global_position.distance_squared_to(target_pos)) != 0:
+		global_position += velocity * delta
 
 
 # Sets the target
@@ -35,7 +38,7 @@ func go_to(point:Vector2):
 
 # Sets the velocity from a provided vector
 func set_velocity_from_vector(vector:Vector2, speed:int=stats.speed):
-	set_velocity(vector.normalized() * speed)
+	velocity = (vector.normalized() * speed)
 	change_facing_direction()
 
 
