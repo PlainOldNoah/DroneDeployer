@@ -1,5 +1,5 @@
 class_name Drone
-extends CharacterBody2D
+extends Area2D
 
 signal state_changed(drone:Drone, new_state:int)
 
@@ -7,13 +7,16 @@ enum STATES {STORED, DEPLOYED, RETURNING, ARMING} # PAUSED RETURNING
 var state:int = -1
 
 @onready var collision_shape := $CollisionShape2D
+@onready var dir_ray := $RayCast2D
 
 var stats:Dictionary = {
 	"speed":100
 }
 
+var velocity:Vector2 = Vector2()
 var collectable:bool = false
 var home_pos:Vector2 = Vector2.ZERO
+var heading:Vector2 = Vector2()
 
 var acceleration:float = 5.0
 # Knockback
@@ -34,34 +37,20 @@ func _ready():
 
 func _physics_process(delta):
 	handle_movement(delta)
-#	print(kb_velocity)
-#	var collision:KinematicCollision2D
-#	handle_knockback(delta)
+#	handle_rotation(delta)
+
+# Heads towards target_pos by the velocity until point reached
+#func move(delta):
+#	velocity.move_toward(target_pos, delta)
 #
-#	if  kb_velocity.length() > 0.01:
-#		print(kb_velocity.length())
-#		collision = move_and_collide(kb_velocity * delta)
-#	else:
-#		collision = move_and_collide(velocity * delta)
-#
-#	if collision:
-#		handle_collision(collision)
+#	if int(global_position.distance_squared_to(target_pos)) != 0:
+#		global_position += velocity * delta
 
 
 func handle_movement(delta):
-	var collision:KinematicCollision2D = null
-	
-	if do_knockback:
-		var lerp_weight:float = kb_recovery * delta
-#		print(kb_velocity.lerp(Vector2.ZERO, lerp_weight))
-#		kb_velocity -= kb_velocity.lerp(Vector2.ZERO, lerp_weight)
-#		collision = move_and_collide(kb_velocity * delta)
-#		velocity -= velocity.lerp(Vector2.ZERO, lerp_weight)
-#	else:
-	collision = move_and_collide(velocity * delta)
-	
-	if collision:
-		handle_collision(collision)
+#	print(heading, ", ", velocity, ", ", global_position)
+	velocity.move_toward(heading, delta)
+	global_position += velocity * delta
 
 
 func apply_knockback(dir:Vector2, force:int):
@@ -181,10 +170,40 @@ func set_velocity_from_radians(radians:float, speed:int=stats.speed):
 
 # Sets the velocity from a provided vector
 func set_velocity_from_vector(vector:Vector2, speed:int=stats.speed):
-	set_velocity(vector.normalized() * speed)
+#	set_velocity(vector.normalized() * speed)
+	velocity = vector.normalized() * speed
 	change_facing_direction()
 
 
 # Sets the home position
 func set_home(home:Node):
 	home_pos = home.get_global_position()
+
+
+func _on_body_entered(body):
+#	set_velocity_from_vector(velocity.bounce(dir_ray.get_collision_normal()))
+#	print(body.name)
+	pass
+
+#L 0,-1
+#B 0,1
+#T 0,-1
+#R 0,1
+
+func _on_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):
+	pass
+	var shape = body.shape_owner_get_owner(body_shape_index).shape
+	var collision_points = $CollisionShape2D.shape.collide_and_get_contacts(global_transform, shape, body.global_transform)
+#
+	var collision_normal = (collision_points[0] - collision_points[1]).normalized()
+	
+#	dir_ray.target_position = dir_ray.target_position.bounce(collision_normal)
+	dir_ray.target_position = shape.normal * 500
+	print(shape.normal)
+#	set_velocity_from_vector(dir_ray.target_position)
+	velocity = Vector2.ZERO
+	
+	
+#	set_velocity_from_vector(velocity.bounce(collision_normal))
+#	set_velocity_from_vector(velocity.bounce(dir_ray.get_collision_normal()))
+	
