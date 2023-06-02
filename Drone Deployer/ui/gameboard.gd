@@ -6,10 +6,8 @@ extends Control
 
 @onready var top_bound := $MapBounds/Top
 @onready var bottom_bound := $MapBounds/Bottom
-#@onready var left_bound := $MapBounds/Left
-#@onready var right_bound := $MapBounds/Right
-@onready var left_bound := $StaticBody2D/Left
-@onready var right_bound := $StaticBody2D/Right
+@onready var left_bound := $MapBounds/Left
+@onready var right_bound := $MapBounds/Right
 
 @export var dist_outside_screen:int = 20
 
