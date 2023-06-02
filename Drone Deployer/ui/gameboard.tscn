@@ -42,23 +42,27 @@ debug_color = Color(0, 0.6, 0.701961, 0.0627451)
 [node name="MapBounds" type="StaticBody2D" parent="."]
 
 [node name="Top" type="CollisionShape2D" parent="MapBounds"]
+position = Vector2(576, 0)
 rotation = -3.14159
 shape = SubResource("WorldBoundaryShape2D_ceo3k")
 
 [node name="Bottom" type="CollisionShape2D" parent="MapBounds"]
+position = Vector2(576, 648)
+rotation = -12.5664
 shape = SubResource("WorldBoundaryShape2D_ceo3k")
 
 [node name="Left" type="CollisionShape2D" parent="MapBounds"]
+position = Vector2(0, 324)
 rotation = 1.57079
 shape = SubResource("WorldBoundaryShape2D_ceo3k")
 
 [node name="Right" type="CollisionShape2D" parent="MapBounds"]
+position = Vector2(1152, 324)
 rotation = -1.57079
 shape = SubResource("WorldBoundaryShape2D_ceo3k")
 
 [node name="LevelObjects" type="Node2D" parent="."]
 
 [node name="EnemySpawnClock" type="Timer" parent="."]
-autostart = true
 
 [connection signal="timeout" from="EnemySpawnClock" to="." method="_on_enemy_spawn_clock_timeout"]

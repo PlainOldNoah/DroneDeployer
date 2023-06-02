@@ -9,19 +9,19 @@ var state:int = -1
 @onready var collision_shape := $CollisionShape2D
 
 var stats:Dictionary = {
-	"speed":100
+	"max_speed":100.0,
+	"speed":100.0
 }
+
+var bounces:int = 1
 
 var collectable:bool = false
 var home_pos:Vector2 = Vector2.ZERO
 
-var acceleration:float = 5.0
-# Knockback
+var acceleration:float = 2
 var do_knockback:bool = false
-var kb_velocity:Vector2 = Vector2.ZERO
-var kb_resist:float = 1.0
-var kb_recovery:float = 0.01
-var kb_cuttoff:float = 0.0
+var kb_resist:float = 1
+var kb_min_speed:float = stats.max_speed / 2.0
 
 
 func _ready():
@@ -29,55 +29,33 @@ func _ready():
 	set_state(STATES.STORED)
 
 
-#func _process(delta):
-#	print(velocity, "|", kb_velocity)
-
 func _physics_process(delta):
 	handle_movement(delta)
-#	print(kb_velocity)
-#	var collision:KinematicCollision2D
-#	handle_knockback(delta)
-#
-#	if  kb_velocity.length() > 0.01:
-#		print(kb_velocity.length())
-#		collision = move_and_collide(kb_velocity * delta)
-#	else:
-#		collision = move_and_collide(velocity * delta)
-#
-#	if collision:
-#		handle_collision(collision)
 
 
+# Controls knockback and kb recovery plus normal movement
 func handle_movement(delta):
-	var collision:KinematicCollision2D = null
-	
 	if do_knockback:
-		var lerp_weight:float = kb_recovery * delta
-#		print(kb_velocity.lerp(Vector2.ZERO, lerp_weight))
-#		kb_velocity -= kb_velocity.lerp(Vector2.ZERO, lerp_weight)
-#		collision = move_and_collide(kb_velocity * delta)
-#		velocity -= velocity.lerp(Vector2.ZERO, lerp_weight)
-#	else:
-	collision = move_and_collide(velocity * delta)
+		stats.speed = lerpf(stats.speed, 0.0, kb_resist*delta)
+		if int(stats.speed) <= kb_min_speed:
+			do_knockback = false
+			bounces -= 1
+			set_velocity_from_vector(-velocity)
+	elif stats.speed < stats.max_speed:
+		stats.speed = lerpf(stats.speed, stats.max_speed, delta*acceleration)
 	
+	set_velocity_from_vector(velocity, stats.speed)
+	
+	# Normal Movement, Collides with walls and props
+	var collision := move_and_collide(velocity * delta)
 	if collision:
 		handle_collision(collision)
 
 
-func apply_knockback(dir:Vector2, force:int):
+# Puts the drone into knockback mode and reverses the velocity
+func activate_knockback():
 	do_knockback = true
-	set_velocity_from_vector(velocity.bounce(dir), force)
-#	kb_velocity = (dir * force) / kb_resist
-
-# NOTE: kb_vel for some reason isn't being set to anything
-
-#func handle_knockback(delta):
-#	print(kb_velocity, ", ", kb_velocity.length())
-#	if kb_cuttoff < kb_velocity.length():
-#		var lerp_weight:float = kb_recovery * delta
-#		kb_velocity.x = lerp(kb_velocity.x, 0.0, lerp_weight)
-#		kb_velocity.y = lerp(kb_velocity.y, 0.0, lerp_weight)
-	
+	set_velocity_from_vector(-velocity)
 
 
 # ===== STATE MACHINE =====
@@ -152,15 +130,13 @@ func handle_collision(collision:KinematicCollision2D):
 		# Fixes two drones from colliding many times at once
 		collider.set_velocity_from_vector(velocity.bounce(collision.get_normal()))
 		collider.change_facing_direction()
-	elif collider.is_in_group("enemy"):
-		velocity = -velocity
-#		set_velocity_from_vector(velocity.bounce(collision.get_normal()), 500)
-#		apply_knockback(collision.get_normal(), 100)
-#		collider.queue_free()
-	else:
+	elif bounces <= 0:
 		set_velocity_from_vector(velocity.bounce(collision.get_normal()))
+		bounces = 1
+	else:
+		activate_knockback() # TEMP FOR TESTING PURPOSES
 		
-	change_facing_direction()
+#	change_facing_direction()
 
 
 # Sets the current heading to that of the provided point
@@ -182,7 +158,8 @@ func set_velocity_from_radians(radians:float, speed:int=stats.speed):
 # Sets the velocity from a provided vector
 func set_velocity_from_vector(vector:Vector2, speed:int=stats.speed):
 	set_velocity(vector.normalized() * speed)
-	change_facing_direction()
+	if (speed > 0) and (do_knockback == false):
+		change_facing_direction()
 
 
 # Sets the home position
