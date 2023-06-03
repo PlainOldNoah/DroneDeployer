@@ -10,18 +10,19 @@ var state:int = -1
 
 var stats:Dictionary = {
 	"max_speed":100.0,
-	"speed":100.0
+	"speed":100.0,
+	"damage":1,
 }
 
-var bounces:int = 1
+var bounces:int = 1 # Number of times to be knocked back before bouncing
 
-var collectable:bool = false
-var home_pos:Vector2 = Vector2.ZERO
+var collectable:bool = false # Can be picked up by DDCC
+var home_pos:Vector2 = Vector2.ZERO # At low battery, return point
 
 var acceleration:float = 2
 var do_knockback:bool = false
 var kb_resist:float = 1
-var kb_min_speed:float = stats.max_speed / 2.0
+var kb_min_speed:float = stats.max_speed / 4.0
 
 
 func _ready():
@@ -37,6 +38,7 @@ func _physics_process(delta):
 func handle_movement(delta):
 	if do_knockback:
 		stats.speed = lerpf(stats.speed, 0.0, kb_resist*delta)
+		
 		if int(stats.speed) <= kb_min_speed:
 			do_knockback = false
 			bounces -= 1
@@ -54,8 +56,9 @@ func handle_movement(delta):
 
 # Puts the drone into knockback mode and reverses the velocity
 func activate_knockback():
-	do_knockback = true
-	set_velocity_from_vector(-velocity)
+	if not do_knockback:
+		do_knockback = true
+		set_velocity_from_vector(-velocity)
 
 
 # ===== STATE MACHINE =====
@@ -165,3 +168,13 @@ func set_velocity_from_vector(vector:Vector2, speed:int=stats.speed):
 # Sets the home position
 func set_home(home:Node):
 	home_pos = home.get_global_position()
+
+
+func _on_scanner_area_entered(area):
+	if area.is_in_group("enemy"):
+		if area.get_health() > stats.damage:
+			stats.speed = stats.max_speed # TEMP FIX
+			activate_knockback()
+			area.take_hit(stats.damage)
+		else:
+			area.take_hit(stats.damage)

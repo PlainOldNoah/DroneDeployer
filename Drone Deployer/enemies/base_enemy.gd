@@ -2,7 +2,8 @@ extends Area2D
 
 var stats:Dictionary = {
 	"speed":0,
-	"max_hp":0
+	"max_hp":0,
+	"health":0,
 }
 
 var velocity:Vector2 = Vector2()
@@ -11,6 +12,7 @@ var target_pos = null
 
 func _ready():
 	add_to_group("enemy")
+	stats.health = stats.max_hp
 
 
 func _physics_process(delta):
@@ -46,3 +48,14 @@ func set_velocity_from_vector(vector:Vector2, speed:int=stats.speed):
 func change_facing_direction():
 	if velocity.x < 1:
 		apply_scale(Vector2(-1,1))
+
+
+func get_health():
+	return stats.health
+
+
+func take_hit(damage:int):
+	stats.health -= damage
+	if stats.health <= 0:
+		print("DEAD")
+		queue_free()

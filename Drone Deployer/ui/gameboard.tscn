@@ -64,5 +64,6 @@ shape = SubResource("WorldBoundaryShape2D_ceo3k")
 [node name="LevelObjects" type="Node2D" parent="."]
 
 [node name="EnemySpawnClock" type="Timer" parent="."]
+autostart = true
 
 [connection signal="timeout" from="EnemySpawnClock" to="." method="_on_enemy_spawn_clock_timeout"]
