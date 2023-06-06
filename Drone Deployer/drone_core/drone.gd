@@ -3,15 +3,21 @@ extends CharacterBody2D
 
 signal state_changed(drone:Drone, new_state:int)
 
-enum STATES {STORED, DEPLOYED, RETURNING, ARMING} # PAUSED RETURNING
+enum STATES {STORED, DEPLOYED, RETURNING, STOPPED, ARMING} # PAUSED RETURNING
 var state:int = -1
 
 @onready var collision_shape := $CollisionShape2D
 
 var stats:Dictionary = {
 	"max_speed":100.0,
-	"speed":100.0,
+	"speed":100,
+	
 	"damage":1,
+	
+	"max_battery":100,
+	"battery":100,
+	"battery_drain":5.0,
+	"battery_return_threshold":0.1,
 }
 
 var bounces:int = 1 # Number of times to be knocked back before bouncing
@@ -19,7 +25,7 @@ var bounces:int = 1 # Number of times to be knocked back before bouncing
 var collectable:bool = false # Can be picked up by DDCC
 var home_pos:Vector2 = Vector2.ZERO # At low battery, return point
 
-var acceleration:float = 2
+var acceleration:float = 1
 var do_knockback:bool = false
 var kb_resist:float = 1
 var kb_min_speed:float = stats.max_speed / 4.0
@@ -32,19 +38,42 @@ func _ready():
 
 func _physics_process(delta):
 	handle_movement(delta)
+#	print(stats.speed)
+
+
+func _process(delta):
+	battery_calculation(delta)
+
+
+func battery_calculation(delta:float):
+	if state == STATES.STORED:
+		stats.battery = clamp(stats.battery + (stats.battery_drain * 2 * delta), 0.0, stats.max_battery)
+	else:
+		stats.battery = clamp(stats.battery - (stats.battery_drain * delta), 0.0, stats.max_battery)
+	
+	#	emit_signal("stats_updated", self, "battery")
+	
+	if stats.battery <= 0.0: # Battery is Dead
+		set_process(false)
+		set_state(STATES.STOPPED)
+	elif (stats.battery / stats.max_battery) <= stats.battery_return_threshold:
+		pass
+#		print("BATTERY RUNNING LOW")
 
 
 # Controls knockback and kb recovery plus normal movement
 func handle_movement(delta):
 	if do_knockback:
-		stats.speed = lerpf(stats.speed, 0.0, kb_resist*delta)
+#		stats.speed = lerpf(stats.speed, 0.0, acceleration * delta)
+		stats.speed = lerpf(stats.speed, 0.0, kb_resist * delta)
 		
 		if int(stats.speed) <= kb_min_speed:
 			do_knockback = false
 			bounces -= 1
-			set_velocity_from_vector(-velocity)
+#			set_velocity_from_vector(-velocity)
+			set_velocity_from_vector(velocity, -stats.speed)
 	elif stats.speed < stats.max_speed:
-		stats.speed = lerpf(stats.speed, stats.max_speed, delta*acceleration)
+		stats.speed = lerpf(stats.speed, stats.max_speed, acceleration * delta)
 	
 	set_velocity_from_vector(velocity, stats.speed)
 	
@@ -58,7 +87,8 @@ func handle_movement(delta):
 func activate_knockback():
 	if not do_knockback:
 		do_knockback = true
-		set_velocity_from_vector(-velocity)
+#		set_velocity_from_vector(-velocity)
+		set_velocity_from_vector(velocity, -stats.speed)
 
 
 # ===== STATE MACHINE =====
@@ -74,21 +104,29 @@ func set_state(new_state:int):
 	state = new_state
 	match state:
 			
-		STATES.DEPLOYED:
+		STATES.DEPLOYED: # On the field in play
+			set_process(true)
 			set_physics_process(true)
 			collision_shape.set_deferred("disabled", false)
 			set_visible(true)
 			collectable = false
 			
-		STATES.RETURNING:
+		STATES.RETURNING: # Heading back to DDCC
 			pass
 		
-		STATES.STORED:
+		STATES.STORED: # Inside the DDCC waiting to be depolyed
+			set_process(true)
 			set_physics_process(false)
 			collision_shape.set_deferred("disabled", true)
 			set_visible(false)
 			set_velocity_from_vector(Vector2i.ZERO, 0)
 			global_position = Vector2.ZERO
+		
+		STATES.STOPPED: # Non-moving, ie battery dead
+			set_physics_process(false)
+			set_velocity_from_vector(velocity, 0)
+			collision_shape.set_deferred("disabled", true)
+		
 		_:
 			print_debug("ERROR: STATE NOT DEFINED <", new_state, ">")
 			return
@@ -138,8 +176,6 @@ func handle_collision(collision:KinematicCollision2D):
 		bounces = 1
 	else:
 		activate_knockback() # TEMP FOR TESTING PURPOSES
-		
-#	change_facing_direction()
 
 
 # Sets the current heading to that of the provided point
