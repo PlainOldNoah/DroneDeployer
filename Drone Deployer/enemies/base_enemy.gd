@@ -4,6 +4,7 @@ var stats:Dictionary = {
 	"speed":0,
 	"max_hp":0,
 	"health":0,
+	"damage":0,
 }
 
 var velocity:Vector2 = Vector2()
@@ -57,5 +58,4 @@ func get_health():
 func take_hit(damage:int):
 	stats.health -= damage
 	if stats.health <= 0:
-		print("DEAD")
 		queue_free()

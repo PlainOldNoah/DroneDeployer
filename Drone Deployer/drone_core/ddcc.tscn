@@ -94,6 +94,7 @@ collision_mask = 2
 shape = SubResource("CircleShape2D_kmesp")
 debug_color = Color(0, 0.6, 0.701961, 0.0980392)
 
+[connection signal="area_entered" from="CoreArea" to="." method="_on_core_area_area_entered"]
 [connection signal="body_entered" from="CoreArea" to="." method="_on_core_area_body_entered"]
 [connection signal="body_exited" from="ArmingRange" to="." method="_on_arming_range_body_exited"]
 [connection signal="body_entered" from="CollectionRange" to="." method="_on_collection_range_body_entered"]

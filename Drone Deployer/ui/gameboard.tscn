@@ -9,6 +9,7 @@ size = Vector2(1152, 648)
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ceo3k"]
 
 [node name="Gameboard" type="Control"]
+editor_description = "Container for the actual game. Hold Drones, Enemies, DDCC, and other objects. Does not handle gameplay elements."
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -65,5 +66,13 @@ shape = SubResource("WorldBoundaryShape2D_ceo3k")
 
 [node name="EnemySpawnClock" type="Timer" parent="."]
 autostart = true
+
+[node name="HealthLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 26.0
+grow_horizontal = 2
+text = "Health: "
 
 [connection signal="timeout" from="EnemySpawnClock" to="." method="_on_enemy_spawn_clock_timeout"]

@@ -4,6 +4,7 @@ var roach_stats:Dictionary = {
 	"speed":50,
 	"max_hp":1,
 	"health":0,
+	"damage":1,
 }
 
 

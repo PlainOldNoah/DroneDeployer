@@ -1,12 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://c4t4k6ucmdjsw"]
+[gd_scene load_steps=6 format=3 uid="uid://c4t4k6ucmdjsw"]
 
 [ext_resource type="PackedScene" uid="uid://e7ud1rls0atx" path="res://enemies/base_enemy.tscn" id="1_jeqh5"]
 [ext_resource type="Script" path="res://enemies/roach.gd" id="2_tsqcy"]
 [ext_resource type="Texture2D" uid="uid://12ok6po7sk3k" path="res://assets/visual/roach.png" id="3_0oajm"]
+[ext_resource type="Texture2D" uid="uid://d2tbcl22i5j48" path="res://assets/visual/shadow.png" id="4_hbkxu"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_s6l6r"]
-radius = 33.0
-height = 160.0
+radius = 25.0
+height = 135.0
 
 [node name="Roach" instance=ExtResource("1_jeqh5")]
 scale = Vector2(0.4, 0.4)
@@ -15,6 +16,13 @@ script = ExtResource("2_tsqcy")
 [node name="Sprite2D" parent="." index="0"]
 texture = ExtResource("3_0oajm")
 
-[node name="CollisionShape2D" parent="." index="1"]
+[node name="Shadow" parent="." index="1"]
+z_index = -1
+position = Vector2(-13.75, 11.25)
+scale = Vector2(1.04779, 0.386029)
+texture = ExtResource("4_hbkxu")
+
+[node name="CollisionShape2D" parent="." index="2"]
+position = Vector2(-15, 12.5)
 rotation = -1.57079
 shape = SubResource("CapsuleShape2D_s6l6r")

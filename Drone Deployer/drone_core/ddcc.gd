@@ -57,7 +57,14 @@ func _on_core_area_body_entered(body):
 		body.queue_free() # TODO
 
 
+func _on_core_area_area_entered(area):
+	if area.is_in_group("enemy"):
+		GameplayManager._on_ddcc_take_damage(area.stats.damage)
+		area.queue_free()
+
+
 func _on_arming_range_body_exited(_body):
 	pass
 #	if body.is_in_group("drone"):
 #		body.ddcc_arming_range_exited()
+
