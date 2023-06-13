@@ -65,14 +65,22 @@ shape = SubResource("WorldBoundaryShape2D_ceo3k")
 [node name="LevelObjects" type="Node2D" parent="."]
 
 [node name="EnemySpawnClock" type="Timer" parent="."]
-autostart = true
 
-[node name="HealthLabel" type="Label" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 26.0
 grow_horizontal = 2
+
+[node name="HealthLabel" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 text = "Health: "
+
+[node name="PlaytimeLabel" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Time: "
 
 [connection signal="timeout" from="EnemySpawnClock" to="." method="_on_enemy_spawn_clock_timeout"]

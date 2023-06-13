@@ -5,8 +5,8 @@
 [node name="GameplayManager" type="Node"]
 editor_description = "Handles all gameplay events such as spawning enemies, controlling difficulty, updating score, taking damage, etc."
 script = ExtResource("1_yvwxg")
+starting_drones = 10
 
 [node name="GameplayTimer" type="Timer" parent="."]
-autostart = true
 
 [connection signal="timeout" from="GameplayTimer" to="." method="_on_gameplay_timer_timeout"]

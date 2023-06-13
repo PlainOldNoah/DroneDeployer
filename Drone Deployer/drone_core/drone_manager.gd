@@ -27,6 +27,12 @@ func remove_drone_from_queue(drone:Drone):
 		drone_queue.erase(drone)
 
 
+# Deletes all of the drones
+func clear_drone_queue():
+	for i in drone_queue:
+		i.queue_free()
+
+
 # Returns the drone_queue
 func get_drone_queue():
 	return drone_queue
@@ -40,10 +46,6 @@ func get_and_pop_next_drone():
 # Moves the drone in position 0 to the end of the drone queue
 func skip_next_drone():
 	drone_queue.push_back(drone_queue.pop_front())
-
-
-func handle_collected_drone():
-	pass
 
 
 func handle_drone_state_change(drone:Drone, state:int):

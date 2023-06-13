@@ -16,7 +16,7 @@ var stats:Dictionary = {
 	
 	"max_battery":100,
 	"battery":100,
-	"battery_drain":5.0,
+	"battery_drain":0.0,
 	"battery_return_threshold":0.1,
 }
 
@@ -140,6 +140,7 @@ func deploy(deploy_pos:Vector2, deploy_angle:float):
 		set_state(STATES.DEPLOYED)
 		set_global_position(deploy_pos)
 		set_velocity_from_radians(deploy_angle)
+		set_facing_direction()
 	else:
 		print_debug("ERROR: ILLEGAL STATE TRANSITION", state)
 
@@ -169,8 +170,9 @@ func handle_collision(collision:KinematicCollision2D):
 	if collider.is_in_group("drone"):
 		set_velocity_from_vector(velocity.bounce(collision.get_normal()))
 		# Fixes two drones from colliding many times at once
-		collider.set_velocity_from_vector(velocity.bounce(collision.get_normal()))
-		collider.change_facing_direction()
+#		collider.set_velocity_from_vector(velocity.bounce(collision.get_normal()))
+		collider.set_velocity_from_vector(collider.get_velocity())
+#		collider.change_facing_direction()
 	elif bounces <= 0:
 		set_velocity_from_vector(velocity.bounce(collision.get_normal()))
 		bounces = 1
@@ -183,9 +185,14 @@ func go_to(point:Vector2):
 	set_velocity_from_vector(point - self.get_global_position())
 
 
-# Adjusts the rotation to that of the current velocity
+# Adjusts the rotation to that of the current velocity GRADUALLY
 func change_facing_direction():
-#	rotation = lerp_angle(rotation, velocity.angle() + PI/2, 0.1)
+	rotation = lerp_angle(rotation, velocity.angle() + PI/2, 0.15)
+#	set_rotation(velocity.angle() + PI/2)
+
+
+# Adjusts the rotation to that of the current velocity INSTANTLY
+func set_facing_direction():
 	set_rotation(velocity.angle() + PI/2)
 
 

@@ -16,11 +16,16 @@ func _ready():
 	var _ok := DroneManager.connect("drone_created", add_node_to_lvl_obj)
 	_ok = EnemyManager.connect("enemy_created", add_enemy_to_map)
 	_ok = GameplayManager.connect("ddcc_health_changed", update_health_label)
+	_ok = GameplayManager.connect("playtime_updated", update_playtime_label)
 
 
 func update_health_label(new_health:int): # TEMP
-	$HealthLabel.text = "Health: " + str(new_health)
+	$HBoxContainer/HealthLabel.text = "Health: " + str(new_health)
 
+
+func update_playtime_label(new_time:int):
+	@warning_ignore("integer_division")
+	$HBoxContainer/PlaytimeLabel.text = "Time: %d:%02d" % [new_time/60, new_time%60]
 
 
 func _input(event):
