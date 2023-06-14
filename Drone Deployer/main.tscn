@@ -9,9 +9,9 @@
 script = ExtResource("1_0yjbx")
 
 [node name="MenuManager" type="CanvasLayer" parent="."]
+editor_description = "Handles GUI menus including requesting, dismissing, and restricting invalid menu tranisitions"
 script = ExtResource("1_5bh5y")
 
 [node name="MainMenu" parent="MenuManager" instance=ExtResource("2_058dp")]
-visible = false
 
-[node name="Gameboard" parent="MenuManager" instance=ExtResource("3_c4o2r")]
+[node name="Gameboard" parent="." instance=ExtResource("3_c4o2r")]

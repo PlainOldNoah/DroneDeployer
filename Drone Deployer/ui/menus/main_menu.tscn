@@ -1,14 +1,22 @@
-[gd_scene load_steps=2 format=3 uid="uid://xyinbcpdlhqm"]
+[gd_scene load_steps=3 format=3 uid="uid://xyinbcpdlhqm"]
 
 [ext_resource type="PackedScene" uid="uid://cwwp6l365mm0f" path="res://ui/menus/base_menu.tscn" id="1_a5twn"]
+[ext_resource type="Script" path="res://ui/menus/main_menu.gd" id="2_dr56i"]
 
 [node name="MainMenu" instance=ExtResource("1_a5twn")]
+script = ExtResource("2_dr56i")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." index="1"]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -126.5
+offset_top = -107.5
+offset_right = 126.5
+offset_bottom = 107.5
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -19,14 +27,17 @@ text = "Drone Deployer"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Button" type="Button" parent="VBoxContainer" index="1"]
+[node name="StartGameBtn" type="Button" parent="VBoxContainer" index="1"]
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_horizontal = 5
 size_flags_vertical = 10
 text = "Start Game"
 
-[node name="Button3" type="Button" parent="VBoxContainer" index="2"]
+[node name="QuitBtn" type="Button" parent="VBoxContainer" index="2"]
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_horizontal = 5
 size_flags_vertical = 2
 text = "Quit"
+
+[connection signal="pressed" from="VBoxContainer/StartGameBtn" to="." method="_on_start_game_btn_pressed"]
+[connection signal="pressed" from="VBoxContainer/QuitBtn" to="." method="_on_quit_btn_pressed"]
