@@ -29,8 +29,7 @@ func remove_drone_from_queue(drone:Drone):
 
 # Deletes all of the drones
 func clear_drone_queue():
-	for i in drone_queue:
-		i.queue_free()
+	drone_queue.clear()
 
 
 # Returns the drone_queue

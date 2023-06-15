@@ -1,7 +1,11 @@
 extends Node
 
-signal ddcc_health_changed(ddcc_max_health:int)
+signal ddcc_health_changed(new_health:int)
 signal playtime_updated(time:int)
+
+signal game_state_updated(state:GAMESTATE)
+enum GAMESTATE {WAITING, STARTING, RUNNING, PAUSED, ENDING}
+var gamestate:GAMESTATE = GAMESTATE.WAITING
 
 @onready var gameplay_timer := $GameplayTimer
 
@@ -18,12 +22,12 @@ signal playtime_updated(time:int)
 
 var ddcc_health:int = ddcc_max_health
 var playtime:int = 0
+var game_running:bool = false
 
 
 func _ready():
 	await get_tree().root.ready
 	emit_signal("ddcc_health_changed", ddcc_max_health)
-	start_game()
 
 
 func start_game():
@@ -31,13 +35,36 @@ func start_game():
 	
 	for i in starting_drones:
 		DroneManager.create_new_drone()
+	
+	emit_signal("game_state_updated", GAMESTATE.STARTING)
 	gameplay_timer.start()
+
+
+func end_game():
+	gameplay_timer.stop()
+	emit_signal("game_state_updated", GAMESTATE.ENDING)
 
 
 func reset_game():
 	ddcc_health = ddcc_max_health
 	playtime = 0
+	emit_signal("playtime_updated", playtime)
+	emit_signal("ddcc_health_changed", ddcc_health)
 	DroneManager.clear_drone_queue()
+
+
+# Pauses if unpaused and vice versa
+func toggle_pause():
+	get_tree().set_pause(!get_tree().is_paused())
+	
+	if get_tree().is_paused():
+		emit_signal("game_state_updated", GAMESTATE.PAUSED)
+	else:
+		emit_signal("game_state_updated", GAMESTATE.RUNNING)
+
+
+func quit_to_title():
+	end_game()
 
 
 # Handles the ddcc's health and reduces it by damage recieved
