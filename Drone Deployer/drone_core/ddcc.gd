@@ -6,9 +6,7 @@ extends Node2D
 @onready var deploy_pnt := $Sprites/Deployer/DeployPoint
 @onready var deploy_clearing := $Sprites/Deployer/DeploymentClearing
 
-#func _ready():
-#	var _ok := DroneManager.connect("drone_deployed", deploy_drone)
-
+var total_collected_scrap:float = 0.0
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
@@ -52,9 +50,9 @@ func _on_collection_range_body_exited(body):
 
 func _on_core_area_body_entered(body):
 	if body.is_in_group("drone"):
+		total_collected_scrap += body.transfer_scrap()
 		body.store()
-	if body.is_in_group("enemy"):
-		body.queue_free() # TODO
+		print("TCS: ", total_collected_scrap)
 
 
 func _on_core_area_area_entered(area):

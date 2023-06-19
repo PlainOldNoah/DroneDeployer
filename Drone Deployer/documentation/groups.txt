@@ -1,0 +1,6 @@
+drone = drone.gd
+
+enemy = base_enemy.gd
+
+pickup = base_pickups.gd
+	scrap = enemy_drop.gd

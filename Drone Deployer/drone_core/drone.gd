@@ -7,6 +7,10 @@ enum STATES {STORED, DEPLOYED, RETURNING, STOPPED, ARMING} # PAUSED RETURNING
 var state:int = -1
 
 @onready var collision_shape := $CollisionShape2D
+@onready var scanner := $Scanner
+@onready var pickup_range := $PickupRange
+
+
 
 var stats:Dictionary = {
 	"max_speed":100.0,
@@ -29,6 +33,8 @@ var acceleration:float = 1
 var do_knockback:bool = false
 var kb_resist:float = 1
 var kb_min_speed:float = stats.max_speed / 4.0
+
+var collected_scrap:float = 0.0
 
 
 func _ready():
@@ -62,36 +68,6 @@ func battery_calculation(delta:float):
 #		print("BATTERY RUNNING LOW")
 
 
-# Controls knockback and kb recovery plus normal movement
-func handle_movement(delta):
-	if do_knockback:
-#		stats.speed = lerpf(stats.speed, 0.0, acceleration * delta)
-		stats.speed = lerpf(stats.speed, 0.0, kb_resist * delta)
-		
-		if int(stats.speed) <= kb_min_speed:
-			do_knockback = false
-			bounces -= 1
-#			set_velocity_from_vector(-velocity)
-			set_velocity_from_vector(velocity, -stats.speed)
-	elif stats.speed < stats.max_speed:
-		stats.speed = lerpf(stats.speed, stats.max_speed, acceleration * delta)
-	
-	set_velocity_from_vector(velocity, stats.speed)
-	
-	# Normal Movement, Collides with walls and props
-	var collision := move_and_collide(velocity * delta)
-	if collision:
-		handle_collision(collision)
-
-
-# Puts the drone into knockback mode and reverses the velocity
-func activate_knockback():
-	if not do_knockback:
-		do_knockback = true
-#		set_velocity_from_vector(-velocity)
-		set_velocity_from_vector(velocity, -stats.speed)
-
-
 # ===== STATE MACHINE =====
 
 
@@ -109,6 +85,8 @@ func set_state(new_state:int):
 			set_process(true)
 			set_physics_process(true)
 			collision_shape.set_deferred("disabled", false)
+			scanner.set_deferred("disabled", false)
+			pickup_range.set_deferred("disabled", false)
 			set_visible(true)
 			collectable = false
 			
@@ -119,6 +97,9 @@ func set_state(new_state:int):
 			set_process(true)
 			set_physics_process(false)
 			collision_shape.set_deferred("disabled", true)
+			scanner.set_deferred("disabled", true)
+			pickup_range.set_deferred("disabled", true)
+			
 			set_visible(false)
 			set_velocity_from_vector(Vector2i.ZERO, 0)
 			global_position = Vector2.ZERO
@@ -126,7 +107,9 @@ func set_state(new_state:int):
 		STATES.STOPPED: # Non-moving, ie battery dead
 			set_physics_process(false)
 			set_velocity_from_vector(velocity, 0)
-			collision_shape.set_deferred("disabled", true)
+			collision_shape.set_deferred("disabled", false)
+			scanner.set_deferred("disabled", true)
+			pickup_range.set_deferred("disabled", true)
 		
 		_:
 			print_debug("ERROR: STATE NOT DEFINED <", new_state, ">")
@@ -138,10 +121,10 @@ func set_state(new_state:int):
 # Activates a Drone for the map with a starting point and angle (in radians)
 func deploy(deploy_pos:Vector2, deploy_angle:float):
 	if state == STATES.STORED:
-		set_state(STATES.DEPLOYED)
 		set_global_position(deploy_pos)
 		set_velocity_from_radians(deploy_angle)
 		set_facing_direction()
+		set_state(STATES.DEPLOYED)
 	else:
 		print_debug("ERROR: ILLEGAL STATE TRANSITION", state)
 
@@ -174,6 +157,7 @@ func _on_scanner_area_entered(area):
 		else:
 			area.take_hit(stats.damage)
 	elif area.is_in_group("pickup"):
+		collected_scrap += area.scrap_value
 		area.queue_free()
 
 
@@ -199,6 +183,36 @@ func handle_collision(collision:KinematicCollision2D):
 		bounces = 1
 	else:
 		activate_knockback() # TEMP FOR TESTING PURPOSES
+
+
+# Controls knockback and kb recovery plus normal movement
+func handle_movement(delta):
+	if do_knockback:
+#		stats.speed = lerpf(stats.speed, 0.0, acceleration * delta)
+		stats.speed = lerpf(stats.speed, 0.0, kb_resist * delta)
+		
+		if int(stats.speed) <= kb_min_speed:
+			do_knockback = false
+			bounces -= 1
+#			set_velocity_from_vector(-velocity)
+			set_velocity_from_vector(velocity, -stats.speed)
+	elif stats.speed < stats.max_speed:
+		stats.speed = lerpf(stats.speed, stats.max_speed, acceleration * delta)
+	
+	set_velocity_from_vector(velocity, stats.speed)
+	
+	# Normal Movement, Collides with walls and props
+	var collision := move_and_collide(velocity * delta)
+	if collision:
+		handle_collision(collision)
+
+
+# Puts the drone into knockback mode and reverses the velocity
+func activate_knockback():
+	if not do_knockback:
+		do_knockback = true
+#		set_velocity_from_vector(-velocity)
+		set_velocity_from_vector(velocity, -stats.speed)
 
 
 # Sets the current heading to that of the provided point
@@ -233,3 +247,11 @@ func set_velocity_from_vector(vector:Vector2, speed:int=stats.speed):
 func set_home(home:Node):
 	home_pos = home.get_global_position()
 
+
+# ===== MISC =====
+
+
+func transfer_scrap() -> float:
+	var output := collected_scrap
+	collected_scrap = 0.0
+	return output

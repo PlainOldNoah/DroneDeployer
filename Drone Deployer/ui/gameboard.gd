@@ -66,19 +66,20 @@ func add_enemy_to_map(enemy:Node):
 
 # When an enemy dies deal with it here
 func _on_enemy_death(enemy:Node):
-	spawn_loot_to_map("res://lvl_objects/enemy_drop.tscn", enemy.global_position, 5, 90)
+	spawn_loot_to_map("res://lvl_objects/enemy_drop.tscn", enemy.global_position, 0.5, 5, 90)
 	enemy.queue_free()
 
 
 # Takes a loot item and spawns in in the given location with count/quan and item spread
-func spawn_loot_to_map(loot_item:String, location:Vector2, count:int=1, spread:int=0):
+func spawn_loot_to_map(loot_item:String, location:Vector2, value:float=0.0, count:int=1, spread:int=0):
 	var loot_scene = load(loot_item)
 	for i in count:
 		var loot_inst = loot_scene.instantiate()
 		var offset:Vector2 = Vector2(randf_range(-spread, spread), randf_range(-spread, spread))
 		loot_inst.global_position = location + offset
-		add_node_to_lvl_obj(loot_inst)
+		loot_inst.scrap_value = value
 		loot_inst.randomize_sprite()
+		add_node_to_lvl_obj(loot_inst)
 
 
 # Return a random L/R cord on the map border modified by dist_outside_screen
