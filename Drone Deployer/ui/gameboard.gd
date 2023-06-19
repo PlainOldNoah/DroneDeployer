@@ -20,6 +20,7 @@ func _ready():
 	_ok = GameplayManager.connect("ddcc_health_changed", _on_update_health_label)
 	_ok = GameplayManager.connect("playtime_updated", _on_update_playtime_label)
 	_ok = GameplayManager.connect("game_state_updated", _on_game_state_updated)
+	_ok = GameplayManager.connect("total_scrap_updated", _on_update_tcs_label)
 
 
 func _on_game_state_updated(state):
@@ -96,13 +97,20 @@ func clear_all_level_objs():
 		i.queue_free()
 
 
+# Updates the health label
 func _on_update_health_label(new_health:int): # TEMP
-	$HBoxContainer/HealthLabel.text = "Health: " + str(new_health)
+	$HBoxContainer/HealthLabel.text = "Health: %d" % new_health
 
 
+# Updates the playtime label
 func _on_update_playtime_label(new_time:int):
 	@warning_ignore("integer_division")
 	$HBoxContainer/PlaytimeLabel.text = "Time: %d:%02d" % [new_time/60, new_time%60]
+
+
+# Updates the total collected scrap label
+func _on_update_tcs_label(new_tcs:float):
+	$HBoxContainer/TCSLabel.text = "Scrap: %.1f" % new_tcs
 
 
 func _on_enemy_spawn_clock_timeout():

@@ -2,6 +2,7 @@ extends Node
 
 signal ddcc_health_changed(new_health:int)
 signal playtime_updated(time:int)
+signal total_scrap_updated(TCS:float)
 
 signal game_state_updated(state:GAMESTATE)
 enum GAMESTATE {TITLE, STARTING, RUNNING, PAUSED, ENDING}
@@ -21,14 +22,9 @@ var gamestate:GAMESTATE = GAMESTATE.TITLE
 @export_range(0, 50) var max_drones:int = 50
 
 var ddcc_health:int = ddcc_max_health
+var total_collected_scrap:float = 0.0
 var playtime:int = 0
 var game_running:bool = false
-
-
-func _ready():
-	await get_tree().root.ready
-	emit_signal("ddcc_health_changed", ddcc_max_health)
-	set_gamestate(GAMESTATE.TITLE)
 
 
 # Setter for the gamestate
@@ -56,8 +52,11 @@ func end_game():
 func reset_game():
 	ddcc_health = ddcc_max_health
 	playtime = 0
+	total_collected_scrap = 0.0
 	emit_signal("playtime_updated", playtime)
 	emit_signal("ddcc_health_changed", ddcc_health)
+	emit_signal("total_scrap_updated", total_collected_scrap)
+	
 	DroneManager.clear_drone_queue()
 
 
@@ -79,11 +78,17 @@ func quit_to_title():
 
 
 # Handles the ddcc's health and reduces it by damage recieved
-func _on_ddcc_take_damage(damage:int):
+func ddcc_take_hit(damage:int):
 	ddcc_health = clampi(ddcc_health - damage, 0, ddcc_max_health)
 	if ddcc_health <= 0:
 		GameplayManager.set_gamestate(GAMESTATE.ENDING)
 	emit_signal("ddcc_health_changed", ddcc_health)
+
+
+# Increments the total collected scrap by amount and emits the signal
+func adjust_total_scrap(amount:float):
+	total_collected_scrap += amount
+	emit_signal("total_scrap_updated", total_collected_scrap)
 
 
 func _on_gameplay_timer_timeout():

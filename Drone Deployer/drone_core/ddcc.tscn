@@ -33,6 +33,7 @@ radius = 132.0
 radius = 190.0
 
 [node name="DDCC" type="Node2D"]
+editor_description = "Drone Deploying Control Core. Central HUB that deploys drones and serves as the \"character\""
 modulate = Color(1, 1, 1, 0.282353)
 script = ExtResource("1_g45i4")
 

@@ -1,5 +1,6 @@
 extends Node2D
-# DRONE DEPLOYING CONTROL CORE
+
+signal total_scrap_updated(total_collected_scrap:float)
 
 @export var rotation_weight:float = 0.2
 @onready var deployer := $Sprites/Deployer
@@ -50,14 +51,15 @@ func _on_collection_range_body_exited(body):
 
 func _on_core_area_body_entered(body):
 	if body.is_in_group("drone"):
-		total_collected_scrap += body.transfer_scrap()
+		GameplayManager.adjust_total_scrap(body.transfer_scrap())
+#		total_collected_scrap += body.transfer_scrap()
 		body.store()
-		print("TCS: ", total_collected_scrap)
+#		print("TCS: ", total_collected_scrap)
 
 
 func _on_core_area_area_entered(area):
 	if area.is_in_group("enemy"):
-		GameplayManager._on_ddcc_take_damage(area.damage)
+		GameplayManager.ddcc_take_hit(area.damage)
 		area.queue_free()
 
 
