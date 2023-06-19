@@ -33,6 +33,7 @@ var kb_min_speed:float = stats.max_speed / 4.0
 
 func _ready():
 	add_to_group("drone")
+	set_z_index(30)
 	set_state(STATES.STORED)
 
 
@@ -150,6 +151,9 @@ func store():
 	set_state(STATES.STORED)
 
 
+# ===== SCANNERS =====
+
+
 func ddcc_collection_range_entered():
 	if collectable == true:
 		set_state(STATES.RETURNING)
@@ -158,6 +162,23 @@ func ddcc_collection_range_entered():
 
 func ddcc_collection_range_exited():
 	collectable = true
+
+
+# Handles enemies that collide with the "body"
+func _on_scanner_area_entered(area):
+	if area.is_in_group("enemy"):
+		if area.get_health() > stats.damage:
+			stats.speed = stats.max_speed # TEMP FIX
+			activate_knockback()
+			area.take_hit(stats.damage)
+		else:
+			area.take_hit(stats.damage)
+	elif area.is_in_group("pickup"):
+		area.queue_free()
+
+
+func _on_pickup_range_area_entered(area):
+	area.magnet_towards(self)
 
 
 # ===== COLLISION & MOVEMENT =====
@@ -212,12 +233,3 @@ func set_velocity_from_vector(vector:Vector2, speed:int=stats.speed):
 func set_home(home:Node):
 	home_pos = home.get_global_position()
 
-
-func _on_scanner_area_entered(area):
-	if area.is_in_group("enemy"):
-		if area.get_health() > stats.damage:
-			stats.speed = stats.max_speed # TEMP FIX
-			activate_knockback()
-			area.take_hit(stats.damage)
-		else:
-			area.take_hit(stats.damage)

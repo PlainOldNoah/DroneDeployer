@@ -45,7 +45,7 @@ texture = SubResource("AtlasTexture_luq3b")
 texture = SubResource("AtlasTexture_wcjxq")
 
 [node name="Deployer" type="Sprite2D" parent="Sprites"]
-z_index = 1
+z_index = 35
 texture = SubResource("AtlasTexture_c50b6")
 
 [node name="DeployPoint" type="Marker2D" parent="Sprites/Deployer"]
@@ -63,7 +63,7 @@ shape = SubResource("CapsuleShape2D_fvfl8")
 debug_color = Color(0, 0.643137, 0.294118, 0.419608)
 
 [node name="Cover" type="Sprite2D" parent="Sprites"]
-z_index = 1
+z_index = 35
 texture = SubResource("AtlasTexture_usjbi")
 
 [node name="CoreArea" type="Area2D" parent="."]

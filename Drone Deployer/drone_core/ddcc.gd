@@ -59,7 +59,7 @@ func _on_core_area_body_entered(body):
 
 func _on_core_area_area_entered(area):
 	if area.is_in_group("enemy"):
-		GameplayManager._on_ddcc_take_damage(area.stats.damage)
+		GameplayManager._on_ddcc_take_damage(area.damage)
 		area.queue_free()
 
 

@@ -1,19 +1,20 @@
 extends Area2D
 
-var stats:Dictionary = {
-	"speed":0,
-	"max_hp":0,
-	"health":0,
-	"damage":0,
-}
+signal died(enemy:Node)
 
+@export_range(0,999) var speed = 0
+@export_range(0,999) var max_hp = 0
+@export_range(0,999) var damage = 0
+
+var health:int = max_hp
 var velocity:Vector2 = Vector2()
 var target_pos = null
 
 
 func _ready():
 	add_to_group("enemy")
-	stats.health = stats.max_hp
+	set_z_index(20)
+	health = max_hp
 
 
 func _physics_process(delta):
@@ -40,8 +41,8 @@ func go_to(point:Vector2):
 
 
 # Sets the velocity from a provided vector
-func set_velocity_from_vector(vector:Vector2, speed:int=stats.speed):
-	velocity = (vector.normalized() * speed)
+func set_velocity_from_vector(vector:Vector2, speed_override:int=speed):
+	velocity = (vector.normalized() * speed_override)
 	change_facing_direction()
 
 
@@ -51,11 +52,18 @@ func change_facing_direction():
 		apply_scale(Vector2(-1,1))
 
 
+# Return the current health
 func get_health():
-	return stats.health
+	return health
 
 
-func take_hit(damage:int):
-	stats.health -= damage
-	if stats.health <= 0:
-		queue_free()
+# Subtracks damage from health, handles death at 0 hp
+func take_hit(damage_pts:int):
+	health -= damage_pts
+	if health <= 0:
+		emit_signal("died", self)
+
+
+# On death spawn drop items
+func _on_death():
+	pass

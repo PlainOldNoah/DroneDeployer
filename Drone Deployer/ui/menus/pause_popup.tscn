@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://bjpnyq1dysd6h"]
+
+[ext_resource type="PackedScene" uid="uid://btb5hep7rx366" path="res://ui/menus/base_popup_menu.tscn" id="1_lnla0"]
+[ext_resource type="Script" path="res://ui/menus/pause_popup.gd" id="2_xlicu"]
+
+[node name="PausePopup" instance=ExtResource("1_lnla0")]
+script = ExtResource("2_xlicu")
+
+[node name="Label" parent="VBoxContainer" index="0"]
+text = "PAUSED"
+
+[node name="ResumeBtn" type="Button" parent="VBoxContainer" index="1"]
+layout_mode = 2
+text = "Resume"
+
+[node name="TitleQuitBtn" type="Button" parent="VBoxContainer" index="2"]
+layout_mode = 2
+text = "Quit to Title"
+
+[connection signal="pressed" from="VBoxContainer/ResumeBtn" to="." method="_on_resume_btn_pressed"]
+[connection signal="pressed" from="VBoxContainer/TitleQuitBtn" to="." method="_on_title_quit_btn_pressed"]

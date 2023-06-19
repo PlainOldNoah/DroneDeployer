@@ -1,0 +1,5 @@
+00 - Ground/Map
+10 - Objects/Debris/Dead Drones
+20 - Enemies
+30 - Drones
+35 - DDCC (Deployer/Cover)

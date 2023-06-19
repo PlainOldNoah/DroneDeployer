@@ -4,8 +4,8 @@ signal ddcc_health_changed(new_health:int)
 signal playtime_updated(time:int)
 
 signal game_state_updated(state:GAMESTATE)
-enum GAMESTATE {WAITING, STARTING, RUNNING, PAUSED, ENDING}
-var gamestate:GAMESTATE = GAMESTATE.WAITING
+enum GAMESTATE {TITLE, STARTING, RUNNING, PAUSED, ENDING}
+var gamestate:GAMESTATE = GAMESTATE.TITLE
 
 @onready var gameplay_timer := $GameplayTimer
 
@@ -28,6 +28,15 @@ var game_running:bool = false
 func _ready():
 	await get_tree().root.ready
 	emit_signal("ddcc_health_changed", ddcc_max_health)
+	set_gamestate(GAMESTATE.TITLE)
+
+
+# Setter for the gamestate
+func set_gamestate(new_gamestate:GAMESTATE):
+	if gamestate == new_gamestate:
+		print_debug("WARNING: gamestate already in state <", new_gamestate, ">")
+	gamestate = new_gamestate
+	emit_signal("game_state_updated", new_gamestate)
 
 
 func start_game():
@@ -36,13 +45,12 @@ func start_game():
 	for i in starting_drones:
 		DroneManager.create_new_drone()
 	
-	emit_signal("game_state_updated", GAMESTATE.STARTING)
+	set_gamestate(GAMESTATE.STARTING)
 	gameplay_timer.start()
 
 
 func end_game():
 	gameplay_timer.stop()
-	emit_signal("game_state_updated", GAMESTATE.ENDING)
 
 
 func reset_game():
@@ -54,22 +62,27 @@ func reset_game():
 
 
 # Pauses if unpaused and vice versa
-func toggle_pause():
-	get_tree().set_pause(!get_tree().is_paused())
+func toggle_pause(value:bool):
+	get_tree().set_pause(value)
+#	get_tree().set_pause(!get_tree().is_paused())
 	
 	if get_tree().is_paused():
-		emit_signal("game_state_updated", GAMESTATE.PAUSED)
+		set_gamestate(GAMESTATE.PAUSED)
 	else:
-		emit_signal("game_state_updated", GAMESTATE.RUNNING)
+		set_gamestate(GAMESTATE.RUNNING)
 
 
 func quit_to_title():
 	end_game()
+	reset_game()
+	set_gamestate(GAMESTATE.TITLE)
 
 
 # Handles the ddcc's health and reduces it by damage recieved
 func _on_ddcc_take_damage(damage:int):
 	ddcc_health = clampi(ddcc_health - damage, 0, ddcc_max_health)
+	if ddcc_health <= 0:
+		GameplayManager.set_gamestate(GAMESTATE.ENDING)
 	emit_signal("ddcc_health_changed", ddcc_health)
 
 

@@ -1,0 +1,41 @@
+[gd_scene load_steps=2 format=3 uid="uid://btb5hep7rx366"]
+
+[ext_resource type="PackedScene" uid="uid://cwwp6l365mm0f" path="res://ui/menus/base_menu.tscn" id="1_askv0"]
+
+[node name="BasePopupMenu" instance=ExtResource("1_askv0")]
+
+[node name="Background" parent="." index="0"]
+color = Color(0, 0, 0, 0.588235)
+
+[node name="ButtonBg" type="ColorRect" parent="." index="1"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -138.5
+offset_top = -64.0
+offset_right = 138.5
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.529412, 0.529412, 0.529412, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." index="2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -94.5
+offset_top = -33.0
+offset_right = 94.5
+offset_bottom = 33.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="VBoxContainer" index="0"]
+layout_mode = 2
+horizontal_alignment = 1

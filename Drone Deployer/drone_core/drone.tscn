@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://cgx8q1e8vwntn"]
+[gd_scene load_steps=6 format=3 uid="uid://cgx8q1e8vwntn"]
 
 [ext_resource type="Script" path="res://drone_core/drone.gd" id="1_rtv2x"]
 [ext_resource type="Texture2D" uid="uid://cy1vdsb4r5r5b" path="res://assets/visual/drone_x128.png" id="2_a3kkh"]
@@ -8,6 +8,9 @@ radius = 64.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_txlfk"]
 radius = 64.1249
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mrykf"]
+radius = 172.0
 
 [node name="Drone" type="CharacterBody2D"]
 scale = Vector2(0.25, 0.25)
@@ -19,15 +22,22 @@ script = ExtResource("1_rtv2x")
 texture = ExtResource("2_a3kkh")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 shape = SubResource("CircleShape2D_3xr3n")
 
 [node name="Scanner" type="Area2D" parent="."]
 collision_layer = 0
-collision_mask = 4
+collision_mask = 36
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Scanner"]
 shape = SubResource("CircleShape2D_txlfk")
 debug_color = Color(0.552941, 0.564706, 0, 0.235294)
 
+[node name="PickupRange" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupRange"]
+shape = SubResource("CircleShape2D_mrykf")
+
 [connection signal="area_entered" from="Scanner" to="." method="_on_scanner_area_entered"]
+[connection signal="area_entered" from="PickupRange" to="." method="_on_pickup_range_area_entered"]

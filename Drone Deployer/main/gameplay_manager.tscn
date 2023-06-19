@@ -1,10 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://dhd2x6nupedsk"]
+[gd_scene load_steps=2 format=3 uid="uid://boxyuo8hbptdd"]
 
-[ext_resource type="Script" path="res://gameplay_manager.gd" id="1_yvwxg"]
+[ext_resource type="Script" path="res://main/gameplay_manager.gd" id="1_yvwxg"]
 
 [node name="GameplayManager" type="Node"]
 editor_description = "Handles all gameplay events such as spawning enemies, controlling difficulty, updating score, taking damage, etc."
 script = ExtResource("1_yvwxg")
+ddcc_max_health = 3
 starting_drones = 10
 
 [node name="GameplayTimer" type="Timer" parent="."]

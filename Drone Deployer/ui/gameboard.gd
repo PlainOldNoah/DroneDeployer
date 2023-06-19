@@ -26,9 +26,9 @@ func _on_game_state_updated(state):
 	match state:
 		GameplayManager.GAMESTATE.STARTING, GameplayManager.GAMESTATE.RUNNING:
 			set_process_input(true)
-		GameplayManager.GAMESTATE.WAITING, GameplayManager.GAMESTATE.PAUSED:
+		GameplayManager.GAMESTATE.PAUSED:
 			set_process_input(false)
-		GameplayManager.GAMESTATE.ENDING:
+		GameplayManager.GAMESTATE.TITLE, GameplayManager.GAMESTATE.ENDING:
 			set_process_input(false)
 			clear_all_level_objs()
 		_:
@@ -52,13 +52,33 @@ func set_boundries():
 
 # Adds the object to the lvl_obj node
 func add_node_to_lvl_obj(object:Node):
-	lvl_obj.add_child(object)
+#	lvl_obj.add_child(object)
+	lvl_obj.call_deferred("add_child", object)
 
 
+# spawns and places an enemy on the gameboard
 func add_enemy_to_map(enemy:Node):
 	add_node_to_lvl_obj(enemy)
 	enemy.set_global_position(get_random_offscreen_point())
 	enemy.set_target(ddcc)
+	var _ok := enemy.connect("died", _on_enemy_death)
+
+
+# When an enemy dies deal with it here
+func _on_enemy_death(enemy:Node):
+	spawn_loot_to_map("res://lvl_objects/enemy_drop.tscn", enemy.global_position, 5, 90)
+	enemy.queue_free()
+
+
+# Takes a loot item and spawns in in the given location with count/quan and item spread
+func spawn_loot_to_map(loot_item:String, location:Vector2, count:int=1, spread:int=0):
+	var loot_scene = load(loot_item)
+	for i in count:
+		var loot_inst = loot_scene.instantiate()
+		var offset:Vector2 = Vector2(randf_range(-spread, spread), randf_range(-spread, spread))
+		loot_inst.global_position = location + offset
+		add_node_to_lvl_obj(loot_inst)
+		loot_inst.randomize_sprite()
 
 
 # Return a random L/R cord on the map border modified by dist_outside_screen

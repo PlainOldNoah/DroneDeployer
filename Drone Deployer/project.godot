@@ -11,13 +11,13 @@ config_version=5
 [application]
 
 config/name="Drone Deployer"
-run/main_scene="res://main.tscn"
+run/main_scene="res://main/main.tscn"
 config/features=PackedStringArray("4.0", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
-GameplayManager="*res://gameplay_manager.tscn"
+GameplayManager="*res://main/gameplay_manager.tscn"
 DroneManager="*res://drone_core/drone_manager.gd"
 EnemyManager="*res://enemies/enemy_manager.gd"
 
@@ -49,3 +49,4 @@ skip_drone={
 2d_physics/layer_3="enemy"
 2d_physics/layer_4="ddcc"
 2d_physics/layer_5="gameboard"
+2d_physics/layer_6="pickup"

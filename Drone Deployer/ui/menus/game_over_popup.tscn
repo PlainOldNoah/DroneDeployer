@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://bb2jmpwphe15s"]
+
+[ext_resource type="PackedScene" uid="uid://btb5hep7rx366" path="res://ui/menus/base_popup_menu.tscn" id="1_d5wuh"]
+[ext_resource type="Script" path="res://ui/menus/game_over_popup.gd" id="2_xucnc"]
+
+[node name="GameOverPopup" instance=ExtResource("1_d5wuh")]
+script = ExtResource("2_xucnc")
+
+[node name="Label" parent="VBoxContainer" index="0"]
+text = "GAMEOVER"
+
+[node name="RestartBtn" type="Button" parent="VBoxContainer" index="1"]
+layout_mode = 2
+text = "Restart"
+
+[node name="TitleQuitBtn" type="Button" parent="VBoxContainer" index="2"]
+layout_mode = 2
+text = "Quit to Title"
+
+[connection signal="pressed" from="VBoxContainer/RestartBtn" to="." method="_on_restart_btn_pressed"]
+[connection signal="pressed" from="VBoxContainer/TitleQuitBtn" to="." method="_on_title_quit_btn_pressed"]

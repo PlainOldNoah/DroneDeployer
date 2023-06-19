@@ -37,3 +37,9 @@ drone.gd
 		Emitted: drone goes though a state transition
 		drone:Drone = drone changing
 		new_state:int = enum value of the new state
+
+
+base_enemy.gd
+	signal died(enemy:Node)
+		Emitted: enemy has 0 hp and is dead
+		enemy:Node = itself
