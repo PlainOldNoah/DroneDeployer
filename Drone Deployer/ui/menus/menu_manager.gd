@@ -3,6 +3,7 @@ extends CanvasLayer
 @onready var main_menu := $MainMenu
 @onready var pause_menu := $PausePopup
 @onready var game_over_menu := $GameOverPopup
+@onready var debug_menu := $DebugMenu
 
 @onready var menu_list:Dictionary = {
 	"none":{
@@ -17,9 +18,12 @@ extends CanvasLayer
 	"game_over_menu":{
 		"scene":game_over_menu,
 	},
+	"debug_menu":{
+		"scene":debug_menu,
+	},
 }
 
-#var current_menu:Dictionary = {}
+var current_menu:Dictionary = {}
 
 
 func _ready():
@@ -34,24 +38,39 @@ func _input(event):
 			GameplayManager.toggle_pause(false)
 		else:
 			GameplayManager.toggle_pause(true)
+	elif event.is_action_pressed("toggle_debug_menu"):
+		request_menu(menu_list.debug_menu, !menu_list.debug_menu["scene"].is_visible())
 
 
 # Handles the dismissing and summoning on menu items
-func request_menu(new_menu:Dictionary):
+func request_menu(new_menu:Dictionary, show_scene:bool=true):
 	match new_menu:
 		menu_list.none:
 			dismiss_all()
+		
 		menu_list.main_menu:
 			dismiss_all()
-			menu_list.main_menu["scene"].show()
+			if show_scene:
+				menu_list.main_menu["scene"].show()
+		
 		menu_list.pause_menu:
 			menu_list.pause_menu["scene"].set_visible(get_tree().is_paused())
+		
 		menu_list.game_over_menu:
 			dismiss_all()
-			menu_list.game_over_menu["scene"].show()
+			if show_scene:
+				menu_list.game_over_menu["scene"].show()
+		
+		menu_list.debug_menu:
+			dismiss_all()
+			if show_scene:
+				menu_list.debug_menu["scene"].show()
+		
 		_:
 			print_debug("ERROR: invalid menu requested <", new_menu, ">")
 			printerr("ERROR: invalid menu requested <", new_menu, ">")
+			
+	current_menu = new_menu
 
 
 # Signal reciever from GameplayManager
@@ -74,3 +93,4 @@ func dismiss_all():
 	for i in menu_list.keys():
 		if menu_list[i]["scene"] != null:
 			menu_list[i]["scene"].hide()
+	current_menu = menu_list.none

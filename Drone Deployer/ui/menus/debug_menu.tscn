@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://cihk4xoa3wwe2"]
+
+[ext_resource type="PackedScene" uid="uid://btb5hep7rx366" path="res://ui/menus/base_popup_menu.tscn" id="1_mvnn2"]
+[ext_resource type="Script" path="res://ui/menus/debug_menu.gd" id="2_p50e5"]
+
+[node name="DebugMenu" instance=ExtResource("1_mvnn2")]
+script = ExtResource("2_p50e5")
+
+[node name="Label" parent="VBoxContainer" index="0"]
+text = "DEBUG"
+
+[node name="TGMButton" type="Button" parent="VBoxContainer" index="1"]
+layout_mode = 2
+toggle_mode = true
+text = "Toggle Invincibility"
+
+[connection signal="pressed" from="VBoxContainer/TGMButton" to="." method="_on_tgm_button_pressed"]

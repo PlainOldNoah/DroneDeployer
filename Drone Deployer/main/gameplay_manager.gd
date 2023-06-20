@@ -23,6 +23,7 @@ var gamestate:GAMESTATE = GAMESTATE.TITLE
 
 var ddcc_health:int = ddcc_max_health
 var total_collected_scrap:float = 0.0
+var ddcc_invincible:bool = false # Debugger function to toggle DDCC take_hit
 var playtime:int = 0
 var game_running:bool = false
 
@@ -79,9 +80,10 @@ func quit_to_title():
 
 # Handles the ddcc's health and reduces it by damage recieved
 func ddcc_take_hit(damage:int):
-	ddcc_health = clampi(ddcc_health - damage, 0, ddcc_max_health)
-	if ddcc_health <= 0:
-		GameplayManager.set_gamestate(GAMESTATE.ENDING)
+	if not ddcc_invincible:
+		ddcc_health = clampi(ddcc_health - damage, 0, ddcc_max_health)
+		if ddcc_health <= 0:
+			GameplayManager.set_gamestate(GAMESTATE.ENDING)
 	emit_signal("ddcc_health_changed", ddcc_health)
 
 
