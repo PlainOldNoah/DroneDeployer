@@ -1,6 +1,12 @@
 extends CanvasLayer
 
+# Adding a Menu
+#	1. Add its path as an @onready
+#	2. Add its hotkey to the _input func
+#	3. Add its menu to request menu
+
 @onready var main_menu := $MainMenu
+@onready var hanger_menu := $HangerMenu
 @onready var pause_menu := $PausePopup
 @onready var game_over_menu := $GameOverPopup
 @onready var debug_menu := $DebugMenu
@@ -11,6 +17,9 @@ extends CanvasLayer
 	},
 	"main_menu":{
 		"scene":main_menu
+	},
+	"hanger_menu":{
+		"scene":hanger_menu
 	},
 	"pause_menu":{
 		"scene":pause_menu
@@ -38,6 +47,8 @@ func _input(event):
 			GameplayManager.toggle_pause(false)
 		else:
 			GameplayManager.toggle_pause(true)
+	elif event.is_action_pressed("toggle_hanger_menu"):
+		request_menu(menu_list.hanger_menu, !menu_list.hanger_menu["scene"].is_visible())
 	elif event.is_action_pressed("toggle_debug_menu"):
 		request_menu(menu_list.debug_menu, !menu_list.debug_menu["scene"].is_visible())
 
@@ -52,6 +63,11 @@ func request_menu(new_menu:Dictionary, show_scene:bool=true):
 			dismiss_all()
 			if show_scene:
 				menu_list.main_menu["scene"].show()
+		
+		menu_list.hanger_menu:
+			dismiss_all()
+			if show_scene:
+				menu_list.hanger_menu["scene"].show()
 		
 		menu_list.pause_menu:
 			menu_list.pause_menu["scene"].set_visible(get_tree().is_paused())

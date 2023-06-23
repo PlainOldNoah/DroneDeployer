@@ -41,6 +41,7 @@ func _ready():
 	add_to_group("drone")
 	set_z_index(30)
 	set_state(STATES.STORED)
+	modulate = Color(randf(), randf(), randf())
 
 
 func _physics_process(delta):

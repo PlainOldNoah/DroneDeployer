@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://cjaeoy88yuim8"]
+
+[ext_resource type="PackedScene" uid="uid://cwwp6l365mm0f" path="res://ui/menus/base_menu.tscn" id="1_7dtce"]
+[ext_resource type="Script" path="res://ui/menus/hanger_menu.gd" id="2_3ppgg"]
+[ext_resource type="Script" path="res://ui/menus/drone_stats.gd" id="3_m74r8"]
+
+[node name="HangerMenu" instance=ExtResource("1_7dtce")]
+script = ExtResource("2_3ppgg")
+
+[node name="DroneStats" type="Label" parent="." index="1"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Hello World"
+script = ExtResource("3_m74r8")
