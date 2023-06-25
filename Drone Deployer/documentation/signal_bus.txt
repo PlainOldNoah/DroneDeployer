@@ -37,6 +37,9 @@ drone.gd
 		Emitted: drone goes though a state transition
 		drone:Drone = drone changing
 		new_state:int = enum value of the new state
+	signal stats_updated(drone:Drone)
+		Emitted: drone stats are updated
+		drone:Drone = drone whose stats have changed
 
 
 base_enemy.gd

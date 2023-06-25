@@ -2,6 +2,7 @@ class_name Drone
 extends CharacterBody2D
 
 signal state_changed(drone:Drone, new_state:int)
+signal stats_updated(drone:Drone)
 
 enum STATES {STORED, DEPLOYED, RETURNING, STOPPED, ARMING} # PAUSED RETURNING
 var state:int = -1
@@ -41,7 +42,15 @@ func _ready():
 	add_to_group("drone")
 	set_z_index(30)
 	set_state(STATES.STORED)
+	debug_randomize_values()
+
+
+func debug_randomize_values():
 	modulate = Color(randf(), randf(), randf())
+	stats.max_speed = randi_range(100, 300)
+	stats.damage = randi_range(1,10)
+	stats.max_battery = randi_range(100,500)
+	emit_signal("stats_updated", self)
 
 
 func _physics_process(delta):
@@ -59,6 +68,7 @@ func battery_calculation(delta:float):
 	else:
 		stats.battery = clamp(stats.battery - (stats.battery_drain * delta), 0.0, stats.max_battery)
 	
+	emit_signal("stats_updated", self)
 	#	emit_signal("stats_updated", self, "battery")
 	
 	if stats.battery <= 0.0: # Battery is Dead

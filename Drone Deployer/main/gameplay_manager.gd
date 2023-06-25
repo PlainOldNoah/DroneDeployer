@@ -30,6 +30,7 @@ var game_running:bool = false
 
 # Setter for the gamestate
 func set_gamestate(new_gamestate:GAMESTATE):
+#	print_debug("SETSTATE: ", new_gamestate)
 	if gamestate == new_gamestate:
 		print_debug("WARNING: gamestate already in state <", new_gamestate, ">")
 	gamestate = new_gamestate
@@ -64,7 +65,6 @@ func reset_game():
 # Pauses if unpaused and vice versa
 func toggle_pause(value:bool):
 	get_tree().set_pause(value)
-#	get_tree().set_pause(!get_tree().is_paused())
 	
 	if get_tree().is_paused():
 		set_gamestate(GAMESTATE.PAUSED)

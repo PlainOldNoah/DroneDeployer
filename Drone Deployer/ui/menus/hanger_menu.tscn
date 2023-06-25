@@ -7,13 +7,41 @@
 [node name="HangerMenu" instance=ExtResource("1_7dtce")]
 script = ExtResource("2_3ppgg")
 
+[node name="Background" parent="." index="0"]
+color = Color(0.6, 0.615686, 0.627451, 0.290196)
+
 [node name="DroneStats" type="Label" parent="." index="1"]
 unique_name_in_owner = true
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = -1
+anchor_left = 0.0425347
+anchor_top = 0.132716
+anchor_right = 0.432292
+anchor_bottom = 0.779321
+offset_bottom = -3.05176e-05
 grow_horizontal = 2
 grow_vertical = 2
 text = "Hello World"
 script = ExtResource("3_m74r8")
+metadata/_edit_use_anchors_ = true
+
+[node name="Test" type="Button" parent="." index="2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.679688
+anchor_top = 0.0910494
+anchor_right = 0.832465
+anchor_bottom = 0.216049
+text = "Get Next Drone"
+metadata/_edit_use_anchors_ = true
+
+[node name="Test2" type="Button" parent="." index="3"]
+layout_mode = 0
+offset_left = 786.0
+offset_top = 150.0
+offset_right = 960.0
+offset_bottom = 238.0
+text = "Randomize Stats"
+
+[connection signal="pressed" from="Test" to="." method="_on_test_pressed"]
+[connection signal="pressed" from="Test2" to="." method="_on_test_2_pressed"]

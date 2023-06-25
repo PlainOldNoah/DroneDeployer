@@ -13,22 +13,34 @@ extends CanvasLayer
 
 @onready var menu_list:Dictionary = {
 	"none":{
-		"scene":null
+		"scene":null, # Path to menu scene
+		"pause_gameplay":false, # Pauses gameplay while menu is active
+		"escapable":true, # Can be exited with hotkey/escape
 	},
 	"main_menu":{
-		"scene":main_menu
+		"scene":main_menu,
+		"pause_gameplay":true,
+		"escapable":false,
 	},
 	"hanger_menu":{
-		"scene":hanger_menu
+		"scene":hanger_menu,
+		"pause_gameplay":true,
+		"escapable":true,
 	},
 	"pause_menu":{
-		"scene":pause_menu
+		"scene":pause_menu,
+		"pause_gameplay":true,
+		"escapable":true,
 	},
 	"game_over_menu":{
 		"scene":game_over_menu,
+		"pause_gameplay":false,
+		"escapable":false,
 	},
 	"debug_menu":{
 		"scene":debug_menu,
+		"pause_gameplay":true,
+		"escapable":true,
 	},
 }
 
@@ -42,50 +54,60 @@ func _ready():
 
 # _input func for ALL menu calling actions
 func _input(event):
+	if current_menu["escapable"] == false:
+		return
+	
 	if event.is_action_pressed("ui_cancel"):
-		if get_tree().is_paused():
-			GameplayManager.toggle_pause(false)
+		if current_menu != menu_list.none:
+			request_menu(menu_list.none)
 		else:
-			GameplayManager.toggle_pause(true)
+			request_menu(menu_list.pause_menu)
+			
 	elif event.is_action_pressed("toggle_hanger_menu"):
-		request_menu(menu_list.hanger_menu, !menu_list.hanger_menu["scene"].is_visible())
+		if current_menu == menu_list.hanger_menu:
+			request_menu(menu_list.none)
+		else:
+			request_menu(menu_list.hanger_menu)
+		
 	elif event.is_action_pressed("toggle_debug_menu"):
-		request_menu(menu_list.debug_menu, !menu_list.debug_menu["scene"].is_visible())
+		if current_menu == menu_list.menu_list.debug_menu:
+			request_menu(menu_list.none)
+		else:
+			request_menu(menu_list.debug_menu)
 
 
 # Handles the dismissing and summoning on menu items
-func request_menu(new_menu:Dictionary, show_scene:bool=true):
+func request_menu(new_menu:Dictionary):
+	dismiss_all()
+	
 	match new_menu:
 		menu_list.none:
-			dismiss_all()
+			GameplayManager.toggle_pause(false)
 		
 		menu_list.main_menu:
-			dismiss_all()
-			if show_scene:
-				menu_list.main_menu["scene"].show()
+			GameplayManager.toggle_pause(true)
+			menu_list.main_menu["scene"].show()
 		
 		menu_list.hanger_menu:
-			dismiss_all()
-			if show_scene:
-				menu_list.hanger_menu["scene"].show()
+			GameplayManager.toggle_pause(true)
+			menu_list.hanger_menu["scene"].show()
 		
 		menu_list.pause_menu:
-			menu_list.pause_menu["scene"].set_visible(get_tree().is_paused())
+			GameplayManager.toggle_pause(true)
+			menu_list.pause_menu["scene"].show()
 		
 		menu_list.game_over_menu:
-			dismiss_all()
-			if show_scene:
-				menu_list.game_over_menu["scene"].show()
+			GameplayManager.toggle_pause(false)
+			menu_list.game_over_menu["scene"].show()
 		
 		menu_list.debug_menu:
-			dismiss_all()
-			if show_scene:
-				menu_list.debug_menu["scene"].show()
+			GameplayManager.toggle_pause(true)
+			menu_list.debug_menu["scene"].show()
 		
 		_:
 			print_debug("ERROR: invalid menu requested <", new_menu, ">")
 			printerr("ERROR: invalid menu requested <", new_menu, ">")
-			
+	
 	current_menu = new_menu
 
 
@@ -97,9 +119,9 @@ func _on_game_state_updated(state:int):
 		GameplayManager.GAMESTATE.STARTING:
 			request_menu(menu_list.none)
 		GameplayManager.GAMESTATE.RUNNING:
-			request_menu(menu_list.pause_menu)
-		GameplayManager.GAMESTATE.PAUSED:
-			request_menu(menu_list.pause_menu)
+			dismiss_all()
+#		GameplayManager.GAMESTATE.PAUSED:
+#			request_menu(menu_list.pause_menu)
 		GameplayManager.GAMESTATE.ENDING:
 			request_menu(menu_list.game_over_menu)
 

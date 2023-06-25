@@ -21,6 +21,7 @@ script = ExtResource("2_cpjur")
 visible = false
 
 [node name="HangerMenu" parent="MenuManager" instance=ExtResource("4_chmra")]
+visible = false
 
 [node name="PausePopup" parent="MenuManager" instance=ExtResource("4_0qfmw")]
 visible = false

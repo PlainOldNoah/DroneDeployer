@@ -1,22 +1,24 @@
 extends Label
 
-
 var linked_drone:Drone = null
-
-
-func _ready():
-	update_labels()
 
 
 # Sets a new linked drone
 func link_to_drone(drone:Drone):
 	if drone != linked_drone:
+		
+		if linked_drone != null:
+			linked_drone.disconnect("stats_updated", update_labels)
+		
 		linked_drone = drone
+		update_labels(linked_drone)
+		var _ok := linked_drone.connect("stats_updated", update_labels)
 
 
-# Updates itself to reflect the current stats
-func update_labels():
-	text = "Speed: %d\nDamage: %d\nBattery: %d" % [0, 1, 2]
+# Updates its labels to display parameter drones stats
+func update_labels(drone:Drone):
+	var lds:Dictionary = drone.stats
+	text = "%s\nSpeed: %d\nDamage: %d\nBattery: %d" % [linked_drone.name, lds.max_speed, lds.damage, lds.max_battery]
 
 
 #Speed: 10 (40)
