@@ -17,5 +17,6 @@ func _on_test_pressed():
 	if debug_counter >= max_drones:
 		debug_counter = 0
 
+
 func _on_test_2_pressed():
 	DroneManager.drone_queue[debug_counter - 1].debug_randomize_values()

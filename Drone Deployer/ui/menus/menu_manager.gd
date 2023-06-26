@@ -47,6 +47,10 @@ extends CanvasLayer
 var current_menu:Dictionary = {}
 
 
+func _process(delta):
+	print(get_viewport().gui_get_focus_owner())
+
+
 func _ready():
 	var _ok := GameplayManager.connect("game_state_updated", _on_game_state_updated)
 	request_menu(menu_list.main_menu)

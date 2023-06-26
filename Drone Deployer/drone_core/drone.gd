@@ -20,9 +20,11 @@ var stats:Dictionary = {
 	"damage":1,
 	
 	"max_battery":100,
-	"battery":100,
+	"battery":100.0,
 	"battery_drain":0.0,
 	"battery_return_threshold":0.1,
+	
+	"display_name":"",
 }
 
 var bounces:int = 1 # Number of times to be knocked back before bouncing
@@ -266,3 +268,11 @@ func transfer_scrap() -> float:
 	var output := collected_scrap
 	collected_scrap = 0.0
 	return output
+
+
+# Setter for stats, prints warning if statically typed items are unequal
+func set_stat(stat:String, value):
+	if stats.has(stat):
+		if (typeof(stats.get(stat))) != (typeof(value)):
+			print_debug("WARNING: setting drone stat of type <", (typeof(stats.get(stat))), "> with type <", (typeof(value)), ">")
+		stats[stat] = value
