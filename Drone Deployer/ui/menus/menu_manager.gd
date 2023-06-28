@@ -47,8 +47,8 @@ extends CanvasLayer
 var current_menu:Dictionary = {}
 
 
-func _process(delta):
-	print(get_viewport().gui_get_focus_owner())
+#func _process(delta):
+#	print(get_viewport().gui_get_focus_owner())
 
 
 func _ready():
@@ -74,7 +74,7 @@ func _input(event):
 			request_menu(menu_list.hanger_menu)
 		
 	elif event.is_action_pressed("toggle_debug_menu"):
-		if current_menu == menu_list.menu_list.debug_menu:
+		if current_menu == menu_list.debug_menu:
 			request_menu(menu_list.none)
 		else:
 			request_menu(menu_list.debug_menu)
