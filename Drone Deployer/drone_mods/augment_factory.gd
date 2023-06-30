@@ -1,8 +1,14 @@
 extends Node
 
+## Singleton script that handles creation of all augments
+
+## Emitted when a new augment is created
+signal augment_created(augment:Augment)
+
+## Reference path to augment scene
 var augment_scene := preload("res://drone_mods/augment.tscn")
 
-# This is right from Drone.stats
+## Available stat options that an augment can have
 var options:Dictionary = {
 	"empty": {
 		"min_val":0,
@@ -22,21 +28,24 @@ var options:Dictionary = {
 	},
 }
 
-# Main function to create and return augments
-func create_augment(color:Color=Color.WHITE, value:int=0) -> Augment:
+## Main function to create and return augments
+func create_augment(hue:float=0.0, value:int=0, stat:String="") -> Augment:
 	var augment := augment_scene.instantiate()
-	augment.set_color(color)
-	augment.set_value(value)
+	augment.stat = stat
+	augment.hue = hue
+	augment.value = value
+	
+	emit_signal("augment_created", augment)
 	return augment
 
 
-# Creates an augment with completely randomized stats
+## Creates an augment with completely randomized stats
 func create_rand_augment() -> Augment:
 	var rand_stat = options.keys()[randi() % options.keys().size()]
 	
 	var pos = options.keys().find(rand_stat)
-	var rand_color:Color = Color.from_hsv(float(pos) / options.keys().size(), 1, 1)
+	var rand_hue:float = (float(pos) / options.keys().size())
 	
-	var value:int = randi_range(options[rand_stat].min_val, options[rand_stat].max_val)
+	var rand_value:int = randi_range(options[rand_stat].min_val, options[rand_stat].max_val)
 	
-	return create_augment(rand_color, value)
+	return create_augment(rand_hue, rand_value, rand_stat)

@@ -30,7 +30,12 @@ var stats:Dictionary = {
 var bounces:int = 1 # Number of times to be knocked back before bouncing
 
 var collectable:bool = false # Can be picked up by DDCC
-var home_pos:Vector2 = Vector2.ZERO # At low battery, return point
+
+## Point to return to when at low battery
+var home_pos:Vector2 = Vector2.ZERO:
+	set(new_value):
+		home_pos = new_value
+
 
 var acceleration:float = 1
 var do_knockback:bool = false
@@ -257,8 +262,8 @@ func set_velocity_from_vector(vector:Vector2, speed:int=stats.speed):
 
 
 # Sets the home position
-func set_home(home:Node):
-	home_pos = home.get_global_position()
+#func set_home(home:Node):
+#	home_pos = home.get_global_position()
 
 
 # ===== MISC =====

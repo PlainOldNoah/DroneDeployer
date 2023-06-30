@@ -34,7 +34,7 @@ func deploy_next_drone():
 		var drone:Drone = DroneManager.get_and_pop_next_drone()
 		if drone != null:
 			drone.deploy(deploy_pnt.global_position, deployer.rotation)
-			drone.set_home(self)
+			drone.home_pos = self.get_global_position()
 #		else:
 #			print_debug("WARNING: no drones left in queue")
 
