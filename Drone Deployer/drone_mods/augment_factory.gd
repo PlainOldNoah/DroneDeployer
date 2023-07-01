@@ -22,7 +22,7 @@ var options:Dictionary = {
 		"min_val":1,
 		"max_val":3,
 	},
-	"battery": {
+	"max_battery": {
 		"min_val":20,
 		"max_val":100,
 	},

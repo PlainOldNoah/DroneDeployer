@@ -12,7 +12,6 @@ var state:int = -1
 @onready var pickup_range := $PickupRange
 
 
-
 var stats:Dictionary = {
 	"max_speed":100.0,
 	"speed":100,

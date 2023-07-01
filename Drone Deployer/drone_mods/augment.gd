@@ -3,6 +3,8 @@ class_name Augment
 
 ## Stat upgrade for Drones
 
+signal augment_selected(augment:Augment)
+
 @onready var texture_rect:TextureRect = $TextureRect
 
 ## What stat this augment will modify
@@ -20,7 +22,7 @@ var battery_drain:float = 0.0:
 	set(new_value):
 		battery_drain = new_value
 
-##
+## The color to modulate the augment to
 var hue:float = 0.0:
 	set(new_hue):
 		set_modulate(Color.from_hsv(new_hue, 1, 1))
@@ -31,12 +33,7 @@ func set_color(color:Color):
 	set_modulate(color)
 
 
-## Setter for value variable
-func set_value(new_value:int):
-	value = new_value
-
-
 ## Handles when augment is clicked on
 func _on_gui_input(event):
 	if (event is InputEventMouseButton) and (event.pressed):
-		print(name, " // ", stat," // ",  value, " // ", get_modulate())
+		emit_signal("augment_selected", self)
