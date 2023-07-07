@@ -1,0 +1,148 @@
+[gd_scene load_steps=4 format=3 uid="uid://drwaaowngfdge"]
+
+[ext_resource type="PackedScene" uid="uid://cwwp6l365mm0f" path="res://ui/menus/base_menu.tscn" id="1_o3d01"]
+[ext_resource type="Script" path="res://fabricator.gd" id="2_a8nwd"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_ekmhj"]
+
+[node name="Fabricator" instance=ExtResource("1_o3d01")]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("2_a8nwd")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." index="1"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HeaderLabels" type="HBoxContainer" parent="VBoxContainer" index="0"]
+layout_mode = 2
+
+[node name="ScrapAmount" type="Label" parent="VBoxContainer/HeaderLabels" index="0"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Scrap: 000000"
+
+[node name="NamePlate" type="Label" parent="VBoxContainer/HeaderLabels" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "DDCC Fabricator"
+horizontal_alignment = 2
+
+[node name="CraftOptionsBtn" type="HBoxContainer" parent="VBoxContainer" index="1"]
+layout_mode = 2
+
+[node name="DDCCBtn" type="Button" parent="VBoxContainer/CraftOptionsBtn" index="0"]
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+button_group = SubResource("ButtonGroup_ekmhj")
+text = "DDCC"
+
+[node name="AugmentsBtn" type="Button" parent="VBoxContainer/CraftOptionsBtn" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+button_group = SubResource("ButtonGroup_ekmhj")
+text = "Augments"
+
+[node name="UpgradesBtn" type="Button" parent="VBoxContainer/CraftOptionsBtn" index="2"]
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+button_group = SubResource("ButtonGroup_ekmhj")
+text = "Upgrades"
+
+[node name="CraftOptions" type="Control" parent="VBoxContainer" index="2"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="DDCCOptions" type="GridContainer" parent="VBoxContainer/CraftOptions" index="0"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button" type="Button" parent="VBoxContainer/CraftOptions/DDCCOptions" index="0"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "DDCC: NULL"
+
+[node name="AugmentsOptions" type="GridContainer" parent="VBoxContainer/CraftOptions" index="1"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RandomAugment" type="Button" parent="VBoxContainer/CraftOptions/AugmentsOptions" index="0"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Random Augment"
+
+[node name="UpgradesOptions" type="GridContainer" parent="VBoxContainer/CraftOptions" index="2"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button3" type="Button" parent="VBoxContainer/CraftOptions/UpgradesOptions" index="0"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "UPGRADE: NULL"
+
+[node name="CraftControls" type="HBoxContainer" parent="VBoxContainer" index="3"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/CraftControls" index="0"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CalibrationLabel" type="Label" parent="VBoxContainer/CraftControls/VBoxContainer" index="0"]
+layout_mode = 2
+text = "Calibration: 100.00%"
+
+[node name="BonusScrapSlide" type="HSlider" parent="VBoxContainer/CraftControls/VBoxContainer" index="1"]
+layout_mode = 2
+
+[node name="AddToQueueBtn" type="Button" parent="VBoxContainer/CraftControls/VBoxContainer" index="2"]
+layout_mode = 2
+text = "Add to Queue"
+
+[node name="CraftingInfo" type="Label" parent="VBoxContainer/CraftControls" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "T1: 50%
+T2: 30%
+T3: 15%
+T4: 5%
+
+Additional Info?"
+
+[node name="CraftQueue" type="HBoxContainer" parent="VBoxContainer" index="4"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[connection signal="pressed" from="VBoxContainer/CraftOptionsBtn/DDCCBtn" to="." method="_on_craft_category_btn_pressed" binds= [0]]
+[connection signal="pressed" from="VBoxContainer/CraftOptionsBtn/AugmentsBtn" to="." method="_on_craft_category_btn_pressed" binds= [1]]
+[connection signal="pressed" from="VBoxContainer/CraftOptionsBtn/UpgradesBtn" to="." method="_on_craft_category_btn_pressed" binds= [2]]
+[connection signal="pressed" from="VBoxContainer/CraftOptions/AugmentsOptions/RandomAugment" to="." method="_on_random_augment_pressed"]

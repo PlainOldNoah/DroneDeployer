@@ -1,15 +1,18 @@
 extends CanvasLayer
 
-# Adding a Menu
-#	1. Add its path as an @onready
-#	2. Add its hotkey to the _input func
-#	3. Add its menu to request menu
+## Handles all menus and menu requests
+##
+## Adding a Menu
+##[br] 1. Add its path as an @onready
+##[br] 2. Add its hotkey to the _input func
+##[br] 3. Add its menu to request menu
 
 @onready var main_menu := $MainMenu
 @onready var hanger_menu := $HangerMenu
 @onready var pause_menu := $PausePopup
 @onready var game_over_menu := $GameOverPopup
 @onready var debug_menu := $DebugMenu
+@onready var fabricator_menu := $Fabricator
 
 @onready var menu_list:Dictionary = {
 	"none":{
@@ -39,6 +42,11 @@ extends CanvasLayer
 	},
 	"debug_menu":{
 		"scene":debug_menu,
+		"pause_gameplay":true,
+		"escapable":true,
+	},
+	"fabricator_menu":{
+		"scene":fabricator_menu,
 		"pause_gameplay":true,
 		"escapable":true,
 	},
@@ -78,6 +86,12 @@ func _input(event):
 			request_menu(menu_list.none)
 		else:
 			request_menu(menu_list.debug_menu)
+	
+	elif event.is_action_pressed("toggle_fabricator_menu"):
+		if current_menu == menu_list.fabricator_menu:
+			request_menu(menu_list.none)
+		else:
+			request_menu(menu_list.fabricator_menu)
 
 
 # Handles the dismissing and summoning on menu items
@@ -107,6 +121,10 @@ func request_menu(new_menu:Dictionary):
 		menu_list.debug_menu:
 			GameplayManager.toggle_pause(true)
 			menu_list.debug_menu["scene"].show()
+		
+		menu_list.fabricator_menu:
+			GameplayManager.toggle_pause(true)
+			menu_list.fabricator_menu["scene"].show()
 		
 		_:
 			print_debug("ERROR: invalid menu requested <", new_menu, ">")

@@ -3,6 +3,7 @@ extends Node
 ## Singleton script that handles creation of all augments
 
 ## Emitted when a new augment is created
+## [br]hanger_menu.gd recieves this signal and adds the augment to itself
 signal augment_created(augment:Augment)
 
 ## Reference path to augment scene

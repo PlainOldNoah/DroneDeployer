@@ -1,6 +1,8 @@
 class_name Drone
 extends CharacterBody2D
 
+## Deployable object that can defeat enemies and pick up items
+
 signal state_changed(drone:Drone, new_state:int)
 signal stats_updated(drone:Drone)
 
