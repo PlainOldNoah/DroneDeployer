@@ -1,25 +1,28 @@
 extends Node2D
+class_name DDCC
 
-signal total_scrap_updated(total_collected_scrap:float)
+## Drone Deploying Command Core; Central hub that deploys drones
+##
+## Acts as main controlling object, most functionality offloaded to gameplay manager
 
 @export var rotation_weight:float = 0.2
 @onready var deployer := $Sprites/Deployer
 @onready var deploy_pnt := $Sprites/Deployer/DeployPoint
 @onready var deploy_clearing := $Sprites/Deployer/DeploymentClearing
 
-var total_collected_scrap:float = 0.0
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+## Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	rotate_deployer()
 
 
+## Follow the mouse cursor and ease the deployer to face in that direction
 func rotate_deployer():
 	var angle = (get_global_mouse_position() - self.global_position).angle()
 	deployer.global_rotation = lerp_angle(deployer.global_rotation, angle, rotation_weight)
 
 
-# Returns true if the deployer is free from obstacles
+## Returns true if the deployer is free from obstacles
 func is_deployer_clear() -> bool:
 	if deploy_clearing.get_overlapping_bodies().size() == 0:
 		return true
@@ -27,7 +30,7 @@ func is_deployer_clear() -> bool:
 		return false
 
 
-# Deploy the drone next in queue if the deploy_clearing is open
+## Deploy the drone next in queue if the deploy_clearing is open
 func deploy_next_drone():
 	if deploy_clearing.get_overlapping_bodies().size() == 0:
 
@@ -51,10 +54,8 @@ func _on_collection_range_body_exited(body):
 
 func _on_core_area_body_entered(body):
 	if body.is_in_group("drone"):
-		GameplayManager.adjust_total_scrap(body.transfer_scrap())
-#		total_collected_scrap += body.transfer_scrap()
+		GameplayManager.add_scrap(body.transfer_scrap())
 		body.store()
-#		print("TCS: ", total_collected_scrap)
 
 
 func _on_core_area_area_entered(area):

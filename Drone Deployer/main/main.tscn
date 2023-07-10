@@ -34,5 +34,6 @@ visible = false
 visible = false
 
 [node name="Fabricator" parent="MenuManager" instance=ExtResource("8_3fxw0")]
+visible = false
 
 [node name="Gameboard" parent="." instance=ExtResource("5_uibrn")]

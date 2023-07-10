@@ -270,9 +270,10 @@ func set_velocity_from_vector(vector:Vector2, speed:int=stats.speed):
 # ===== MISC =====
 
 
-func transfer_scrap() -> float:
-	var output := collected_scrap
-	collected_scrap = 0.0
+## Returns the current scrap amount and resets it to 0
+func transfer_scrap() -> int:
+	var output := roundi(collected_scrap)
+	collected_scrap = 0
 	return output
 
 

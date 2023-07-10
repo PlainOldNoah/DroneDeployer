@@ -95,7 +95,7 @@ size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Time: "
 
-[node name="TCSLabel" type="Label" parent="HBoxContainer"]
+[node name="ScrapLabel" type="Label" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0, 0, 0, 1)
