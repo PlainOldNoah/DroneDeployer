@@ -6,12 +6,12 @@ extends Node
 signal ddcc_health_changed(new_health:int)
 ## Emitted when the elapsed playtime changes
 signal playtime_updated(time:int)
+## Emitted when the current scrap count changes
+signal curr_scrap_updated(scrap:float)
 ## Emitted when the total collected scrap changes
 signal total_scrap_updated(TCS:float)
 ## Emitted when the game state changes
 signal game_state_updated(state:GAMESTATE)
-## Emitted when the current scrap count changes
-signal curr_scrap_updated(scrap:float)
 
 ## Available states that the game can be in
 enum GAMESTATE {

@@ -109,8 +109,8 @@ func _on_update_playtime_label(new_time:int):
 
 
 # Updates the total collected scrap label
-func _on_update_scrap_label(scrap_valuet:float):
-	$HBoxContainer/ScrapLabel.text = "Scrap: %d" % scrap_valuet
+func _on_update_scrap_label(scrap_value:float):
+	$HBoxContainer/ScrapLabel.text = "Scrap: %d" % scrap_value
 
 
 func _on_enemy_spawn_clock_timeout():

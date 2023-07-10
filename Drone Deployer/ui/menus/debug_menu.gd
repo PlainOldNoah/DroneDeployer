@@ -16,9 +16,9 @@ func _on_add_scrap_pressed():
 		GameplayManager.add_scrap(%ScrapAmount.get_value())
 	else:
 		GameplayManager.remove_scrap(absi(%ScrapAmount.get_value()))
-	print("DEBUG // added scrap")
+#	print("DEBUG // added scrap")
 
 
 func _on_add_health_pressed():
 	GameplayManager.ddcc_health += %HealthAmount.get_value()
-	print("DEBUG // added health")
+#	print("DEBUG // added health")

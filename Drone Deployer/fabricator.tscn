@@ -22,6 +22,7 @@ grow_vertical = 2
 layout_mode = 2
 
 [node name="ScrapAmount" type="Label" parent="VBoxContainer/HeaderLabels" index="0"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Scrap: 000000"
@@ -78,6 +79,7 @@ text = "DDCC: NULL"
 
 [node name="AugmentsOptions" type="GridContainer" parent="VBoxContainer/CraftOptions" index="1"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
