@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://c60vo518lervr"]
+
+[ext_resource type="Script" path="res://enemies/enemy_manager.gd" id="1_kswpw"]
+
+[node name="EnemyManager" type="Node"]
+script = ExtResource("1_kswpw")
+
+[node name="EnemySpawnClock" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="EnemySpawnClock" to="." method="_on_enemy_spawn_clock_timeout"]

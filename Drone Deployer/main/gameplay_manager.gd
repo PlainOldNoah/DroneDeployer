@@ -91,10 +91,11 @@ func set_gamestate(new_gamestate:GAMESTATE):
 func start_game():
 	starting_drones = clampi(starting_drones, 1, max_drones)
 
+	set_gamestate(GAMESTATE.STARTING)
+	
 	for i in starting_drones:
 		DroneManager.create_new_drone()
 
-	set_gamestate(GAMESTATE.STARTING)
 	gameplay_timer.start()
 
 

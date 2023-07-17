@@ -1,5 +1,7 @@
 extends Control
 
+## Container for the actual game. Hold Drones, Enemies, DDCC, and other objects. Does not handle gameplay elements.
+
 @onready var centerer := $Centerer
 @onready var lvl_obj := $LevelObjects
 @onready var ddcc := $Centerer/Midpoint/DDCC
@@ -56,13 +58,16 @@ func add_node_to_lvl_obj(object:Node):
 #	lvl_obj.add_child(object)
 	lvl_obj.call_deferred("add_child", object)
 
-
+var count:int = 0
 # spawns and places an enemy on the gameboard
 func add_enemy_to_map(enemy:Node):
 	add_node_to_lvl_obj(enemy)
-	enemy.set_global_position(get_random_offscreen_point())
+#	enemy.set_global_position(get_random_offscreen_point())
+	enemy.set_global_position(Vector2i(-20, count))
+#	print("GB // ", enemy, ": ", enemy.global_position)
 	enemy.set_target(ddcc)
 	var _ok := enemy.connect("died", _on_enemy_death)
+	count += 1
 
 
 # When an enemy dies deal with it here
@@ -111,7 +116,3 @@ func _on_update_playtime_label(new_time:int):
 # Updates the total collected scrap label
 func _on_update_scrap_label(scrap_value:float):
 	$HBoxContainer/ScrapLabel.text = "Scrap: %d" % scrap_value
-
-
-func _on_enemy_spawn_clock_timeout():
-	EnemyManager.create_new_enemy("res://enemies/roach.tscn")

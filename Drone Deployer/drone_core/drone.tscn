@@ -7,10 +7,10 @@
 radius = 64.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_txlfk"]
-radius = 64.1249
+radius = 64.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_mrykf"]
-radius = 172.0
+radius = 500.0
 
 [node name="Drone" type="CharacterBody2D"]
 scale = Vector2(0.25, 0.25)
@@ -22,25 +22,24 @@ script = ExtResource("1_rtv2x")
 texture = ExtResource("2_a3kkh")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 shape = SubResource("CircleShape2D_3xr3n")
 
-[node name="Scanner" type="Area2D" parent="."]
-visible = false
+[node name="PseudoBody" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 36
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Scanner"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PseudoBody"]
 shape = SubResource("CircleShape2D_txlfk")
+disabled = true
 debug_color = Color(0.552941, 0.564706, 0, 0.235294)
 
-[node name="PickupRange" type="Area2D" parent="."]
-visible = false
+[node name="CollectionRange" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 32
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupRange"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollectionRange"]
 shape = SubResource("CircleShape2D_mrykf")
+disabled = true
 
-[connection signal="area_entered" from="Scanner" to="." method="_on_scanner_area_entered"]
-[connection signal="area_entered" from="PickupRange" to="." method="_on_pickup_range_area_entered"]
+[connection signal="area_entered" from="PseudoBody" to="." method="_on_scanner_area_entered"]
+[connection signal="area_entered" from="CollectionRange" to="." method="_on_collection_range_area_entered"]

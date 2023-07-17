@@ -6,7 +6,7 @@
 editor_description = "Handles all gameplay events such as spawning enemies, controlling difficulty, updating score, taking damage, etc."
 script = ExtResource("1_yvwxg")
 ddcc_max_health = 999
-starting_drones = 10
+starting_drones = 5
 
 [node name="GameplayTimer" type="Timer" parent="."]
 

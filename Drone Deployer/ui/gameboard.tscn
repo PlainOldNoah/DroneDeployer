@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://cee1i6r18g6ut" path="res://drone_core/ddcc.tscn" id="1_de6p2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u7sq1"]
-size = Vector2(1152, 648)
+size = Vector2(1920, 1080)
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ceo3k"]
 
@@ -52,29 +52,26 @@ debug_color = Color(0, 0.6, 0.701961, 0.0627451)
 [node name="MapBounds" type="StaticBody2D" parent="."]
 
 [node name="Top" type="CollisionShape2D" parent="MapBounds"]
-position = Vector2(576, 0)
+position = Vector2(960, 0)
 rotation = -3.14159
 shape = SubResource("WorldBoundaryShape2D_ceo3k")
 
 [node name="Bottom" type="CollisionShape2D" parent="MapBounds"]
-position = Vector2(576, 648)
+position = Vector2(960, 1080)
 rotation = -12.5664
 shape = SubResource("WorldBoundaryShape2D_ceo3k")
 
 [node name="Left" type="CollisionShape2D" parent="MapBounds"]
-position = Vector2(0, 324)
+position = Vector2(0, 540)
 rotation = 1.57079
 shape = SubResource("WorldBoundaryShape2D_ceo3k")
 
 [node name="Right" type="CollisionShape2D" parent="MapBounds"]
-position = Vector2(1152, 324)
+position = Vector2(1920, 540)
 rotation = -1.57079
 shape = SubResource("WorldBoundaryShape2D_ceo3k")
 
 [node name="LevelObjects" type="Node2D" parent="."]
-
-[node name="EnemySpawnClock" type="Timer" parent="."]
-autostart = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -100,5 +97,3 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Scrap: "
-
-[connection signal="timeout" from="EnemySpawnClock" to="." method="_on_enemy_spawn_clock_timeout"]
