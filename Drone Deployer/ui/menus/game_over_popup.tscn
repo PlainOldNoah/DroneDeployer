@@ -6,16 +6,13 @@
 [node name="GameOverPopup" instance=ExtResource("1_d5wuh")]
 script = ExtResource("2_xucnc")
 
-[node name="Label" parent="VBoxContainer" index="0"]
-text = "GAMEOVER"
-
-[node name="RestartBtn" type="Button" parent="VBoxContainer" index="1"]
+[node name="RestartBtn" type="Button" parent="ButtonBg/MarginContainer/VBoxContainer" index="1"]
 layout_mode = 2
 text = "Restart"
 
-[node name="TitleQuitBtn" type="Button" parent="VBoxContainer" index="2"]
+[node name="TitleQuitBtn" type="Button" parent="ButtonBg/MarginContainer/VBoxContainer" index="2"]
 layout_mode = 2
 text = "Quit to Title"
 
-[connection signal="pressed" from="VBoxContainer/RestartBtn" to="." method="_on_restart_btn_pressed"]
-[connection signal="pressed" from="VBoxContainer/TitleQuitBtn" to="." method="_on_title_quit_btn_pressed"]
+[connection signal="pressed" from="ButtonBg/MarginContainer/VBoxContainer/RestartBtn" to="." method="_on_restart_btn_pressed"]
+[connection signal="pressed" from="ButtonBg/MarginContainer/VBoxContainer/TitleQuitBtn" to="." method="_on_title_quit_btn_pressed"]

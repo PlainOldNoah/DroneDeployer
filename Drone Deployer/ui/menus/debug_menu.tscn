@@ -12,45 +12,24 @@ offset_top = -100.0
 offset_right = 135.5
 offset_bottom = 100.0
 
-[node name="Label" parent="VBoxContainer" index="0"]
-text = "DEBUG"
+[node name="Label" parent="ButtonBg/MarginContainer/VBoxContainer" index="0"]
+text = "Debug"
 
-[node name="TGMButton" type="Button" parent="VBoxContainer" index="1"]
+[node name="TGMButton" type="Button" parent="ButtonBg/MarginContainer/VBoxContainer" index="1"]
 layout_mode = 2
 toggle_mode = true
 text = "Toggle Invincibility"
 
-[node name="CreateRandAugment" type="Button" parent="VBoxContainer" index="2"]
-layout_mode = 2
-text = "Create Random Augment"
-
-[node name="Scrap" type="HBoxContainer" parent="VBoxContainer" index="3"]
+[node name="VBoxContainerHealth" type="HBoxContainer" parent="ButtonBg/MarginContainer/VBoxContainer" index="2"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="AddScrap" type="Button" parent="VBoxContainer/Scrap" index="0"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Add Scrap"
-
-[node name="ScrapAmount" type="SpinBox" parent="VBoxContainer/Scrap" index="1"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-min_value = -500.0
-max_value = 999.0
-value = 1.0
-
-[node name="Health" type="HBoxContainer" parent="VBoxContainer" index="4"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="AddHealth" type="Button" parent="VBoxContainer/Health" index="0"]
+[node name="AddHealth" type="Button" parent="ButtonBg/MarginContainer/VBoxContainer/VBoxContainerHealth" index="0"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Add Health"
 
-[node name="HealthAmount" type="SpinBox" parent="VBoxContainer/Health" index="1"]
+[node name="HealthAmount" type="SpinBox" parent="ButtonBg/MarginContainer/VBoxContainer/VBoxContainerHealth" index="1"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -58,7 +37,28 @@ min_value = -999.0
 max_value = 999.0
 value = 1.0
 
-[connection signal="pressed" from="VBoxContainer/TGMButton" to="." method="_on_tgm_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/CreateRandAugment" to="." method="_on_create_rand_augment_pressed"]
-[connection signal="pressed" from="VBoxContainer/Scrap/AddScrap" to="." method="_on_add_scrap_pressed"]
-[connection signal="pressed" from="VBoxContainer/Health/AddHealth" to="." method="_on_add_health_pressed"]
+[node name="CreateRandAugment" type="Button" parent="ButtonBg/MarginContainer/VBoxContainer" index="3"]
+layout_mode = 2
+text = "Create Random Augment"
+
+[node name="VBoxContainerScrap" type="HBoxContainer" parent="ButtonBg/MarginContainer/VBoxContainer" index="4"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="AddScrap" type="Button" parent="ButtonBg/MarginContainer/VBoxContainer/VBoxContainerScrap" index="0"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Add Scrap"
+
+[node name="ScrapAmount" type="SpinBox" parent="ButtonBg/MarginContainer/VBoxContainer/VBoxContainerScrap" index="1"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = -500.0
+max_value = 999.0
+value = 1.0
+
+[connection signal="pressed" from="ButtonBg/MarginContainer/VBoxContainer/TGMButton" to="." method="_on_tgm_button_pressed"]
+[connection signal="pressed" from="ButtonBg/MarginContainer/VBoxContainer/VBoxContainerHealth/AddHealth" to="." method="_on_add_health_pressed"]
+[connection signal="pressed" from="ButtonBg/MarginContainer/VBoxContainer/CreateRandAugment" to="." method="_on_create_rand_augment_pressed"]
+[connection signal="pressed" from="ButtonBg/MarginContainer/VBoxContainer/VBoxContainerScrap/AddScrap" to="." method="_on_add_scrap_pressed"]

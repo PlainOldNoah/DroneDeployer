@@ -6,16 +6,24 @@
 [node name="PausePopup" instance=ExtResource("1_lnla0")]
 script = ExtResource("2_xlicu")
 
-[node name="Label" parent="VBoxContainer" index="0"]
-text = "PAUSED"
+[node name="ButtonBg" parent="." index="1"]
+offset_left = -887.0
+offset_top = 300.0
+offset_right = -610.0
+offset_bottom = 428.0
 
-[node name="ResumeBtn" type="Button" parent="VBoxContainer" index="1"]
+[node name="Label" parent="ButtonBg/MarginContainer/VBoxContainer" index="0"]
+text = "Paused"
+
+[node name="ResumeBtn" type="Button" parent="ButtonBg/MarginContainer/VBoxContainer" index="1"]
 layout_mode = 2
+size_flags_vertical = 3
 text = "Resume"
 
-[node name="TitleQuitBtn" type="Button" parent="VBoxContainer" index="2"]
+[node name="TitleQuitBtn" type="Button" parent="ButtonBg/MarginContainer/VBoxContainer" index="2"]
 layout_mode = 2
+size_flags_vertical = 3
 text = "Quit to Title"
 
-[connection signal="pressed" from="VBoxContainer/ResumeBtn" to="." method="_on_resume_btn_pressed"]
-[connection signal="pressed" from="VBoxContainer/TitleQuitBtn" to="." method="_on_title_quit_btn_pressed"]
+[connection signal="pressed" from="ButtonBg/MarginContainer/VBoxContainer/ResumeBtn" to="." method="_on_resume_btn_pressed"]
+[connection signal="pressed" from="ButtonBg/MarginContainer/VBoxContainer/TitleQuitBtn" to="." method="_on_title_quit_btn_pressed"]
