@@ -10,7 +10,6 @@ var health:int = max_hp:
 	set(new_health):
 		health = clampi(new_health, 0, max_hp)
 		if health <= 0:
-			print(self, " = Died @ ", self.global_position)
 			emit_signal("died", self)
 	get:
 		return health

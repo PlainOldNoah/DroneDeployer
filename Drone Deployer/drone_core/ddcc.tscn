@@ -24,20 +24,20 @@ atlas = ExtResource("2_avquc")
 region = Rect2(0, 792, 264, 264)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yahjk"]
-radius = 36.0555
+radius = 71.1758
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qk2ho"]
 radius = 132.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kmesp"]
-radius = 264.0
+radius = 512.0
 
 [node name="DDCC" type="Node2D"]
 editor_description = "Drone Deploying Control Core. Central HUB that deploys drones and serves as the \"character\""
-modulate = Color(1, 1, 1, 0.282353)
 script = ExtResource("1_g45i4")
 
 [node name="Sprites" type="Node2D" parent="."]
+modulate = Color(1, 1, 1, 0.313726)
 
 [node name="Base" type="Sprite2D" parent="Sprites"]
 texture = SubResource("AtlasTexture_luq3b")
@@ -67,21 +67,21 @@ debug_color = Color(0, 0.643137, 0.294118, 0.419608)
 z_index = 35
 texture = SubResource("AtlasTexture_usjbi")
 
-[node name="CoreArea" type="Area2D" parent="."]
+[node name="Core" type="Area2D" parent="."]
 z_index = 1
 collision_layer = 0
 collision_mask = 6
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CoreArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Core"]
 shape = SubResource("CircleShape2D_yahjk")
 debug_color = Color(0.764706, 0.172549, 1, 0.0980392)
 
-[node name="ArmingRange" type="Area2D" parent="."]
+[node name="Perimeter" type="Area2D" parent="."]
 z_index = 1
 collision_layer = 0
-collision_mask = 2
+collision_mask = 38
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ArmingRange"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Perimeter"]
 shape = SubResource("CircleShape2D_qk2ho")
 debug_color = Color(0.835294, 0.388235, 0, 0.0980392)
 
@@ -92,10 +92,10 @@ collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CollectionRange"]
 shape = SubResource("CircleShape2D_kmesp")
-debug_color = Color(0, 0.6, 0.701961, 0.0980392)
+debug_color = Color(0, 0.6, 0.701961, 0.117647)
 
-[connection signal="area_entered" from="CoreArea" to="." method="_on_core_area_area_entered"]
-[connection signal="body_entered" from="CoreArea" to="." method="_on_core_area_body_entered"]
-[connection signal="body_exited" from="ArmingRange" to="." method="_on_arming_range_body_exited"]
+[connection signal="area_entered" from="Perimeter" to="." method="_on_perimeter_area_entered"]
+[connection signal="body_entered" from="Perimeter" to="." method="_on_perimeter_body_entered"]
+[connection signal="body_exited" from="Perimeter" to="." method="_on_perimeter_body_exited"]
+[connection signal="area_entered" from="CollectionRange" to="." method="_on_collection_range_area_entered"]
 [connection signal="body_entered" from="CollectionRange" to="." method="_on_collection_range_body_entered"]
-[connection signal="body_exited" from="CollectionRange" to="." method="_on_collection_range_body_exited"]

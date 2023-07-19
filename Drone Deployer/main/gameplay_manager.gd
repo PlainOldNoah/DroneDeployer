@@ -62,7 +62,6 @@ var total_collected_scrap:int = 0:
 var current_scrap:int = 0:
 	set(new_value):
 		current_scrap = new_value
-		print("Current Scrap: ", current_scrap)
 		emit_signal("curr_scrap_updated", current_scrap)
 
 ## Toggle if the [DDCC] should be allowed to take damage, used for debugging

@@ -2,10 +2,24 @@ extends Area2D
 
 @export_range(0,999,0.5) var points := 1.0
 
-var attract_force:int = 40
-var target_body:Node = null
+var attract_force:int = 20
 var acceleration:Vector2 = Vector2.ZERO
 var velocity:Vector2 = Vector2.ZERO
+
+var target_body:Node = null:
+	set(new_body):
+		target_body = new_body
+#		if target_body != null:
+#			magnet_active = magnet_active
+
+#var magnet_active:bool = false:
+#	set(new_value):
+#		magnet_active = new_value
+#		if not magnet_active:
+#			set_physics_process(false)
+#		else:
+#			if target_body != null:
+#				set_physics_process(true)
 
 
 func _ready():
@@ -29,7 +43,7 @@ func _physics_process(delta):
 	position += velocity
 
 
-# Moves to the paramaterized body
+## Activates physics process and sets a new target body
 func magnet_towards(new_body:Node):
 	set_physics_process(true)
 	target_body = new_body

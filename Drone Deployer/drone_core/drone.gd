@@ -124,9 +124,9 @@ func set_state(new_state:int):
 			set_process(false)
 			set_physics_process(false)
 			disable_collision_shapes(true, true)
-			set_visible(false)
+#			set_visible(false)
 			set_velocity_from_vector(Vector2i.ZERO, 0)
-			global_position = Vector2.ZERO
+			global_position = home_pos
 
 		STATES.STOPPED: # Non-moving, ie battery dead
 			set_physics_process(false)
@@ -171,8 +171,9 @@ func ddcc_collection_range_entered():
 		go_to(home_pos)
 
 
-func ddcc_collection_range_exited():
-	collectable = true
+## Set the drone to collectable when outside the range
+#func ddcc_perimeter_exited():
+#	collectable = true
 
 
 ## Handles enemies that collide with the "body"

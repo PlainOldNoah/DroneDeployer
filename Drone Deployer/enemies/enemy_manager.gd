@@ -26,7 +26,7 @@ func _ready():
 	for i in enemy_waves.keys():
 		enemy_wave_times.append(i)
 	enemy_wave_times.sort()
-	print(enemy_wave_times)
+#	print(enemy_wave_times)
 
 
 ## Create and add an instance of an enemy

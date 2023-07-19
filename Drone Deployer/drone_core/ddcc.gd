@@ -37,9 +37,28 @@ func deploy_next_drone():
 		var drone:Drone = DroneManager.get_and_pop_next_drone()
 		if drone != null:
 			drone.deploy(deploy_pnt.global_position, deployer.rotation)
-			drone.home_pos = self.get_global_position()
-#		else:
-#			print_debug("WARNING: no drones left in queue")
+
+
+## ----- SIGNALS -----
+
+func _on_perimeter_area_entered(area):
+	if area.is_in_group("enemy"):
+		GameplayManager.ddcc_take_hit(area.damage)
+		area.queue_free()
+	elif area.is_in_group("scrap"):
+		GameplayManager.add_scrap(area.scrap_value)
+		area.queue_free()
+
+
+func _on_perimeter_body_entered(body):
+	if body.is_in_group("drone") and body.collectable == true:
+		GameplayManager.add_scrap(body.transfer_scrap())
+		body.store()
+
+
+func _on_perimeter_body_exited(body):
+	if body.is_in_group("drone"):
+		body.collectable = true
 
 
 func _on_collection_range_body_entered(body):
@@ -47,25 +66,6 @@ func _on_collection_range_body_entered(body):
 		body.ddcc_collection_range_entered()
 
 
-func _on_collection_range_body_exited(body):
-	if body.is_in_group("drone"):
-		body.ddcc_collection_range_exited()
-
-
-func _on_core_area_body_entered(body):
-	if body.is_in_group("drone"):
-		GameplayManager.add_scrap(body.transfer_scrap())
-		body.store()
-
-
-func _on_core_area_area_entered(area):
-	if area.is_in_group("enemy"):
-		GameplayManager.ddcc_take_hit(area.damage)
-		area.queue_free()
-
-
-func _on_arming_range_body_exited(_body):
-	pass
-#	if body.is_in_group("drone"):
-#		body.ddcc_arming_range_exited()
-
+func _on_collection_range_area_entered(area): # TODO
+	if area.is_in_group("scrap"):
+		print("SCRAP IN AREA")
