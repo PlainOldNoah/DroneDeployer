@@ -191,7 +191,12 @@ func _on_scanner_area_entered(area):
 
 
 func _on_collection_range_area_entered(area):
-	area.magnet_towards(self)
+	area.collection_range_entered(self)
+
+
+func _on_collection_range_area_exited(area):
+	pass
+#	area.stop()
 
 
 # ===== COLLISION & MOVEMENT =====
@@ -288,3 +293,4 @@ func set_stat(stat:String, value):
 		if (typeof(stats.get(stat))) != (typeof(value)):
 			print_debug("WARNING: setting drone stat of type <", (typeof(stats.get(stat))), "> with type <", (typeof(value)), ">")
 		stats[stat] = value
+

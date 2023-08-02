@@ -43,3 +43,4 @@ disabled = true
 
 [connection signal="area_entered" from="PseudoBody" to="." method="_on_scanner_area_entered"]
 [connection signal="area_entered" from="CollectionRange" to="." method="_on_collection_range_area_entered"]
+[connection signal="area_exited" from="CollectionRange" to="." method="_on_collection_range_area_exited"]
