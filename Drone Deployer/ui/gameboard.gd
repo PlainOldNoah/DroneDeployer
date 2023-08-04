@@ -73,7 +73,8 @@ func add_enemy_to_map(enemy:Node):
 
 ## When an enemy dies deal with it here
 func _on_enemy_death(enemy:Node):
-	spawn_loot_to_map("res://lvl_objects/enemy_drop.tscn", enemy.global_position, 0.5, 5, 90)
+#	spawn_loot_to_map("res://lvl_objects/enemy_drop.tscn", enemy.global_position, 0.5, 5, 90)
+	spawn_loot_to_map("res://lvl_objects/enemy_drop.tscn", enemy.global_position, 0.5, 8, 120)
 	enemy.queue_free()
 
 

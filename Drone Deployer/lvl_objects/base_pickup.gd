@@ -2,26 +2,28 @@ extends Area2D
 
 @export_range(0,999,0.5) var points := 1.0
 
-var attract_force:int = 5
-var acceleration:Vector2 = Vector2.ZERO
-var dir:Vector2 = Vector2.ZERO
-var velocity:Vector2 = Vector2.ZERO
+#var attraction_multiplier:float = 0.5
+#var acceleration:Vector2 = Vector2.ZERO
+#var dir:Vector2 = Vector2.ZERO
+#var velocity:Vector2 = Vector2.ZERO
+var lerp_weight:float = 0.5
+
 
 ## Current node (Drone?) that this scrap is currently attracted towards
 var attract_target:Node = null:
 	set(new_target):
 		if attract_target == null:
 			attract_target = new_target
-		# If new target is closer than old target
-		
-		elif position.distance_to(new_target.position) > position.distance_to(attract_target.position):
-			if attract_target.state_changed.is_connected(attract_target_unavailable):
-				attract_target.state_changed.disconnect(attract_target_unavailable)
-			attract_target = new_target
 		
 		elif new_target == null:
 			if attract_target.state_changed.is_connected(attract_target_unavailable):
 				attract_target.state_changed.disconnect(attract_target_unavailable)
+		
+		# If new target is closer than old target
+		elif position.distance_to(new_target.position) > position.distance_to(attract_target.position):
+			if attract_target.state_changed.is_connected(attract_target_unavailable):
+				attract_target.state_changed.disconnect(attract_target_unavailable)
+			attract_target = new_target
 			
 		if not attract_target.state_changed.is_connected(attract_target_unavailable):
 			attract_target.state_changed.connect(attract_target_unavailable)
@@ -33,7 +35,7 @@ var attract_target:Node = null:
 ## Signal reciever for if the current attract_target becomes unavailable
 func attract_target_unavailable(_drone:Drone, state:int):
 	if state == Drone.STATES.STORED:
-		attract_target == null
+		attract_target = null
 
 # =================================================================================================
 
@@ -72,13 +74,8 @@ func _physics_process(delta):
 
 ## Move to the attracted target
 func move_towards(delta):
-	acceleration = Vector2()
-	dir = (attract_target.position - position).normalized()
-	
-	acceleration += dir * attract_force
-	
-	velocity += acceleration * delta
-	position += velocity
+	lerp_weight += 0.5
+	position = position.lerp(attract_target.position, lerp_weight * delta)
 
 
 func slow_movement(delta):
