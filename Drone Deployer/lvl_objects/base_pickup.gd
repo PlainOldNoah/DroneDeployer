@@ -1,21 +1,48 @@
 extends Area2D
 
-@export_range(0,999,0.5) var points := 1.0
+## Pickups that spawn on the map such as scrap
+##
+## Spawn in the NEW state and do not do anything until a Drone gets close
+## LERPs it's position to that of the Drone while in the moving state until collected
 
-#var attraction_multiplier:float = 0.5
-#var acceleration:Vector2 = Vector2.ZERO
-#var dir:Vector2 = Vector2.ZERO
-#var velocity:Vector2 = Vector2.ZERO
+## Available states
+enum STATE {
+	IDLE, ## Returned to a non-moving state
+	MOVING, ## Currently chasing after a Drone
+	NEW ## Just spawned in
+	}
+## Current state of the scrap
+## Toggles physics_process depending on the state
+var state:STATE = STATE.NEW:
+	set(new_state):
+		state = new_state
+		match state:
+			STATE.IDLE, STATE.NEW:
+				set_physics_process(false)
+			STATE.MOVING:
+				set_physics_process(true)
+
+## Value of the scrap when collected
+@export_range(0,999,0.5) var points := 1.0
+## Multiply the scale by this value
+@export_range(0.1, 2.0) var size_variance := 0.2
+
+## Weight used in moving scrap to designated drone
 var lerp_weight:float = 0.5
+## How much to increase the lerp_weight by each physics frame
+var lerp_increase:float = 0.5
 
 
 ## Current node (Drone?) that this scrap is currently attracted towards
+## Conditionals dictate what state and what signals this item should be connected to
 var attract_target:Node = null:
 	set(new_target):
 		if attract_target == null:
 			attract_target = new_target
+			state = STATE.MOVING
 		
 		elif new_target == null:
+			state = STATE.IDLE
 			if attract_target.state_changed.is_connected(attract_target_unavailable):
 				attract_target.state_changed.disconnect(attract_target_unavailable)
 		
@@ -24,17 +51,15 @@ var attract_target:Node = null:
 			if attract_target.state_changed.is_connected(attract_target_unavailable):
 				attract_target.state_changed.disconnect(attract_target_unavailable)
 			attract_target = new_target
+			state = STATE.MOVING
 			
 		if not attract_target.state_changed.is_connected(attract_target_unavailable):
 			attract_target.state_changed.connect(attract_target_unavailable)
 
-		# Turn off physics if attract_target is null
-		set_physics_process(attract_target != null)
-
 
 ## Signal reciever for if the current attract_target becomes unavailable
-func attract_target_unavailable(_drone:Drone, state:int):
-	if state == Drone.STATES.STORED:
+func attract_target_unavailable(_drone:Drone, drone_state:int):
+	if drone_state == Drone.STATES.STORED:
 		attract_target = null
 
 # =================================================================================================
@@ -42,56 +67,30 @@ func attract_target_unavailable(_drone:Drone, state:int):
 func _ready():
 	add_to_group("pickup")
 	set_z_index(10)
-#	set_physics_process(false)
 
 
+func _physics_process(delta):
+	if state == STATE.MOVING:
+		move_towards(delta)
+		rotate(0.05)
+#	elif state == STATE.IDLE:
+#		rotate(0.1)
+
+
+## Selects a sprite from the sprite sheet
 func randomize_sprite():
 	var sprite := $Sprite2D
 	var total_frames:int = sprite.get_vframes() * sprite.get_hframes()
 	sprite.set_frame(randi_range(0, total_frames - 1))
-
-
-func _physics_process(delta):
-	if attract_target != null:
-		move_towards(delta)
-#	else:
-#		slow_movement(delta)
-
-
-#	print("E")
-#	acceleration = Vector2()
-#	var dir = (attract_target.position - position).normalized()
-##	var mag = position.distance_to(attract_target.position)
-##	print(self, ", ", mag)
-#	if attract_target != null:
-#		acceleration += dir * attract_force
-#	else:
-#		acceleration -= dir * attract_force
-#
-#	velocity += acceleration * delta
-#	position += velocity
+	
+	var rand_size_mult:float = randf_range(1 - size_variance, 1 + size_variance)
+	scale *= rand_size_mult
 
 
 ## Move to the attracted target
 func move_towards(delta):
-	lerp_weight += 0.5
+	lerp_weight += lerp_increase
 	position = position.lerp(attract_target.position, lerp_weight * delta)
-
-
-func slow_movement(delta):
-	pass
-#	print("Hello?")
-#	acceleration = Vector2()
-#	acceleration *= .95
-
-#	velocity = Vector2.ZERO
-#	position += velocity
-
-
-#func stop():
-#	if attract_target.state_changed.is_connected():
-#		disconnect(attract_target.state_changed, test)
-#	attract_target = null
 
 
 ## Activates physics process and sets a new target body

@@ -194,11 +194,6 @@ func _on_collection_range_area_entered(area):
 	area.collection_range_entered(self)
 
 
-func _on_collection_range_area_exited(area):
-	pass
-#	area.stop()
-
-
 # ===== COLLISION & MOVEMENT =====
 
 
