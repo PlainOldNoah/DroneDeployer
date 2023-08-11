@@ -1,16 +1,14 @@
+class_name Fabricator
 extends Control
 
-## Spend scrap to create augments and upgrades for [Drone]
-##
-## To add a new craftable item:
-## [br]1. Create a button within the correct CRAFT_CATEGORIES
-## [br]2. Add the item to the craftables:Dictionary
-## [br]3. Add the item to the fabricate_item's match statement
+## Spend scrap to create augments and upgrades
+
+## Emitted when a new augment is fabricated
+signal augment_fabricated(new_augment:Augment)
 
 @onready var ddcc_options := %DDCCOptions
 @onready var augment_options := %AugmentsOptions
 @onready var upgrade_options := %UpgradesOptions
-
 @onready var scrap_amt_label := %ScrapAmount
 
 ## The different available crafting options
@@ -28,17 +26,6 @@ func _ready():
 	var _ok := GameplayManager.connect("curr_scrap_updated", _on_update_scrap_label)
 
 
-## All existing craftable items
-var craftables:Dictionary = {
-	"repair_kit":{
-		"cost":1
-	},
-	"rand_augment":{
-		"cost":2
-	}
-}
-
-
 ## Shows and hides the different craft option categories
 func change_craft_option_tab(new_category:CRAFT_CATEGORIES):
 	ddcc_options.hide()
@@ -54,24 +41,29 @@ func change_craft_option_tab(new_category:CRAFT_CATEGORIES):
 			upgrade_options.show()
 
 
-## Verifies item_name is in the craftables dict then expends the scrap and sets the item to be made
-func fabricate_item(item_name:String):
+## Verifies item_name is in the CraftingDb then expends the scrap and sets the item to be made
+func fabricate_item(item_type:String, item_name:String):
 #	1. Check that craftables:Dictionary has item_name
-	if not craftables.has(item_name):
+	var craft_db_item:Dictionary = {}
+	if CraftingDb[item_type].has(item_name):
+		craft_db_item = CraftingDb[item_type][item_name]
+	else:
 		print_debug("ERROR: <", item_name, "> is not a craftable item")
 		return
-
+		
 #	2. Checks if the necessary scrap is available
-	if GameplayManager.remove_scrap(craftables[item_name]["cost"]):
-
+	if GameplayManager.remove_scrap(craft_db_item["base_cost"]):
+		
 #	3. Handles the specifics for each craftable item
-		match craftables[item_name]:
-			craftables.rand_augment:
-				AugmentFactory.create_rand_augment()
+		match craft_db_item:
+			CraftingDb.drone_augments.random:
+				emit_signal("augment_fabricated", AugmentFactory.create_rand_augment())
+			CraftingDb.general.stock_drone:
+				DroneManager.create_new_drone()
 			_:
 				print_debug("ERROR: unable to complete craft")
-#	else:
-#		print_debug("Insufficient Scrap <", GameplayManager.current_scrap, "/", craftables[item_name]["cost"],">")
+	else:
+		print_debug("Insufficient Scrap <", GameplayManager.current_scrap, "/", craft_db_item["base_cost"],">")
 
 
 ## Updates the scrap_amt_label value
@@ -84,6 +76,12 @@ func _on_craft_category_btn_pressed(new_category:CRAFT_CATEGORIES):
 	craft_category = new_category
 
 
-## Create a random augment
-func _on_random_augment_pressed():
-	fabricate_item("rand_augment")
+## All craft buttons connect here and pass item as a string to specify what they link to
+func _on_fabricate_item_button_pressed(item:String):
+	match item:
+		"drone_augment_random":
+			fabricate_item("drone_augments", "random")
+		"new_stock_drone":
+			fabricate_item("general", "stock_drone")
+		_:
+			print_debug("ERROR: Unknown item_specific <", item, ">")

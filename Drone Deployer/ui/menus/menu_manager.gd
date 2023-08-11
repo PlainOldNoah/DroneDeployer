@@ -8,11 +8,13 @@ extends CanvasLayer
 ##[br] 3. Add its menu to request menu
 
 @onready var main_menu := $MainMenu
-@onready var hanger_menu := $HangerMenu
+@onready var hanger_menu := $ModificationGroupMenu
+#@onready var hanger_menu := $HangerMenu
 @onready var pause_menu := $PausePopup
 @onready var game_over_menu := $GameOverPopup
 @onready var debug_menu := $DebugMenu
-@onready var fabricator_menu := $Fabricator
+#@onready var fabricator_menu := $Fabricator
+@onready var fabricator_menu := $ModificationGroupMenu
 
 @onready var menu_list:Dictionary = {
 	"none":{
@@ -80,18 +82,18 @@ func _input(event):
 			request_menu(menu_list.none)
 		else:
 			request_menu(menu_list.hanger_menu)
-		
-	elif event.is_action_pressed("toggle_debug_menu"):
-		if current_menu == menu_list.debug_menu:
-			request_menu(menu_list.none)
-		else:
-			request_menu(menu_list.debug_menu)
 	
 	elif event.is_action_pressed("toggle_fabricator_menu"):
 		if current_menu == menu_list.fabricator_menu:
 			request_menu(menu_list.none)
 		else:
 			request_menu(menu_list.fabricator_menu)
+		
+	elif event.is_action_pressed("toggle_debug_menu"):
+		if current_menu == menu_list.debug_menu:
+			request_menu(menu_list.none)
+		else:
+			request_menu(menu_list.debug_menu)
 
 
 # Handles the dismissing and summoning on menu items

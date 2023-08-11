@@ -7,6 +7,16 @@ signal augment_selected(augment:Augment)
 
 @onready var texture_rect:TextureRect = $TextureRect
 
+## ------------------------------------------------------------------ THEORY ONLY! NOT IN GAME YET
+#var stats:Dictionary = {
+#	"stat_1":31, # Allow multiple stats
+#	"stat_2":12,
+#}
+#
+#func add_stat(stat:String, value:float):
+#	stats[stat] = value
+
+
 ## What stat this augment will modify
 var stat:String = "":
 	set(new_stat):

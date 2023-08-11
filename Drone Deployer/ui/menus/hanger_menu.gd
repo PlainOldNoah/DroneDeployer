@@ -1,11 +1,13 @@
+class_name HangerMenu
 extends Control
 
 ## [Drone] customization and enhancement menu
 
-@onready var drone_stats := %DroneStats
-@onready var available_augments := $HBoxContainer/VBoxContainer/AvailableAugments
-@onready var stat_label:Label = %DroneStats
 @onready var drone_name := %DroneName
+@onready var stat_label:Label = %DroneStats
+@onready var drone_stats := %DroneStats
+@onready var added_augment_view := %AddedAugments
+@onready var available_augments := $HBoxContainer/VBoxContainer/AvailableAugments
 
 ## Selected drone to apply all current operations to
 var linked_drone:Drone = null:
@@ -30,8 +32,11 @@ var augmented_drone_stats:Dictionary = {}
 var added_augments:Array[Augment] = []
 
 
-func _ready():
-	var _ok := AugmentFactory.connect("augment_created", add_free_augment)
+#func _ready():
+#	if DroneManager.drone_queue.size() >= 1:
+#		linked_drone = (DroneManager.drone_queue[0])
+		
+#	var _ok := AugmentFactory.connect("augment_created", add_free_augment)
 
 
 ## Adds the augment to the available augment window

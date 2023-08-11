@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dga152hfbqa4o"]
+[gd_scene load_steps=11 format=3 uid="uid://c0301cvv6jtqb"]
 
 [ext_resource type="Script" path="res://main/main.gd" id="1_sgwdy"]
 [ext_resource type="Script" path="res://ui/menus/menu_manager.gd" id="2_cpjur"]
@@ -8,7 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://bb2jmpwphe15s" path="res://ui/menus/game_over_popup.tscn" id="5_1nhqk"]
 [ext_resource type="PackedScene" uid="uid://cj0tslt5wg010" path="res://ui/gameboard.tscn" id="5_uibrn"]
 [ext_resource type="PackedScene" uid="uid://cihk4xoa3wwe2" path="res://ui/menus/debug_menu.tscn" id="6_88qbp"]
-[ext_resource type="PackedScene" uid="uid://drwaaowngfdge" path="res://fabricator.tscn" id="8_3fxw0"]
+[ext_resource type="PackedScene" uid="uid://wsn3sdtkkuiq" path="res://ui/menus/fabricator_menu.tscn" id="8_3fxw0"]
+[ext_resource type="PackedScene" uid="uid://bpqdwxfpa7vw3" path="res://modification_group_menu.tscn" id="9_y8m1t"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_sgwdy")
@@ -35,5 +36,7 @@ visible = false
 
 [node name="Fabricator" parent="MenuManager" instance=ExtResource("8_3fxw0")]
 visible = false
+
+[node name="ModificationGroupMenu" parent="MenuManager" instance=ExtResource("9_y8m1t")]
 
 [node name="Gameboard" parent="." instance=ExtResource("5_uibrn")]

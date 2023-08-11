@@ -1,0 +1,96 @@
+[gd_scene load_steps=3 format=3 uid="uid://cjm3ib45n2f7h"]
+
+[ext_resource type="Script" path="res://ui/menus/storage_menu.gd" id="1_j1nt6"]
+[ext_resource type="PackedScene" uid="uid://ctpfnw6mnf3xu" path="res://drone_mods/augment_v2.tscn" id="2_11o3t"]
+
+[node name="Storage" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+script = ExtResource("1_j1nt6")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.6, 0.615686, 0.627451, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="AugmentsBtn" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Augment"
+
+[node name="UpgradesBtn" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Upgrade"
+
+[node name="AugmentStorage" type="GridContainer" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+columns = 5
+
+[node name="Augment" parent="MarginContainer/VBoxContainer/AugmentStorage" instance=ExtResource("2_11o3t")]
+layout_mode = 2
+
+[node name="Augment2" parent="MarginContainer/VBoxContainer/AugmentStorage" instance=ExtResource("2_11o3t")]
+layout_mode = 2
+
+[node name="Augment3" parent="MarginContainer/VBoxContainer/AugmentStorage" instance=ExtResource("2_11o3t")]
+layout_mode = 2
+
+[node name="Augment4" parent="MarginContainer/VBoxContainer/AugmentStorage" instance=ExtResource("2_11o3t")]
+layout_mode = 2
+
+[node name="Augment5" parent="MarginContainer/VBoxContainer/AugmentStorage" instance=ExtResource("2_11o3t")]
+layout_mode = 2
+
+[node name="Augment6" parent="MarginContainer/VBoxContainer/AugmentStorage" instance=ExtResource("2_11o3t")]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="LineEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Search"
+
+[node name="OptionButton" type="OptionButton" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+item_count = 2
+selected = 0
+popup/item_0/text = "Name"
+popup/item_0/id = 0
+popup/item_1/text = "Rarity"
+popup/item_1/id = 1

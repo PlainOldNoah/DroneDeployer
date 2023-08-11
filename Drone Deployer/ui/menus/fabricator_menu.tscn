@@ -1,14 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://drwaaowngfdge"]
+[gd_scene load_steps=4 format=3 uid="uid://wsn3sdtkkuiq"]
 
-[ext_resource type="PackedScene" uid="uid://cwwp6l365mm0f" path="res://ui/menus/base_menu.tscn" id="1_o3d01"]
-[ext_resource type="Script" path="res://fabricator.gd" id="2_a8nwd"]
+[ext_resource type="PackedScene" uid="uid://cwwp6l365mm0f" path="res://ui/menus/base_menu.tscn" id="1_v1d1b"]
+[ext_resource type="Script" path="res://ui/menus/fabricator.gd" id="2_o6opr"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_ekmhj"]
 
-[node name="Fabricator" instance=ExtResource("1_o3d01")]
+[node name="Fabricator" instance=ExtResource("1_v1d1b")]
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = ExtResource("2_a8nwd")
+script = ExtResource("2_o6opr")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." index="1"]
 layout_mode = 1
@@ -63,7 +63,6 @@ size_flags_vertical = 3
 
 [node name="DDCCOptions" type="GridContainer" parent="VBoxContainer/CraftOptions" index="0"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -71,11 +70,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Button" type="Button" parent="VBoxContainer/CraftOptions/DDCCOptions" index="0"]
+[node name="NewStockDrone" type="Button" parent="VBoxContainer/CraftOptions/DDCCOptions" index="0"]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-text = "DDCC: NULL"
+text = "New Stock Drone"
 
 [node name="AugmentsOptions" type="GridContainer" parent="VBoxContainer/CraftOptions" index="1"]
 unique_name_in_owner = true
@@ -89,8 +86,6 @@ grow_vertical = 2
 
 [node name="RandomAugment" type="Button" parent="VBoxContainer/CraftOptions/AugmentsOptions" index="0"]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 text = "Random Augment"
 
 [node name="UpgradesOptions" type="GridContainer" parent="VBoxContainer/CraftOptions" index="2"]
@@ -147,4 +142,5 @@ size_flags_vertical = 3
 [connection signal="pressed" from="VBoxContainer/CraftOptionsBtn/DDCCBtn" to="." method="_on_craft_category_btn_pressed" binds= [0]]
 [connection signal="pressed" from="VBoxContainer/CraftOptionsBtn/AugmentsBtn" to="." method="_on_craft_category_btn_pressed" binds= [1]]
 [connection signal="pressed" from="VBoxContainer/CraftOptionsBtn/UpgradesBtn" to="." method="_on_craft_category_btn_pressed" binds= [2]]
-[connection signal="pressed" from="VBoxContainer/CraftOptions/AugmentsOptions/RandomAugment" to="." method="_on_random_augment_pressed"]
+[connection signal="pressed" from="VBoxContainer/CraftOptions/DDCCOptions/NewStockDrone" to="." method="_on_fabricate_item_button_pressed" binds= ["new_stock_drone"]]
+[connection signal="pressed" from="VBoxContainer/CraftOptions/AugmentsOptions/RandomAugment" to="." method="_on_fabricate_item_button_pressed" binds= ["drone_augment_random"]]
