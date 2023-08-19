@@ -7,14 +7,15 @@ extends Node
 signal augment_created(augment:Augment)
 
 ## Reference path to augment scene
-var augment_scene := preload("res://drone_mods/augment.tscn")
+#var augment_scene := preload("res://drone_mods/augment.tscn")
+var augment_scene := preload("res://drone_mods/augment_v2.tscn")
 
 ## Available stat options that an augment can have
 var options:Dictionary = {
-	"empty": {
-		"min_val":0,
-		"max_val":0,
-	},
+#	"empty": {
+#		"min_val":0,
+#		"max_val":0,
+#	},
 	"max_speed": {
 		"min_val":20,
 		"max_val":300,
@@ -32,9 +33,10 @@ var options:Dictionary = {
 ## Main function to create and return augments
 func create_augment(hue:float=0.0, value:int=0, stat:String="") -> Augment:
 	var augment := augment_scene.instantiate()
-	augment.stat = stat
+#	augment.stat = stat
+#	augment.value = value
+	augment.add_stat(stat, value)
 	augment.hue = hue
-	augment.value = value
 	
 	emit_signal("augment_created", augment)
 	return augment
@@ -43,10 +45,9 @@ func create_augment(hue:float=0.0, value:int=0, stat:String="") -> Augment:
 ## Creates an augment with completely randomized stats
 func create_rand_augment() -> Augment:
 	var rand_stat = options.keys()[randi() % options.keys().size()]
+	var rand_value:int = randi_range(options[rand_stat].min_val, options[rand_stat].max_val)
 	
 	var pos = options.keys().find(rand_stat)
 	var rand_hue:float = (float(pos) / options.keys().size())
-	
-	var rand_value:int = randi_range(options[rand_stat].min_val, options[rand_stat].max_val)
 	
 	return create_augment(rand_hue, rand_value, rand_stat)

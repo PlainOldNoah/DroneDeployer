@@ -20,7 +20,6 @@ editor_description = "Handles GUI menus including requesting, dismissing, and re
 script = ExtResource("2_cpjur")
 
 [node name="MainMenu" parent="MenuManager" instance=ExtResource("3_tw6px")]
-visible = false
 
 [node name="HangerMenu" parent="MenuManager" instance=ExtResource("4_chmra")]
 visible = false
@@ -38,5 +37,6 @@ visible = false
 visible = false
 
 [node name="ModificationGroupMenu" parent="MenuManager" instance=ExtResource("9_y8m1t")]
+visible = false
 
 [node name="Gameboard" parent="." instance=ExtResource("5_uibrn")]

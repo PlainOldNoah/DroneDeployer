@@ -17,7 +17,7 @@ func add_augment(augment:Augment):
 
 ## Emitted when [Augment] in storage is clicked
 func _on_augment_selected(augment:Augment):
-	print(augment.stat)
+	print(augment.stats)
 
 # Functions
 # Select Augment

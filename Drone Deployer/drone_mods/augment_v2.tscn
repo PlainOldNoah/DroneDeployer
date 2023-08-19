@@ -22,7 +22,7 @@ default_font_size = 12
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_uq23t")
 
 [node name="Augment" type="PanelContainer"]
-self_modulate = Color(0, 0.984314, 1, 1)
+self_modulate = Color(0, 1, 1, 1)
 custom_minimum_size = Vector2(205, 0)
 anchors_preset = 8
 anchor_left = 0.5
@@ -36,6 +36,7 @@ offset_bottom = 52.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 6
+mouse_filter = 1
 theme = SubResource("Theme_svn3l")
 script = ExtResource("1_rtht4")
 
@@ -53,6 +54,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="AugmentIcon" type="TextureRect" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 texture = ExtResource("2_pjj5h")
@@ -60,22 +62,34 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="BatteryDrainLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 6
+mouse_filter = 1
 text = "🔋 12 p/sec"
 horizontal_alignment = 1
 
 [node name="VSeparator" type="VSeparator" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
+mouse_filter = 1
 theme_override_constants/separation = 10
 
 [node name="StatLabel" type="RichTextLabel" parent="MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 1
 text = "Speed: 120
 Damage: 3
 Pickup: 201
 Crit Chance: 39%
 Crit Damage: 999%"
+threaded = true
 
-[connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[node name="ClickArea" type="Button" parent="."]
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+flat = true
+
+[connection signal="pressed" from="ClickArea" to="." method="_on_click_area_pressed"]

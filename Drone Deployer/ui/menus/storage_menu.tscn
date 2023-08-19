@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://cjm3ib45n2f7h"]
+[gd_scene load_steps=2 format=3 uid="uid://cjm3ib45n2f7h"]
 
 [ext_resource type="Script" path="res://ui/menus/storage_menu.gd" id="1_j1nt6"]
-[ext_resource type="PackedScene" uid="uid://ctpfnw6mnf3xu" path="res://drone_mods/augment_v2.tscn" id="2_11o3t"]
 
 [node name="Storage" type="Control"]
 layout_mode = 3
@@ -11,6 +10,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
+mouse_filter = 1
 script = ExtResource("1_j1nt6")
 
 [node name="Background" type="ColorRect" parent="."]
@@ -58,24 +58,6 @@ size_flags_vertical = 3
 theme_override_constants/h_separation = 10
 theme_override_constants/v_separation = 10
 columns = 5
-
-[node name="Augment" parent="MarginContainer/VBoxContainer/AugmentStorage" instance=ExtResource("2_11o3t")]
-layout_mode = 2
-
-[node name="Augment2" parent="MarginContainer/VBoxContainer/AugmentStorage" instance=ExtResource("2_11o3t")]
-layout_mode = 2
-
-[node name="Augment3" parent="MarginContainer/VBoxContainer/AugmentStorage" instance=ExtResource("2_11o3t")]
-layout_mode = 2
-
-[node name="Augment4" parent="MarginContainer/VBoxContainer/AugmentStorage" instance=ExtResource("2_11o3t")]
-layout_mode = 2
-
-[node name="Augment5" parent="MarginContainer/VBoxContainer/AugmentStorage" instance=ExtResource("2_11o3t")]
-layout_mode = 2
-
-[node name="Augment6" parent="MarginContainer/VBoxContainer/AugmentStorage" instance=ExtResource("2_11o3t")]
-layout_mode = 2
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
