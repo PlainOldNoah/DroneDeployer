@@ -11,13 +11,14 @@ config_version=5
 [application]
 
 config/name="Drone Deployer"
+config/description="\"Drone Deployer\" is an immersive action role-playing game that seamlessly blends modern technology with sci-fi aesthetics. Players become skilled operators controlling advanced cleaning drones, armed with unique abilities and enhancements. These drones bounce off surfaces, engaging in strategic battles against a variety of enemies embodying dirt and filth. With a battery mechanic adding depth, the game offers customizable loadouts, diverse environments, and engaging combat mechanics. Immerse yourself in a strategic experience as the ultimate Clean-Tech Guardian."
 run/main_scene="res://main/main.tscn"
 config/features=PackedStringArray("4.0", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="res://assets/visual/drone_x128.png"
 
 [autoload]
 
-GameplayManager="*res://main/gameplay_manager.tscn"
+GameplayManager="*res://main/gameplay_manager/gameplay_manager.tscn"
 DroneManager="*res://drone_core/drone_manager.gd"
 EnemyManager="*res://enemies/enemy_manager.tscn"
 AugmentFactory="*res://drone_mods/augment_factory.gd"

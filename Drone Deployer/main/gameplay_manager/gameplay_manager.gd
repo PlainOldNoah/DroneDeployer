@@ -13,7 +13,7 @@ signal total_scrap_updated(TCS:float)
 ## Emitted when the game state changes
 signal game_state_updated(state:GAMESTATE)
 
-## Available states that the game can be in
+## Available states that the game can be in, these act more as the Transistions
 enum GAMESTATE {
 	TITLE, ## Main Menu
 	STARTING, ## When the game is beginning

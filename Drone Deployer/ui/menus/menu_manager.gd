@@ -1,15 +1,20 @@
 extends CanvasLayer
 
+## Handler for all in-game menus
+##
+## Handles keypresses and what menu to show and when
+
 @onready var main_menu := $MainMenu
 @onready var pause_menu := $PausePopup
 @onready var game_over_menu := $GameOverPopup
 @onready var debug_menu := $DebugMenu
 @onready var mod_group_menu := $ModificationGroupMenu
 
+## All available menus and their required data for handling
 @onready var menu_network:Dictionary = {
 	"main_menu":{
 		"scene":main_menu,
-		"cancel_to":null,
+		"cancel_to":null, ## on ui_cancel go to this menu
 	},
 	"no_menu":{
 		"scene":null,
@@ -41,16 +46,9 @@ extends CanvasLayer
 
 
 func _ready():
-	main_menu.echo_on_start_game_btn_pressed.connect(request_menu.bind("no_menu"))
-#	var _ok = main_menu.connect("echo_on_start_game_btn_pressed", test("E"))
-#	player.hit.connect(_on_player_hit.bind("sword", 100))
-#button.button_down.connect(Callable(self, "_on_button_down"))
-
+	GameplayManager.game_state_updated.connect(_on_game_state_updated)
 	request_menu("main_menu")
 
-
-func test(poop:String):
-	print("TEST", poop)
 
 func _unhandled_input(event):
 	if event.is_action_pressed("ui_cancel"):
@@ -60,11 +58,31 @@ func _unhandled_input(event):
 
 ##
 func request_menu(requested_menu:String):
+	print("RQST MNU: ", requested_menu)
 	if menu_network[requested_menu]["scene"] != null:
 		menu_network[requested_menu]["scene"].show()
-	else:
-		current_menu["scene"].hide()
+#	else:
+#		current_menu["scene"].hide()
+		
 	current_menu = menu_network[requested_menu]
+	cleanup()
+
+
+## Hides all scenes except for the current one
+func cleanup():
+	for i in menu_network.keys():
+		if (menu_network[i] != current_menu) and (menu_network[i]["scene"] != null):
+			menu_network[i]["scene"].hide()
+
+
+## 
+func _on_game_state_updated(new_state:int):
+	match new_state:
+		GameplayManager.GAMESTATE.TITLE:
+			request_menu("main_menu")
+		GameplayManager.GAMESTATE.STARTING:
+			request_menu("no_menu")
+
 
 ### Ask for a new menu, returns menu if accepted
 #func select_new_menu(menu_id:String):

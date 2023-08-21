@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://boxyuo8hbptdd"]
+
+[ext_resource type="Script" path="res://main/gameplay_manager/gameplay_manager.gd" id="1_jj6xa"]
+[ext_resource type="Script" path="res://main/gameplay_manager/gamestate_manager.gd" id="2_cg1ie"]
+[ext_resource type="PackedScene" uid="uid://d1c23dbgwjno5" path="res://main/gameplay_manager/title_gamestate.tscn" id="2_slgt0"]
+
+[node name="GameplayManager" type="Node"]
+editor_description = "Handles all gameplay events such as spawning enemies, controlling difficulty, updating score, taking damage, etc."
+script = ExtResource("1_jj6xa")
+ddcc_max_health = 999
+starting_drones = 5
+
+[node name="GameplayTimer" type="Timer" parent="."]
+
+[node name="GamestateManager" type="Node" parent="."]
+script = ExtResource("2_cg1ie")
+
+[node name="TitleGamestate" parent="GamestateManager" instance=ExtResource("2_slgt0")]
+
+[connection signal="timeout" from="GameplayTimer" to="." method="_on_gameplay_timer_timeout"]
