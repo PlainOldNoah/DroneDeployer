@@ -11,21 +11,22 @@ signal curr_scrap_updated(scrap:float)
 ## Emitted when the total collected scrap changes
 signal total_scrap_updated(TCS:float)
 ## Emitted when the game state changes
-signal game_state_updated(state:GAMESTATE)
+#signal game_state_updated(state:GAMESTATE)
 
 ## Available states that the game can be in, these act more as the Transistions
-enum GAMESTATE {
-	TITLE, ## Main Menu
-	STARTING, ## When the game is beginning
-	RUNNING, ## Resumed from PAUSED
-	PAUSED, ## Game is paused
-	ENDING, ## Gameover
-}
+#enum GAMESTATE {
+#	TITLE, ## Main Menu
+#	STARTING, ## When the game is beginning
+#	RUNNING, ## Resumed from PAUSED
+#	PAUSED, ## Game is paused
+#	ENDING, ## Gameover
+#}
 
 ## Current state the game is in
 ##[br]Note that this acts more like state tranistion rather than the state itself
-var gamestate:GAMESTATE = GAMESTATE.TITLE
+#var gamestate:GAMESTATE = GAMESTATE.TITLE
 
+@onready var gamestate_manager:GamestateManager = $GamestateManager
 @onready var gameplay_timer := $GameplayTimer
 
 @export_category("Enemies")
@@ -50,7 +51,8 @@ var ddcc_health:int = ddcc_max_health:
 		ddcc_health = clampi(new_health, 0, ddcc_max_health)
 		emit_signal("ddcc_health_changed", ddcc_health)
 		if ddcc_health <= 0:
-			GameplayManager.set_gamestate(GAMESTATE.ENDING)
+			gamestate_manager.change_state(gamestate_manager.title_gamestate)
+#			GameplayManager.set_gamestate(GAMESTATE.ENDING)
 
 ## Total quantity of collected scrap
 var total_collected_scrap:int = 0:
@@ -77,20 +79,24 @@ var playtime:int = 0:
 var game_running:bool = false
 
 
-## Setter for the gamestate
-func set_gamestate(new_gamestate:GAMESTATE):
-#	print_debug("SETSTATE: ", new_gamestate)
-	if gamestate == new_gamestate:
-		print_debug("WARNING: gamestate already in state <", new_gamestate, ">")
-	gamestate = new_gamestate
-	emit_signal("game_state_updated", new_gamestate)
+func _ready():
+	gamestate_manager.init()
+
+
+### Setter for the gamestate
+#func set_gamestate(new_gamestate:GAMESTATE):
+##	print_debug("SETSTATE: ", new_gamestate)
+#	if gamestate == new_gamestate:
+#		print_debug("WARNING: gamestate already in state <", new_gamestate, ">")
+#	gamestate = new_gamestate
+#	emit_signal("game_state_updated", new_gamestate)
 
 
 ## Runs though all the steps required to start the game
 func start_game():
 	starting_drones = clampi(starting_drones, 1, max_drones)
 
-	set_gamestate(GAMESTATE.STARTING)
+#	set_gamestate(GAMESTATE.STARTING)
 	
 	for i in starting_drones:
 		DroneManager.create_new_drone()
@@ -117,17 +123,17 @@ func reset_game():
 func toggle_pause(value:bool):
 	get_tree().set_pause(value)
 
-	if get_tree().is_paused():
-		set_gamestate(GAMESTATE.PAUSED)
-	else:
-		set_gamestate(GAMESTATE.RUNNING)
+#	if get_tree().is_paused():
+#		set_gamestate(GAMESTATE.PAUSED)
+#	else:
+#		set_gamestate(GAMESTATE.RUNNING)
 
 
 ## Safely quits to the main menu
 func quit_to_title():
 	end_game()
 	reset_game()
-	set_gamestate(GAMESTATE.TITLE)
+#	set_gamestate(GAMESTATE.TITLE)
 
 
 ## Reduces the [DDCC] health, setter handles the rest
