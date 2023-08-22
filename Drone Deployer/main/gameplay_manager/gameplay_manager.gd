@@ -10,21 +10,7 @@ signal playtime_updated(time:int)
 signal curr_scrap_updated(scrap:float)
 ## Emitted when the total collected scrap changes
 signal total_scrap_updated(TCS:float)
-## Emitted when the game state changes
-#signal game_state_updated(state:GAMESTATE)
 
-## Available states that the game can be in, these act more as the Transistions
-#enum GAMESTATE {
-#	TITLE, ## Main Menu
-#	STARTING, ## When the game is beginning
-#	RUNNING, ## Resumed from PAUSED
-#	PAUSED, ## Game is paused
-#	ENDING, ## Gameover
-#}
-
-## Current state the game is in
-##[br]Note that this acts more like state tranistion rather than the state itself
-#var gamestate:GAMESTATE = GAMESTATE.TITLE
 
 @onready var gamestate_manager:GamestateManager = $GamestateManager
 @onready var gameplay_timer := $GameplayTimer
@@ -42,6 +28,7 @@ signal total_scrap_updated(TCS:float)
 @export_range(0, 99) var starting_drones:int = 1
 ## Upper limit on how many drones there can be at once
 @export_range(0, 50) var max_drones:int = 50
+
 
 ## Current health of the [DDCC]
 ## [br]Setter clamps health between 0 and ddcc_max_health
@@ -83,25 +70,22 @@ func _ready():
 	gamestate_manager.init()
 
 
-### Setter for the gamestate
-#func set_gamestate(new_gamestate:GAMESTATE):
-##	print_debug("SETSTATE: ", new_gamestate)
-#	if gamestate == new_gamestate:
-#		print_debug("WARNING: gamestate already in state <", new_gamestate, ">")
-#	gamestate = new_gamestate
-#	emit_signal("game_state_updated", new_gamestate)
+func _unhandled_input(event):
+	if event.is_action_pressed("toggle_debug_menu"):
+		print_debug("TOGGLE DEBUG MODE")
+	gamestate_manager.input(event)
 
 
 ## Runs though all the steps required to start the game
 func start_game():
 	starting_drones = clampi(starting_drones, 1, max_drones)
-
-#	set_gamestate(GAMESTATE.STARTING)
 	
 	for i in starting_drones:
 		DroneManager.create_new_drone()
-
+	
 	gameplay_timer.start()
+	
+	_on_game_initialized()
 
 
 ## Runs though all the steps needed to safely end the game
@@ -123,17 +107,12 @@ func reset_game():
 func toggle_pause(value:bool):
 	get_tree().set_pause(value)
 
-#	if get_tree().is_paused():
-#		set_gamestate(GAMESTATE.PAUSED)
-#	else:
-#		set_gamestate(GAMESTATE.RUNNING)
-
 
 ## Safely quits to the main menu
 func quit_to_title():
 	end_game()
 	reset_game()
-#	set_gamestate(GAMESTATE.TITLE)
+	gamestate_manager.change_state(BaseState.STATE.TITLE)
 
 
 ## Reduces the [DDCC] health, setter handles the rest
@@ -156,6 +135,20 @@ func remove_scrap(amount:int) -> bool:
 	else:
 		current_scrap -= amount
 		return true
+
+
+## User input on resume button in pause menu
+func _on_resume_game_requested():
+	gamestate_manager.change_state(BaseState.STATE.RUNNING)
+
+## When we want the game to start call this
+func _on_start_game_requested():
+	gamestate_manager.change_state(BaseState.STATE.STARTING)
+
+
+## When the game as finished initializating
+func _on_game_initialized():
+	gamestate_manager.change_state(BaseState.STATE.RUNNING)
 
 
 ## Increments playtime by 1

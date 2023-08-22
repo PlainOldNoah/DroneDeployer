@@ -1,0 +1,36 @@
+[gd_scene load_steps=9 format=3 uid="uid://cm8gevfcxc7h0"]
+
+[ext_resource type="Script" path="res://ui/menus/menu_manager.gd" id="1_7q1n8"]
+[ext_resource type="PackedScene" uid="uid://xyinbcpdlhqm" path="res://ui/menus/main_menu.tscn" id="2_os7te"]
+[ext_resource type="PackedScene" uid="uid://cjaeoy88yuim8" path="res://ui/menus/hanger_menu.tscn" id="3_hbkq2"]
+[ext_resource type="PackedScene" uid="uid://bjpnyq1dysd6h" path="res://ui/menus/pause_popup.tscn" id="4_qysh2"]
+[ext_resource type="PackedScene" uid="uid://bb2jmpwphe15s" path="res://ui/menus/game_over_popup.tscn" id="5_culkg"]
+[ext_resource type="PackedScene" uid="uid://cihk4xoa3wwe2" path="res://ui/menus/debug_menu.tscn" id="6_lsmdn"]
+[ext_resource type="PackedScene" uid="uid://wsn3sdtkkuiq" path="res://ui/menus/fabricator_menu.tscn" id="7_rdxf7"]
+[ext_resource type="PackedScene" uid="uid://bpqdwxfpa7vw3" path="res://modification_group_menu.tscn" id="8_f8efg"]
+
+[node name="MenuManager" type="CanvasLayer"]
+process_mode = 3
+editor_description = "Handles GUI menus including requesting, dismissing, and restricting invalid menu tranisitions"
+script = ExtResource("1_7q1n8")
+
+[node name="MainMenu" parent="." instance=ExtResource("2_os7te")]
+visible = false
+
+[node name="HangerMenu" parent="." instance=ExtResource("3_hbkq2")]
+visible = false
+
+[node name="PausePopup" parent="." instance=ExtResource("4_qysh2")]
+visible = false
+
+[node name="GameOverPopup" parent="." instance=ExtResource("5_culkg")]
+visible = false
+
+[node name="DebugMenu" parent="." instance=ExtResource("6_lsmdn")]
+visible = false
+
+[node name="Fabricator" parent="." instance=ExtResource("7_rdxf7")]
+visible = false
+
+[node name="ModificationGroupMenu" parent="." instance=ExtResource("8_f8efg")]
+visible = false

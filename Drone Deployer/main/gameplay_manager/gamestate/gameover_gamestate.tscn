@@ -5,5 +5,3 @@
 
 [node name="GameoverGamestate" instance=ExtResource("1_enme3")]
 script = ExtResource("2_iky7g")
-starting_node = null
-title_node = null

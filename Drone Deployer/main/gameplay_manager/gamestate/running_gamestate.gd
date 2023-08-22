@@ -1,11 +1,18 @@
 extends BaseState
 
-@export_node_path("BaseState") var gameover_node
-@export_node_path("BaseState") var paused_node
-
-@onready var gameover_state:BaseState = get_node(gameover_node)
-@onready var paused_state:BaseState = get_node(paused_node)
-
+## Running Gamestate; Middle of gameplay
 
 func enter() -> void:
+	# resume timer
 	pass
+
+
+func exit() -> void:
+	# pause timer
+	pass
+
+
+func input(event: InputEvent) -> int:
+	if event.is_action_pressed("ui_cancel"):
+		return STATE.PAUSED
+	return STATE.NULL

@@ -19,6 +19,7 @@ config/icon="res://assets/visual/drone_x128.png"
 [autoload]
 
 GameplayManager="*res://main/gameplay_manager/gameplay_manager.tscn"
+MenuManager="*res://ui/menu_manager.tscn"
 DroneManager="*res://drone_core/drone_manager.gd"
 EnemyManager="*res://enemies/enemy_manager.tscn"
 AugmentFactory="*res://drone_mods/augment_factory.gd"

@@ -24,7 +24,7 @@ func _ready():
 	_ok = EnemyManager.connect("enemy_created", add_enemy_to_map)
 	_ok = GameplayManager.connect("ddcc_health_changed", _on_update_health_label)
 	_ok = GameplayManager.connect("playtime_updated", _on_update_playtime_label)
-	_ok = GameplayManager.connect("game_state_updated", _on_game_state_updated)
+#	_ok = GameplayManager.connect("game_state_updated", _on_game_state_updated)
 	_ok = GameplayManager.connect("curr_scrap_updated", _on_update_scrap_label)
 
 

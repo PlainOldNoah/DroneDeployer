@@ -5,4 +5,3 @@
 
 [node name="PausedGamestate" instance=ExtResource("1_5ogf8")]
 script = ExtResource("2_u1d50")
-running_node = null

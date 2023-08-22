@@ -20,6 +20,9 @@ enum STATE {
 	GAMEOVER, ## Player has lost the game
 }
 
+func _ready():
+	add_to_group("gamestate")
+
 
 func enter() -> void:
 	pass
@@ -28,11 +31,11 @@ func exit() -> void:
 	pass
 
 
-func input(event: InputEvent) -> BaseState:
-	return null
+func input(_event: InputEvent) -> int:
+	return STATE.NULL
 
-func process(delta: float) -> BaseState:
-	return null
+func process(_delta: float) -> int:
+	return STATE.NULL
 
-func physics_process(delta: float) -> BaseState:
-	return null
+func physics_process(_delta: float) -> int:
+	return STATE.NULL

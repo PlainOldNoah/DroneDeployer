@@ -1,8 +1,17 @@
 extends CanvasLayer
 
 ## Handler for all in-game menus
-##
-## Handles keypresses and what menu to show and when
+
+## List of available menus
+enum MENUS {
+	NULL, ## No menu selected, typically gameboard
+	MAIN, ## Title screen
+	PAUSE, ## Pause menu
+	GAMEOVER, ## Gameover menu
+	DEBUG, ## Debug menu
+	FABRICATOR, ## Fabricator menu
+	HANGER, ## Hanger menu
+	}
 
 @onready var main_menu := $MainMenu
 @onready var pause_menu := $PausePopup
@@ -18,7 +27,7 @@ extends CanvasLayer
 	},
 	"no_menu":{
 		"scene":null,
-		"cancel_to":"pause_menu",
+		"cancel_to":MENUS.PAUSE,
 	},
 	"pause_menu":{
 		"scene":pause_menu,
@@ -42,29 +51,41 @@ extends CanvasLayer
 	},
 }
 
+## The currently selected menu
 @onready var current_menu:Dictionary = {}
 
 
-func _ready():
-	GameplayManager.game_state_updated.connect(_on_game_state_updated)
-	request_menu("main_menu")
+## Returns the specific menu dict, safer using enums
+func get_menu_dict(menu:MENUS) -> Dictionary:
+	match menu:
+		MENUS.NULL:
+			return menu_network["no_menu"]
+		MENUS.MAIN:
+			return menu_network["main_menu"]
+		MENUS.PAUSE:
+			return menu_network["pause_menu"]
+		MENUS.GAMEOVER:
+			return menu_network["gameover_menu"]
+		MENUS.DEBUG:
+			return menu_network["debug_menu"]
+		MENUS.FABRICATOR:
+			return menu_network["fabricator_menu"]
+		MENUS.HANGER:
+			return menu_network["hanger_menu"]
+		_:
+			return menu_network["no_menu"]
 
 
-func _unhandled_input(event):
-	if event.is_action_pressed("ui_cancel"):
-		if current_menu["cancel_to"] != null:
-			request_menu(current_menu["cancel_to"])
-
-
-##
-func request_menu(requested_menu:String):
-	print("RQST MNU: ", requested_menu)
-	if menu_network[requested_menu]["scene"] != null:
-		menu_network[requested_menu]["scene"].show()
+## Sets the requested menu if possible
+func request_menu(requested_menu:MENUS):
+	var rqst_menu_dict:Dictionary = get_menu_dict(requested_menu)
+	
+	if rqst_menu_dict["scene"] != null:
+		rqst_menu_dict["scene"].show()
 #	else:
 #		current_menu["scene"].hide()
-		
-	current_menu = menu_network[requested_menu]
+
+	current_menu = rqst_menu_dict
 	cleanup()
 
 
@@ -73,200 +94,3 @@ func cleanup():
 	for i in menu_network.keys():
 		if (menu_network[i] != current_menu) and (menu_network[i]["scene"] != null):
 			menu_network[i]["scene"].hide()
-
-
-## 
-func _on_game_state_updated(new_state:int):
-	match new_state:
-		GameplayManager.GAMESTATE.TITLE:
-			request_menu("main_menu")
-		GameplayManager.GAMESTATE.STARTING:
-			request_menu("no_menu")
-
-
-### Ask for a new menu, returns menu if accepted
-#func select_new_menu(menu_id:String):
-#	match current_menu:
-#		main_menu:
-#			pass
-#
-#		pause_menu:
-#			pass
-#
-#		game_over_menu:
-#			pass
-#
-#		debug_menu:
-#			pass
-#
-#		mod_group_menu:
-#			pass
-#
-#		_:
-#			print_debug("ERROR")
-#
-#
-### Sets the current menu to the new_menu
-#func set_new_menu(new_menu:Control):
-#	pass
-
-# -----------------------------------------------------------------------------
-
-#extends CanvasLayer
-#
-### Handles all menus and menu requests
-###
-### Adding a Menu
-###[br] 1. Add its path as an @onready
-###[br] 2. Add its hotkey to the _input func
-###[br] 3. Add its menu to request menu
-#
-#@onready var main_menu := $MainMenu
-#@onready var hanger_menu := $ModificationGroupMenu
-##@onready var hanger_menu := $HangerMenu
-#@onready var pause_menu := $PausePopup
-#@onready var game_over_menu := $GameOverPopup
-#@onready var debug_menu := $DebugMenu
-##@onready var fabricator_menu := $Fabricator
-#@onready var fabricator_menu := $ModificationGroupMenu
-#
-#@onready var menu_list:Dictionary = {
-#	"none":{
-#		"scene":null, # Path to menu scene
-#		"pause_gameplay":false, # Pauses gameplay while menu is active
-#		"escapable":true, # Can be exited with hotkey/escape
-#	},
-#	"main_menu":{
-#		"scene":main_menu,
-#		"pause_gameplay":true,
-#		"escapable":false,
-#	},
-#	"hanger_menu":{
-#		"scene":hanger_menu,
-#		"pause_gameplay":true,
-#		"escapable":true,
-#	},
-#	"pause_menu":{
-#		"scene":pause_menu,
-#		"pause_gameplay":true,
-#		"escapable":true,
-#	},
-#	"game_over_menu":{
-#		"scene":game_over_menu,
-#		"pause_gameplay":false,
-#		"escapable":false,
-#	},
-#	"debug_menu":{
-#		"scene":debug_menu,
-#		"pause_gameplay":true,
-#		"escapable":true,
-#	},
-#	"fabricator_menu":{
-#		"scene":fabricator_menu,
-#		"pause_gameplay":true,
-#		"escapable":true,
-#	},
-#}
-#
-#var current_menu:Dictionary = {}
-#
-#
-##func _process(delta):
-##	print(get_viewport().gui_get_focus_owner())
-#
-#
-#func _ready():
-#	var _ok := GameplayManager.connect("game_state_updated", _on_game_state_updated)
-#	request_menu(menu_list.main_menu)
-#
-#
-## _input func for ALL menu calling actions
-#func _unhandled_input(event):
-#	if current_menu["escapable"] == false:
-#		return
-#
-#	if event.is_action_pressed("ui_cancel"):
-#		if current_menu != menu_list.none:
-#			request_menu(menu_list.none)
-#		else:
-#			request_menu(menu_list.pause_menu)
-#
-#	elif event.is_action_pressed("toggle_hanger_menu"):
-#		if current_menu == menu_list.hanger_menu:
-#			request_menu(menu_list.none)
-#		else:
-#			request_menu(menu_list.hanger_menu)
-#
-#	elif event.is_action_pressed("toggle_fabricator_menu"):
-#		if current_menu == menu_list.fabricator_menu:
-#			request_menu(menu_list.none)
-#		else:
-#			request_menu(menu_list.fabricator_menu)
-#
-#	elif event.is_action_pressed("toggle_debug_menu"):
-#		if current_menu == menu_list.debug_menu:
-#			request_menu(menu_list.none)
-#		else:
-#			request_menu(menu_list.debug_menu)
-#
-#
-## Handles the dismissing and summoning on menu items
-#func request_menu(new_menu:Dictionary):
-#	dismiss_all()
-#
-#	match new_menu:
-#		menu_list.none:
-#			GameplayManager.toggle_pause(false)
-#
-#		menu_list.main_menu:
-#			GameplayManager.toggle_pause(true)
-#			menu_list.main_menu["scene"].show()
-#
-#		menu_list.hanger_menu:
-#			GameplayManager.toggle_pause(true)
-#			menu_list.hanger_menu["scene"].show()
-#
-#		menu_list.pause_menu:
-#			GameplayManager.toggle_pause(true)
-#			menu_list.pause_menu["scene"].show()
-#
-#		menu_list.game_over_menu:
-#			GameplayManager.toggle_pause(false)
-#			menu_list.game_over_menu["scene"].show()
-#
-#		menu_list.debug_menu:
-#			GameplayManager.toggle_pause(true)
-#			menu_list.debug_menu["scene"].show()
-#
-#		menu_list.fabricator_menu:
-#			GameplayManager.toggle_pause(true)
-#			menu_list.fabricator_menu["scene"].show()
-#
-#		_:
-#			print_debug("ERROR: invalid menu requested <", new_menu, ">")
-#			printerr("ERROR: invalid menu requested <", new_menu, ">")
-#
-#	current_menu = new_menu
-#
-#
-## Signal reciever from GameplayManager
-#func _on_game_state_updated(state:int):
-#	match state:
-#		GameplayManager.GAMESTATE.TITLE:
-#			request_menu(menu_list.main_menu)
-#		GameplayManager.GAMESTATE.STARTING:
-#			request_menu(menu_list.none)
-#		GameplayManager.GAMESTATE.RUNNING:
-#			dismiss_all()
-##		GameplayManager.GAMESTATE.PAUSED:
-##			request_menu(menu_list.pause_menu)
-#		GameplayManager.GAMESTATE.ENDING:
-#			request_menu(menu_list.game_over_menu)
-#
-#
-## Hides every menu
-#func dismiss_all():
-#	for i in menu_list.keys():
-#		if menu_list[i]["scene"] != null:
-#			menu_list[i]["scene"].hide()
-#	current_menu = menu_list.none

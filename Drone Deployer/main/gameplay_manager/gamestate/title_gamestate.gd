@@ -1,15 +1,11 @@
 extends BaseState
 
-@export_node_path("BaseState") var starting_node
-
-@onready var starting_state:BaseState = get_node(starting_node)
+## Title Gamestate; Title screen
 
 
 func enter() -> void:
-	# bring up main menu
-	pass
+	MenuManager.request_menu(MenuManager.MENUS.MAIN)
 
 
 func exit() -> void:
-	# hide main menu
-	pass
+	MenuManager.request_menu(MenuManager.MENUS.NULL)

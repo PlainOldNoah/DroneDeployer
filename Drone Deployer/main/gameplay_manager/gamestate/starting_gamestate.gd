@@ -1,5 +1,7 @@
 extends BaseState
 
-@export_node_path("BaseState") var running_node
+## Starting Gamestate; Initialize the game
 
-@onready var running_state:BaseState = get_node(running_node)
+func enter() -> void:
+	GameplayManager.reset_game()
+	GameplayManager.start_game()
