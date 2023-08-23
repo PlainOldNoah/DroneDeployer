@@ -5,7 +5,6 @@ extends BaseState
 func enter() -> void:
 	get_tree().set_pause(true)
 	MenuManager.request_menu(MenuManager.MENUS.PAUSE)
-	# Request menu based on what key was pressed, this is the menu state afterall
 
 
 func exit() -> void:
@@ -16,4 +15,8 @@ func exit() -> void:
 func input(event: InputEvent) -> int:
 	if event.is_action_pressed("ui_cancel"):
 		return STATE.RUNNING
+#	elif event.is_action_pressed("toggle_fabricator_menu"):
+#		MenuManager.request_menu(MenuManager.MENUS.FABRICATOR)
+#	elif event.is_action_pressed("toggle_hanger_menu"):
+#		MenuManager.request_menu(MenuManager.MENUS.HANGER)
 	return STATE.NULL

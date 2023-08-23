@@ -1,7 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://bjpnyq1dysd6h"]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="PackedScene" uid="uid://btb5hep7rx366" path="res://ui/menus/base_popup_menu.tscn" id="1_lnla0"]
-[ext_resource type="Script" path="res://ui/menus/pause_popup.gd" id="2_xlicu"]
+[ext_resource type="Script" path="res://ui/menus/pause_menu.gd" id="2_xlicu"]
 
 [node name="PausePopup" instance=ExtResource("1_lnla0")]
 script = ExtResource("2_xlicu")

@@ -16,8 +16,9 @@ enum STATE {
 	TITLE, ## Title Screen
 	STARTING, ## Initialize the start of the game
 	RUNNING, ## Main gameplay occuring
-	PAUSED, ## In a menu
+	PAUSED, ## In the Pause menu
 	GAMEOVER, ## Player has lost the game
+	MENU, ## Non Debug or Pause menus
 }
 
 func _ready():

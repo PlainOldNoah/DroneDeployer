@@ -1,13 +1,9 @@
 class_name GamestateManager
 extends Node
 
-## LEFT OFF -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-# Start connecting the gamestates up to do what they're suppose to
-# May require some major signal reworking
-# Use the states to drive the code, not the other way around
-# Events can change the states
+## Handles changing gamestate and passing data into them
 
-#@export_node_path("BaseState") var starting_state
+## The state that the game starts in
 @export var starting_state:BaseState.STATE
 
 ## State enums for state names that way every script has the same interface
@@ -16,15 +12,9 @@ extends Node
 	BaseState.STATE.STARTING: $StartingGamestate,
 	BaseState.STATE.RUNNING: $RunningGamestate,
 	BaseState.STATE.PAUSED: $PausedGamestate,
-	BaseState.STATE.GAMEOVER: $GameoverGamestate
+	BaseState.STATE.GAMEOVER: $GameoverGamestate,
+	BaseState.STATE.MENU: $MenuGamestate,
 }
-
-
-#@onready var title_gamestate:BaseState = $TitleGamestate
-#@onready var starting_gamestate:BaseState = $StartingGamestate
-#@onready var running_gamestate:BaseState = $RunningGamestate
-#@onready var paused_gamestate:BaseState = $PausedGamestate
-#@onready var gameover_gamestate:BaseState = $GameoverGamestate
 
 
 ## The current state the state machine is in

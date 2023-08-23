@@ -5,6 +5,7 @@ extends BaseState
 
 func enter() -> void:
 	MenuManager.request_menu(MenuManager.MENUS.MAIN)
+#	MenuManager.request_menu(MenuManager.MENUS.MAIN)
 
 
 func exit() -> void:

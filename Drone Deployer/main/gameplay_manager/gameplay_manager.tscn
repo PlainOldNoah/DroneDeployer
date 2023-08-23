@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bcw6lr1eurkh7"]
+[gd_scene load_steps=9 format=3 uid="uid://bcw6lr1eurkh7"]
 
 [ext_resource type="Script" path="res://main/gameplay_manager/gameplay_manager.gd" id="1_y4rj8"]
 [ext_resource type="Script" path="res://main/gameplay_manager/gamestate/gamestate_manager.gd" id="2_cg1ie"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cikjiqcegopmc" path="res://main/gameplay_manager/gamestate/starting_gamestate.tscn" id="4_efb5o"]
 [ext_resource type="PackedScene" uid="uid://cojuxeikkuood" path="res://main/gameplay_manager/gamestate/gameover_gamestate.tscn" id="6_16kc7"]
 [ext_resource type="PackedScene" uid="uid://cfc7ykcyhhcnf" path="res://main/gameplay_manager/gamestate/paused_gamestate.tscn" id="6_48pie"]
+[ext_resource type="PackedScene" uid="uid://cujradf08j1kp" path="res://main/gameplay_manager/gamestate/menu_gamestate.tscn" id="8_bj2b5"]
 
 [node name="GameplayManager" type="Node"]
 process_mode = 3
@@ -29,6 +30,8 @@ starting_state = 1
 [node name="RunningGamestate" parent="GamestateManager" instance=ExtResource("4_dlpur")]
 
 [node name="PausedGamestate" parent="GamestateManager" instance=ExtResource("6_48pie")]
+
+[node name="MenuGamestate" parent="GamestateManager" instance=ExtResource("8_bj2b5")]
 
 [node name="GameoverGamestate" parent="GamestateManager" instance=ExtResource("6_16kc7")]
 

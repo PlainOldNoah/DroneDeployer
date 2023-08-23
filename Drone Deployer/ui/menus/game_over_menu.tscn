@@ -1,7 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://bb2jmpwphe15s"]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="PackedScene" uid="uid://btb5hep7rx366" path="res://ui/menus/base_popup_menu.tscn" id="1_d5wuh"]
-[ext_resource type="Script" path="res://ui/menus/game_over_popup.gd" id="2_xucnc"]
+[ext_resource type="Script" path="res://ui/menus/game_over_menu.gd" id="2_xucnc"]
 
 [node name="GameOverPopup" instance=ExtResource("1_d5wuh")]
 script = ExtResource("2_xucnc")
