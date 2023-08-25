@@ -18,14 +18,12 @@ func input(event: InputEvent) -> int:
 		
 	elif event.is_action_pressed("toggle_fabricator_menu"):
 		if MenuManager.is_current_menu(MenuManager.MENUS.FABRICATOR):
-#			MenuManager.request_menu(MenuManager.MENUS.NULL)
 			return STATE.RUNNING
 		else:
 			MenuManager.request_menu(MenuManager.MENUS.FABRICATOR)
 		
 	elif event.is_action_pressed("toggle_hanger_menu"):
 		if MenuManager.is_current_menu(MenuManager.MENUS.HANGER):
-#			MenuManager.request_menu(MenuManager.MENUS.NULL)
 			return STATE.RUNNING
 		else:
 			MenuManager.request_menu(MenuManager.MENUS.HANGER)

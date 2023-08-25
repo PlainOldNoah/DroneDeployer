@@ -1,7 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://cgx8q1e8vwntn"]
+[gd_scene load_steps=11 format=3 uid="uid://cgx8q1e8vwntn"]
 
 [ext_resource type="Script" path="res://drone_core/drone.gd" id="1_rtv2x"]
 [ext_resource type="Texture2D" uid="uid://cy1vdsb4r5r5b" path="res://assets/visual/drone_x128.png" id="2_a3kkh"]
+[ext_resource type="Script" path="res://drone_core/drone_state/drone_state_manager.gd" id="3_275fc"]
+[ext_resource type="PackedScene" uid="uid://b1opn2ph2xvsj" path="res://drone_core/drone_state/idle_drone_state.tscn" id="4_88xyg"]
+[ext_resource type="PackedScene" uid="uid://dq880xcb8lo3v" path="res://drone_core/drone_state/active_drone_state.tscn" id="5_y68xj"]
+[ext_resource type="PackedScene" uid="uid://xxxovnei82h5" path="res://drone_core/drone_state/returning_drone_state.tscn" id="6_ruc6w"]
+[ext_resource type="PackedScene" uid="uid://dpsgcjbncvg0r" path="res://drone_core/drone_state/dead_drone_state.tscn" id="7_e0dg1"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3xr3n"]
 radius = 64.0
@@ -40,6 +45,18 @@ collision_mask = 32
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CollectionRange"]
 shape = SubResource("CircleShape2D_mrykf")
 disabled = true
+
+[node name="DroneStateManager" type="Node" parent="."]
+script = ExtResource("3_275fc")
+starting_state = 1
+
+[node name="IdleDroneState" parent="DroneStateManager" instance=ExtResource("4_88xyg")]
+
+[node name="ActiveDroneState" parent="DroneStateManager" instance=ExtResource("5_y68xj")]
+
+[node name="ReturningDroneState" parent="DroneStateManager" instance=ExtResource("6_ruc6w")]
+
+[node name="DeadDroneState" parent="DroneStateManager" instance=ExtResource("7_e0dg1")]
 
 [connection signal="area_entered" from="PseudoBody" to="." method="_on_scanner_area_entered"]
 [connection signal="area_entered" from="CollectionRange" to="." method="_on_collection_range_area_entered"]

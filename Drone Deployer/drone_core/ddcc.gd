@@ -1,5 +1,5 @@
-extends Node2D
 class_name DDCC
+extends Node2D
 
 ## Drone Deploying Command Core; Central hub that deploys drones
 ##

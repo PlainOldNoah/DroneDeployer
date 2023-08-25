@@ -1,5 +1,4 @@
 extends Node
-#Gameboard/Centerer/Midpoint/DDCC
 
 #func _ready():
 #	await get_tree().root.ready

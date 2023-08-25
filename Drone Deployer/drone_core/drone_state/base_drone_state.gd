@@ -1,11 +1,7 @@
-class_name BaseState
+class_name DroneState
 extends Node
 
-## Base state for all of the Gamestates
-##
-## For each added gamestate a list of references is needed: 
-## [br]@export_node_path("BaseState") var state_node 
-## [br]@onready var name_state:BaseState = get_node(state_node)
+## Base state for all of the drone states
 ##
 ## @tutorial(State Machine Example): https://www.youtube.com/watch?v=Bm3sRxDb3js
 ## @tutorial(Advanced State Machine): https://www.youtube.com/watch?v=DPxIMVC0oZA
@@ -13,16 +9,14 @@ extends Node
 
 enum STATE {
 	NULL, ## No State
-	TITLE, ## Title Screen
-	STARTING, ## Initialize the start of the game
-	RUNNING, ## Main gameplay occuring
-	PAUSED, ## In the Pause menu
-	GAMEOVER, ## Player has lost the game
-	MENU, ## Non Debug or Pause menus
+	IDLE, ## Waiting to be deployed
+	ACTIVE, ## Currently deployed
+	RETURNING, ## Low battery, going home
+	DEAD, ## No battery, dead in the water
 }
 
-func _ready():
-	add_to_group("gamestate")
+#func _ready():
+#	add_to_group("dronestate")
 
 
 func enter() -> void:

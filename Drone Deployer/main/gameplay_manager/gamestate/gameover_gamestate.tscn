@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cojuxeikkuood"]
 
-[ext_resource type="PackedScene" uid="uid://csccs0s0gtcue" path="res://main/gameplay_manager/gamestate/base_gamestate.tscn" id="1_enme3"]
+[ext_resource type="PackedScene" uid="uid://bbnte6vksg3yh" path="res://main/gameplay_manager/gamestate/base_gamestate.tscn" id="1_enme3"]
 [ext_resource type="Script" path="res://main/gameplay_manager/gamestate/gameover_gamestate.gd" id="2_iky7g"]
 
 [node name="GameoverGamestate" instance=ExtResource("1_enme3")]

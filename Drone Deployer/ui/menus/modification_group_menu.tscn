@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://ui/menus/modification_group_menu.gd" id="1_3a0nx"]
+[ext_resource type="PackedScene" uid="uid://cjaeoy88yuim8" path="res://ui/menus/hanger_menu.tscn" id="1_r4umq"]
+[ext_resource type="PackedScene" uid="uid://wsn3sdtkkuiq" path="res://ui/menus/fabricator_menu.tscn" id="2_bmvsk"]
+[ext_resource type="PackedScene" uid="uid://cjm3ib45n2f7h" path="res://ui/menus/storage_menu.tscn" id="2_i55hd"]
+
+[node name="ModificationGroupMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3a0nx")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Hanger" parent="HBoxContainer" instance=ExtResource("1_r4umq")]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Storage" parent="HBoxContainer" instance=ExtResource("2_i55hd")]
+layout_mode = 2
+size_flags_stretch_ratio = 1.5
+
+[node name="Fabricator" parent="HBoxContainer" instance=ExtResource("2_bmvsk")]
+visible = false
+layout_mode = 2

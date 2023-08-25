@@ -1,7 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://cj0tslt5wg010"]
+[gd_scene load_steps=5 format=3 uid="uid://3iosjnrxcewp"]
 
-[ext_resource type="Script" path="res://ui/gameboard.gd" id="1_5iutp"]
-[ext_resource type="PackedScene" uid="uid://cee1i6r18g6ut" path="res://drone_core/ddcc.tscn" id="1_de6p2"]
+[ext_resource type="Script" path="res://main/gameboard.gd" id="1_1c46u"]
+[ext_resource type="PackedScene" uid="uid://cee1i6r18g6ut" path="res://drone_core/ddcc.tscn" id="2_uomh2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u7sq1"]
 size = Vector2(1920, 1080)
@@ -16,7 +16,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_5iutp")
+script = ExtResource("1_1c46u")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
@@ -38,7 +38,7 @@ grow_vertical = 2
 [node name="Midpoint" type="Control" parent="Centerer"]
 layout_mode = 2
 
-[node name="DDCC" parent="Centerer/Midpoint" instance=ExtResource("1_de6p2")]
+[node name="DDCC" parent="Centerer/Midpoint" instance=ExtResource("2_uomh2")]
 scale = Vector2(0.4, 0.4)
 
 [node name="GameboardArea" type="Area2D" parent="Centerer/Midpoint"]
@@ -72,28 +72,3 @@ rotation = -1.57079
 shape = SubResource("WorldBoundaryShape2D_ceo3k")
 
 [node name="LevelObjects" type="Node2D" parent="."]
-
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 26.0
-grow_horizontal = 2
-
-[node name="HealthLabel" type="Label" parent="HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "Health: "
-
-[node name="PlaytimeLabel" type="Label" parent="HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "Time: "
-
-[node name="ScrapLabel" type="Label" parent="HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "Scrap: "

@@ -1,8 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cikjiqcegopmc"]
 
-[ext_resource type="PackedScene" uid="uid://csccs0s0gtcue" path="res://main/gameplay_manager/gamestate/base_gamestate.tscn" id="1_y03ih"]
+[ext_resource type="PackedScene" uid="uid://bbnte6vksg3yh" path="res://main/gameplay_manager/gamestate/base_gamestate.tscn" id="1_y03ih"]
 [ext_resource type="Script" path="res://main/gameplay_manager/gamestate/starting_gamestate.gd" id="2_omsf1"]
 
 [node name="StartingGamestate" instance=ExtResource("1_y03ih")]
 script = ExtResource("2_omsf1")
-running_node = null

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://mwij3hl8u88q"]
+[gd_scene load_steps=9 format=3 uid="uid://b6bv28scxqr4f"]
 
 [ext_resource type="Script" path="res://ui/menus/menu_manager.gd" id="1_7q1n8"]
 [ext_resource type="PackedScene" uid="uid://xyinbcpdlhqm" path="res://ui/menus/main_menu.tscn" id="2_os7te"]
@@ -7,11 +7,12 @@
 [ext_resource type="PackedScene" path="res://ui/menus/game_over_menu.tscn" id="5_culkg"]
 [ext_resource type="PackedScene" uid="uid://cihk4xoa3wwe2" path="res://ui/menus/debug_menu.tscn" id="6_lsmdn"]
 [ext_resource type="PackedScene" uid="uid://wsn3sdtkkuiq" path="res://ui/menus/fabricator_menu.tscn" id="7_rdxf7"]
-[ext_resource type="PackedScene" uid="uid://bpqdwxfpa7vw3" path="res://modification_group_menu.tscn" id="8_f8efg"]
+[ext_resource type="PackedScene" path="res://ui/menus/modification_group_menu.tscn" id="8_f8efg"]
 
 [node name="MenuManager" type="CanvasLayer"]
 process_mode = 3
 editor_description = "Handles GUI menus including requesting, dismissing, and restricting invalid menu tranisitions"
+layer = 2
 script = ExtResource("1_7q1n8")
 
 [node name="MainMenu" parent="." instance=ExtResource("2_os7te")]

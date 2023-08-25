@@ -1,8 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://bieqlsxtydcf3"]
+[gd_scene load_steps=3 format=3 uid="uid://cx254fejk5rfk"]
 
-[ext_resource type="PackedScene" uid="uid://csccs0s0gtcue" path="res://main/gameplay_manager/gamestate/base_gamestate.tscn" id="1_dvdl6"]
+[ext_resource type="PackedScene" uid="uid://bbnte6vksg3yh" path="res://main/gameplay_manager/gamestate/base_gamestate.tscn" id="1_dvdl6"]
 [ext_resource type="Script" path="res://main/gameplay_manager/gamestate/title_gamestate.gd" id="2_bpyp0"]
 
 [node name="TitleGamestate" instance=ExtResource("1_dvdl6")]
 script = ExtResource("2_bpyp0")
-starting_node = null

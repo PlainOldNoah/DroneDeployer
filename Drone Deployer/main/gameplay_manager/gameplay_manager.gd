@@ -10,7 +10,8 @@ signal playtime_updated(time:int)
 signal curr_scrap_updated(scrap:float)
 ## Emitted when the total collected scrap changes
 signal total_scrap_updated(TCS:float)
-
+## Emitted when drone needs to be deployed; Running Gamestate
+signal request_drone_deploy()
 
 @onready var gamestate_manager:GamestateManager = $GamestateManager
 @onready var gameplay_timer := $GameplayTimer
@@ -102,10 +103,15 @@ func reset_game():
 
 	DroneManager.clear_drone_queue()
 
+## Running Gamestate -> HERE -> [Gameboard]
+func _on_drone_deploy_request():
+	emit_signal("request_drone_deploy")
+
+# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 ## Pasues and unpauses the game
-func toggle_pause(value:bool):
-	get_tree().set_pause(value)
+#func toggle_pause(value:bool):
+#	get_tree().set_pause(value)
 
 
 ## Safely quits to the main menu
@@ -136,6 +142,7 @@ func remove_scrap(amount:int) -> bool:
 		current_scrap -= amount
 		return true
 
+# ----- STATE CHANGES -----
 
 ## User input on resume button in pause menu
 func _on_resume_game_requested():
@@ -145,11 +152,9 @@ func _on_resume_game_requested():
 func _on_start_game_requested():
 	gamestate_manager.change_state(BaseState.STATE.STARTING)
 
-
 ## When the game as finished initializating
 func _on_game_initialized():
 	gamestate_manager.change_state(BaseState.STATE.RUNNING)
-
 
 ## Increments playtime by 1
 func _on_gameplay_timer_timeout():
