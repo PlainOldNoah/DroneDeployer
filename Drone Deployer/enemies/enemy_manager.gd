@@ -45,7 +45,8 @@ func spawn_wave(wave:Dictionary):
 
 ## After timeout check and use playtime to determine enemy wave
 func _on_enemy_spawn_clock_timeout():
-	if not enemy_wave_times.is_empty(): # Verify there are still wave times stored
+	
+	if (GameplayManager.enable_enemy_spawning) and (not enemy_wave_times.is_empty()): # Verify there are still wave times stored
 		for i in enemy_wave_times:
 			if GameplayManager.playtime >= i: # Compare the playtime to the next wave_key
 				curr_wave_key = i

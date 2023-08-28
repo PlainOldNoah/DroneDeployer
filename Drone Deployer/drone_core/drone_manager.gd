@@ -10,7 +10,6 @@ var drone_queue:Array = []
 ## Makes a new drone instance
 func create_new_drone():
 	var drone_inst := drone_scene.instantiate()
-	var _ok = drone_inst.connect("state_changed", handle_drone_state_change)
 	emit_signal("drone_created", drone_inst)
 
 
@@ -49,9 +48,9 @@ func skip_next_drone():
 
 
 ## Controls what happens when a drone's state changes
-func handle_drone_state_change(drone:Drone, state:int):
-	match state:
-		Drone.STATES.STORED:
-#			print_debug(drone, ": ", state)
-			add_drone_to_queue(drone)
+#func handle_drone_state_change(drone:Drone, state:int):
+#	match state:
+#		Drone.STATES.STORED:
+##			print_debug(drone, ": ", state)
+#			add_drone_to_queue(drone)
 		

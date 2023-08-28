@@ -53,14 +53,16 @@ var attract_target:Node = null:
 			attract_target = new_target
 			state = STATE.MOVING
 			
-		if not attract_target.state_changed.is_connected(attract_target_unavailable):
-			attract_target.state_changed.connect(attract_target_unavailable)
+#		if not attract_target.state_changed.is_connected(attract_target_unavailable):
+#			attract_target.state_changed.connect(attract_target_unavailable)
 
 
 ## Signal reciever for if the current attract_target becomes unavailable
 func attract_target_unavailable(_drone:Drone, drone_state:int):
-	if drone_state == Drone.STATES.STORED:
-		attract_target = null
+	print("ATU: ", _drone.get_drone_state(), " // ", DroneState.STATE.IDLE)
+#	if _drone.get_drone_state() == DroneState.STATE.IDLE:
+#	if drone_state == Drone.STATES.STORED:
+#		attract_target = null
 
 # =================================================================================================
 

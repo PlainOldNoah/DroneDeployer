@@ -20,7 +20,10 @@ var current_state: DroneState
 
 
 ## Intialize the state manager with the starting state
-func init():
+func init(linked_drone:Drone):
+	for child in get_children():
+		child.drone = linked_drone
+		
 	change_state(starting_state)
 
 

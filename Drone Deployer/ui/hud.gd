@@ -19,6 +19,7 @@ func _on_update_health_label(new_health:int):
 	
 ## Updates the playtime label
 func _on_update_playtime_label(new_time:int):
+	@warning_ignore("integer_division")
 	time_lbl.text = "Time: %d:%02d" % [new_time/60, new_time%60]
 	
 ## Updates the total collected scrap label

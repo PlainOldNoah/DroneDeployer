@@ -15,8 +15,7 @@ enum STATE {
 	DEAD, ## No battery, dead in the water
 }
 
-#func _ready():
-#	add_to_group("dronestate")
+var drone:Drone
 
 
 func enter() -> void:
@@ -24,7 +23,6 @@ func enter() -> void:
 
 func exit() -> void:
 	pass
-
 
 func input(_event: InputEvent) -> int:
 	return STATE.NULL

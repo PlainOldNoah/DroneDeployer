@@ -23,14 +23,14 @@ height = 162.0
 atlas = ExtResource("2_avquc")
 region = Rect2(0, 792, 264, 264)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_8xjsk"]
+radius = 192.0
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_yahjk"]
-radius = 71.1758
+radius = 82.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qk2ho"]
 radius = 132.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_kmesp"]
-radius = 512.0
 
 [node name="DDCC" type="Node2D"]
 editor_description = "Drone Deploying Control Core. Central HUB that deploys drones and serves as the \"character\""
@@ -45,12 +45,16 @@ texture = SubResource("AtlasTexture_luq3b")
 [node name="Lights" type="Sprite2D" parent="Sprites"]
 texture = SubResource("AtlasTexture_wcjxq")
 
+[node name="CollectionRange" type="Sprite2D" parent="Sprites"]
+self_modulate = Color(0, 0, 0, 1)
+scale = Vector2(1.526, 1.526)
+texture = SubResource("AtlasTexture_wcjxq")
+
 [node name="Deployer" type="Sprite2D" parent="Sprites"]
 z_index = 35
 texture = SubResource("AtlasTexture_c50b6")
 
 [node name="DeployPoint" type="Marker2D" parent="Sprites/Deployer"]
-position = Vector2(80, 0)
 
 [node name="DeploymentClearing" type="Area2D" parent="Sprites/Deployer"]
 z_index = 1
@@ -67,16 +71,25 @@ debug_color = Color(0, 0.643137, 0.294118, 0.419608)
 z_index = 35
 texture = SubResource("AtlasTexture_usjbi")
 
-[node name="Core" type="Area2D" parent="."]
+[node name="ShieldArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 38
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShieldArea"]
+shape = SubResource("CircleShape2D_8xjsk")
+debug_color = Color(0, 0.6, 0.701961, 0.0392157)
+
+[node name="DroneCollectArea" type="Area2D" parent="."]
 z_index = 1
 collision_layer = 0
-collision_mask = 6
+collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Core"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DroneCollectArea"]
 shape = SubResource("CircleShape2D_yahjk")
-debug_color = Color(0.764706, 0.172549, 1, 0.0980392)
+debug_color = Color(0.764706, 0.172549, 1, 0.0392157)
 
 [node name="Perimeter" type="Area2D" parent="."]
+visible = false
 z_index = 1
 collision_layer = 0
 collision_mask = 38
@@ -85,17 +98,8 @@ collision_mask = 38
 shape = SubResource("CircleShape2D_qk2ho")
 debug_color = Color(0.835294, 0.388235, 0, 0.0980392)
 
-[node name="CollectionRange" type="Area2D" parent="."]
-z_index = 1
-collision_layer = 0
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CollectionRange"]
-shape = SubResource("CircleShape2D_kmesp")
-debug_color = Color(0, 0.6, 0.701961, 0.117647)
-
+[connection signal="body_entered" from="ShieldArea" to="." method="_on_shield_area_body_entered"]
+[connection signal="body_exited" from="ShieldArea" to="." method="_on_shield_area_body_exited"]
 [connection signal="area_entered" from="Perimeter" to="." method="_on_perimeter_area_entered"]
 [connection signal="body_entered" from="Perimeter" to="." method="_on_perimeter_body_entered"]
 [connection signal="body_exited" from="Perimeter" to="." method="_on_perimeter_body_exited"]
-[connection signal="area_entered" from="CollectionRange" to="." method="_on_collection_range_area_entered"]
-[connection signal="body_entered" from="CollectionRange" to="." method="_on_collection_range_body_entered"]
