@@ -9,6 +9,7 @@ extends Node
 ## State enums for state names that way every script has the same interface
 @onready var states:Dictionary = {
 	DroneState.STATE.IDLE: $IdleDroneState,
+	DroneState.STATE.ARMING: $ArmingDroneState,
 	DroneState.STATE.ACTIVE: $ActiveDroneState,
 	DroneState.STATE.RETURNING: $ReturningDroneState,
 	DroneState.STATE.DEAD: $DeadDroneState, 

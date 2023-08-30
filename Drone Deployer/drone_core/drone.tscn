@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://cgx8q1e8vwntn"]
+[gd_scene load_steps=12 format=3 uid="uid://cgx8q1e8vwntn"]
 
 [ext_resource type="Script" path="res://drone_core/drone.gd" id="1_rtv2x"]
 [ext_resource type="Texture2D" uid="uid://cy1vdsb4r5r5b" path="res://assets/visual/drone_x128.png" id="2_a3kkh"]
 [ext_resource type="Script" path="res://drone_core/drone_state/drone_state_manager.gd" id="3_275fc"]
 [ext_resource type="PackedScene" uid="uid://b1opn2ph2xvsj" path="res://drone_core/drone_state/idle_drone_state.tscn" id="4_88xyg"]
+[ext_resource type="PackedScene" uid="uid://bkrgrtcw0njtb" path="res://drone_core/drone_state/arming_drone_state.tscn" id="5_kchnw"]
 [ext_resource type="PackedScene" uid="uid://dq880xcb8lo3v" path="res://drone_core/drone_state/active_drone_state.tscn" id="5_y68xj"]
 [ext_resource type="PackedScene" uid="uid://xxxovnei82h5" path="res://drone_core/drone_state/returning_drone_state.tscn" id="6_ruc6w"]
 [ext_resource type="PackedScene" uid="uid://dpsgcjbncvg0r" path="res://drone_core/drone_state/dead_drone_state.tscn" id="7_e0dg1"]
@@ -18,7 +19,7 @@ radius = 64.0
 radius = 180.0
 
 [node name="Drone" type="CharacterBody2D"]
-scale = Vector2(0.25, 0.25)
+scale = Vector2(0.5, 0.5)
 collision_layer = 2
 collision_mask = 3
 script = ExtResource("1_rtv2x")
@@ -51,6 +52,8 @@ script = ExtResource("3_275fc")
 starting_state = 1
 
 [node name="IdleDroneState" parent="DroneStateManager" instance=ExtResource("4_88xyg")]
+
+[node name="ArmingDroneState" parent="DroneStateManager" instance=ExtResource("5_kchnw")]
 
 [node name="ActiveDroneState" parent="DroneStateManager" instance=ExtResource("5_y68xj")]
 

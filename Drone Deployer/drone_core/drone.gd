@@ -51,10 +51,6 @@ var knockback_cutoff:float = 10.0
 
 ## Flag for if the drone has moved outside the shield range
 var exited_shield_area:bool = false
-## Flag for if the DDCC can collect this drone when it comes in contact
-var ddcc_collectable:bool = false
-## Distance away from DDCC in which a drone would be collected
-var ddcc_collect_distance:int = 10
 
 
 func _ready():
@@ -66,7 +62,6 @@ func _ready():
 
 func _physics_process(delta):
 	drone_state_manager.physics_process(delta)
-	ddcc_collect()
 
 func _process(delta):
 	drone_state_manager.process(delta)
@@ -111,24 +106,18 @@ func deploy(deploy_pos:Vector2, deploy_angle:float):
 	set_global_position(deploy_pos)
 	set_velocity_from_radians(deploy_angle)
 	set_facing_direction(true)
-	drone_state_manager.change_state(DroneState.STATE.ACTIVE)
+	drone_state_manager.change_state(DroneState.STATE.ARMING)
 
 
-## Returns the current state the drone is in
+# Returns the current state the drone is in
 func get_drone_state() -> DroneState:
 	return drone_state_manager.current_state
 
+## Returns true if the current drone state matches the paramater match_state
+func is_current_state(match_state:DroneState.STATE) -> int:
+	return get_drone_state() == drone_state_manager.states[match_state]
 
-## When the drone moves far enough away set ddcc_collectable to true
-## Once true if the drone gets within that distance to the ddcc, go to hanger
-func ddcc_collect():
-	if ddcc_collectable == false:
-		if self.global_position.distance_to(home_pos) > ddcc_collect_distance:
-			ddcc_collectable = true
-	else:
-		if self.global_position.distance_to(home_pos) <= ddcc_collect_distance:
-			drone_state_manager.change_state(DroneState.STATE.IDLE)
-
+### ----- START MOVE -----
 
 ## Moves and collides both normally and with knockback
 func move(delta:float):
@@ -150,9 +139,13 @@ func move(delta:float):
 ## Handles what happens when drone is colliding
 func handle_collision(collision:KinematicCollision2D):
 	var collider = collision.get_collider()
-
+	# Hit drone
 	if collider.is_in_group("drone"):
 		knockback_velocity = collider.global_position.direction_to(global_position) * 50
+	# Battery low
+	elif (stats.battery / stats.max_battery) <= stats.battery_return_threshold:
+		drone_state_manager.change_state(DroneState.STATE.RETURNING)
+		
 	else:
 		set_velocity_from_vector(velocity.bounce(collision.get_normal()))
 
@@ -161,21 +154,26 @@ func handle_collision(collision:KinematicCollision2D):
 func handle_knockback(delta:float):
 	knockback_velocity = knockback_velocity.lerp(Vector2.ZERO, 1 * delta)
 
-
-func temp():
-	pass
-#	if exited_shield_area:
-#		drone_state_manager.change_state(DroneState.STATE.IDLE)
-
+### ----- END MOVE -----
 
 ## When the drone enters the shield area, go to the hanger
 func _on_ddcc_shield_area_entered():
-	if exited_shield_area:
+	if is_current_state(DroneState.STATE.ACTIVE):
 		drone_state_manager.change_state(DroneState.STATE.RETURNING)
 
 ## When the drone exits the shield area for the first time
 func _on_ddcc_shield_area_exited():
-	exited_shield_area = true
+	pass
+
+## When exiting the DDCC, enter the ACTIVE state if in the ARMING state
+func _on_ddcc_collection_pt_exited():
+	if is_current_state(DroneState.STATE.ARMING):
+		drone_state_manager.change_state(DroneState.STATE.ACTIVE)
+
+## When entering the DDCC, allow collection if ACTIVE or RETURNING
+func _on_ddcc_collection_pt_entered():
+	if is_current_state(DroneState.STATE.ACTIVE) or is_current_state(DroneState.STATE.RETURNING):
+		drone_state_manager.change_state(DroneState.STATE.IDLE)
 
 # ------------------------------------------------------------------------------
 
@@ -218,7 +216,7 @@ func ddcc_collection_range_entered():
 
 
 ## Handles enemies that collide with the "body"
-func _on_scanner_area_entered(area):
+func _on_scanner_area_entered(_area):
 	pass
 #	if area.is_in_group("enemy"):
 #		if area.health > stats.damage:

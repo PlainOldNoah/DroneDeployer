@@ -39,7 +39,7 @@ grow_vertical = 2
 layout_mode = 2
 
 [node name="DDCC" parent="Centerer/Midpoint" instance=ExtResource("2_uomh2")]
-scale = Vector2(0.4, 0.4)
+scale = Vector2(0.8, 0.8)
 
 [node name="GameboardArea" type="Area2D" parent="Centerer/Midpoint"]
 collision_layer = 16

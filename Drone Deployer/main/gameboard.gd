@@ -21,22 +21,9 @@ extends Control
 func _ready():
 	set_boundries()
 	set_process_input(false)
-	var _ok := DroneManager.connect("drone_created", add_node_to_lvl_obj)
-	_ok = EnemyManager.connect("enemy_created", add_enemy_to_map)
-	_ok = GameplayManager.request_drone_deploy.connect(ddcc.deploy_next_drone)
-
-#func _on_game_state_updated(state):
-#	match state:
-#		GameplayManager.GAMESTATE.STARTING, GameplayManager.GAMESTATE.RUNNING:
-#			set_process_input(true)
-#		GameplayManager.GAMESTATE.PAUSED:
-#			set_process_input(false)
-#		GameplayManager.GAMESTATE.TITLE, GameplayManager.GAMESTATE.ENDING:
-#			set_process_input(false)
-#			clear_all_level_objs()
-#		_:
-#			print_debug("ERROR: bad state set <", state, ">")
-
+	DroneManager.connect("drone_created", add_node_to_lvl_obj)
+	EnemyManager.connect("enemy_created", add_enemy_to_map)
+	GameplayManager.request_drone_deploy.connect(ddcc.deploy_next_drone)
 
 
 ## Adjusts the world borders to the edge of the map

@@ -6,10 +6,14 @@ extends Node2D
 ## Acts as main controlling object, most functionality offloaded to gameplay manager
 
 @export var rotation_weight:float = 0.2
-@onready var deployer := $Sprites/Deployer
-@onready var deploy_pnt := $Sprites/Deployer/DeployPoint
-@onready var deploy_clearing := $Sprites/Deployer/DeploymentClearing
+@onready var deployer := $Sprites
+@onready var deploy_pnt := $Sprites/DeployPoint
+@onready var deploy_clearing := $Sprites/DeploymentClearing
 
+
+#func _ready():
+#	$Sprites/Core.set_z_index(40)
+#	$Sprites/Inside.set_z_index(20)
 
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
@@ -38,21 +42,31 @@ func deploy_next_drone():
 		if drone != null:
 			drone.deploy(deploy_pnt.global_position, deployer.rotation)
 
+# ----- Signals -----
 
+## Drone enters the shield area
 func _on_shield_area_body_entered(body):
 	if body.is_in_group("drone"):
 		body._on_ddcc_shield_area_entered()
 
+## Drone leaves the shield area
 func _on_shield_area_body_exited(body):
 	if body.is_in_group("drone"):
 		body._on_ddcc_shield_area_exited()
 
+## Drone enters the collection area/point
 func _on_drone_collect_area_body_entered(body):
 	if body.is_in_group("drone"):
-		body.temp()
+		body._on_ddcc_collection_pt_entered()
+
+## Drone leaves the collection area/point
+func _on_drone_collect_area_body_exited(body):
+	if body.is_in_group("drone"):
+		body._on_ddcc_collection_pt_exited()
+
 ## -=-=-=-=--=-=-=-=--=-=-=-=--=-=-=-=--=-=-=-=--=-=-=-=--=-=-=-=--=-=-=-=--=-=
 
-func _on_perimeter_area_entered(area):
+func _on_perimeter_area_entered(_area):
 	pass
 #	if area.is_in_group("enemy"):
 #		GameplayManager.ddcc_take_hit(area.damage)
@@ -62,28 +76,31 @@ func _on_perimeter_area_entered(area):
 #		area.queue_free()
 
 
-func _on_perimeter_body_entered(body):
+func _on_perimeter_body_entered(_body):
 	pass
 #	if body.is_in_group("drone") and body.collectable == true:
 #		GameplayManager.add_scrap(body.transfer_scrap())
 #		body.store()
 
 
-func _on_perimeter_body_exited(body):
+func _on_perimeter_body_exited(_body):
 	pass
 #	if body.is_in_group("drone"):
 #		body.collectable = true
 
 
-func _on_collection_range_body_entered(body):
+func _on_collection_range_body_entered(_body):
 	pass
 #	if body.is_in_group("drone") and body.collectable == true:
 #		body.ddcc_collection_range_entered()
 
 
-func _on_collection_range_area_entered(area): # TODO
-	if area.is_in_group("scrap"):
-		print("SCRAP IN AREA")
+#func _on_collection_range_area_entered(area): # TODO
+#	if area.is_in_group("scrap"):
+#		print("SCRAP IN AREA")
+
+
+
 
 
 

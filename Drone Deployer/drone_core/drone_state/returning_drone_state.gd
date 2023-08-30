@@ -1,9 +1,8 @@
-extends DroneState
+extends MovingDroneState
 
 
 func enter() -> void:
-	# Set target for the DDCC
-	pass
+	drone.set_velocity_from_vector(drone.home_pos - drone.get_global_position()) # go home
 
 func exit() -> void:
 	pass

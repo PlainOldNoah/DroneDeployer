@@ -10,6 +10,7 @@ extends Node
 enum STATE {
 	NULL, ## No State
 	IDLE, ## Waiting to be deployed
+	ARMING, ## Preparing to be active
 	ACTIVE, ## Currently deployed
 	RETURNING, ## Low battery, going home
 	DEAD, ## No battery, dead in the water
