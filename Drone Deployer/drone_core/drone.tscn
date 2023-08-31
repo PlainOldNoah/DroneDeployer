@@ -39,11 +39,11 @@ shape = SubResource("CircleShape2D_txlfk")
 disabled = true
 debug_color = Color(0.552941, 0.564706, 0, 0.235294)
 
-[node name="CollectionRange" type="Area2D" parent="."]
+[node name="VacuumArea" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 32
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CollectionRange"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VacuumArea"]
 shape = SubResource("CircleShape2D_mrykf")
 disabled = true
 
@@ -61,5 +61,5 @@ starting_state = 1
 
 [node name="DeadDroneState" parent="DroneStateManager" instance=ExtResource("7_e0dg1")]
 
-[connection signal="area_entered" from="PseudoBody" to="." method="_on_scanner_area_entered"]
-[connection signal="area_entered" from="CollectionRange" to="." method="_on_collection_range_area_entered"]
+[connection signal="area_entered" from="PseudoBody" to="." method="_on_pseudo_body_area_entered"]
+[connection signal="area_entered" from="VacuumArea" to="." method="_on_vacuum_area_area_entered"]

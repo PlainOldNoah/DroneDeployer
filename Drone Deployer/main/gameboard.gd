@@ -38,7 +38,7 @@ func set_boundries():
 func add_node_to_lvl_obj(object:Node):
 	lvl_obj.call_deferred("add_child", object)
 	if object is Drone:
-		object.home_pos = ddcc.get_global_position()
+		object.data.home_pos = ddcc.get_global_position()
 
 
 ## Spawns and places an enemy on the gameboard

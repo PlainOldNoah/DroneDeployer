@@ -6,7 +6,7 @@ func enter() -> void:
 	drone.disable_collision_shapes(true, true)
 	drone.set_visible(false)
 	drone.set_velocity_from_vector(Vector2i.ZERO, 0)
-	drone.global_position = drone.home_pos
+	drone.global_position = drone.data.home_pos
 	
 	DroneManager.add_drone_to_queue(drone)
 
