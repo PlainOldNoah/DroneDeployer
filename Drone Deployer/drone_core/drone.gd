@@ -15,63 +15,8 @@ signal stats_updated(drone:Drone)
 ## Drone State Manager, handles drone states
 @onready var drone_state_manager:DroneStateManager = $DroneStateManager
 
-#var stats:Dictionary = {
-#	"max_speed":100.0,
-#	"speed":200,
-#
-#	"damage":1,
-#
-#	"max_battery":100,
-#	"battery":100.0,
-#	"battery_drain":0,
-#	"battery_return_threshold":0.1,
-#
-#	"display_name":"",
-#}
-
 ## Create a new DroneData resource
 var data:DroneData = DroneData.new()
-
-#print(drone_data.collected_scrap)
-
-### Drone name as appears to the player
-#@export var display_name:String = "Drone"
-### How much health enemies lose when hit
-##@export_range(1, 9999) var damage:int = 1
-### How much scrap is current stored within self
-#var collected_scrap:float = 0.0
-### Point to return to when at low battery
-#var home_pos:Vector2 = Vector2.ZERO
-
-#@export_category("Speed")
-### Top speed of the drone
-#@export_range(0, 9999) var max_speed:int = 200
-### Current moving speed
-#var speed:int = 200
-
-#@export_category("Battery")
-### Total battery of drone
-#@export_range(0, 9999) var max_battery:float = 100.0
-### Current battery of drone
-#var battery:float = max_battery
-### Battery depleted per second
-#@export_range(0.0, 9999) var battery_drain:float = 0.0
-### Percent of battery remaining that drone returns on
-#@export_range(0, 100) var low_battery_threshold = 0.10
-
-
-#@export_category("Knockback")
-### Velocity only used in knockback
-#var knockback_velocity:Vector2
-### How much the drone is affected by knockback
-#@export_range(0.0, 9999) var mass:float = 10.0
-### Value in which knockback is no longer significient
-#@export_range(0.0, 100) var knockback_cutoff:float = 10.0
-
-## Number of times to be knocked back before bouncing
-#var bounces:int = 1
-## Can be picked up by DDCC
-#var collectable:bool = false
 
 # === Overridden ===
 
