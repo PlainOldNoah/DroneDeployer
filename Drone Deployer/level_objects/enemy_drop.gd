@@ -1,4 +1,4 @@
-extends "res://lvl_objects/base_pickup.gd"
+extends "res://level_objects/base_pickup.gd"
 
 var scrap_value := 0.0
 

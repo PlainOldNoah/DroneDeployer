@@ -1,10 +1,14 @@
+class_name BaseEnemy
 extends Area2D
 
 signal died(enemy:Node)
 
-@export_range(0,999) var speed = 0
-@export_range(0,999) var max_hp = 0
+@export_range(0,999) var speed = 100
+@export_range(0,999) var max_hp = 1
 @export_range(0,999) var damage = 0
+
+## What this enemy will drop upon death. See [EnemyDrop].
+@export var death_drops:Array[EnemyDrop] = []
 
 var health:int = max_hp:
 	set(new_health):

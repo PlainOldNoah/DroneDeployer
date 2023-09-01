@@ -109,20 +109,20 @@ func set_facing_direction(instantly:bool=true):
 		rotation = lerp_angle(rotation, velocity.angle() + PI/2, 0.15)
 
 ## Sets the velocity from a provided angle in radians and speed
-func set_velocity_from_radians(radians:float, speed:int=data.speed):
+func set_velocity_from_radians(radians:float, speed:float=data.speed):
 	set_velocity_from_vector(Vector2.from_angle(radians), speed)
 
 ## Sets the velocity from a provided vector
-func set_velocity_from_vector(vector:Vector2, speed:int=data.speed):
+func set_velocity_from_vector(vector:Vector2, speed:float=data.speed):
 	set_velocity(vector.normalized() * speed)
 
 # === Misc ===
 
 func debug_randomize_values():
 	$Sprite.modulate = Color(randf(), randf(), randf())
-	data.max_speed = randi_range(100, 300)
-	data.damage = randi_range(1,10)
-	data.max_battery = randi_range(100,500)
+#	data.max_speed = randi_range(100, 300)
+#	data.damage = randi_range(1,10)
+#	data.max_battery = randi_range(100,500)
 	emit_signal("stats_updated", self)
 
 ## Toggle both the solid colliding body as well as the area2d scanners
@@ -132,27 +132,22 @@ func disable_collision_shapes(solid_body_value:bool, scanner_value:bool):
 	collection_range.get_node("CollisionShape2D").set_deferred("disabled", scanner_value)
 
 
-## Set the drone to collectable when outside the range
-#func ddcc_perimeter_exited():
-#	collectable = true
-
-
+## When an enemy or pickup enters the Drone's "Body"
 func _on_pseudo_body_area_entered(area):
-	pass
-#	if area.is_in_group("enemy"):
-#		if area.health > data.damage:
-#			data.speed = data.max_speed # TEMP FIX
-#			activate_knockback()
-#			area.take_hit(data.damage)
-#		else:
-#			area.take_hit(data.damage)
-#	elif area.is_in_group("pickup"):
-#		collected_scrap += area.scrap_value
-#		area.queue_free()
+	if area.is_in_group("enemy"):
+		if area.health > data.damage:
+			data.knockback_velocity = area.global_position.direction_to(global_position) * 200
+			area.take_hit(data.damage)
+		else:
+			area.take_hit(data.damage)
+	elif area.is_in_group("scrap"):
+		data.collected_scrap += area.value
+		area.queue_free()
 
 
+## Begins attraction of scrap items
 func _on_vacuum_area_area_entered(area):
-	pass # Replace with function body.
+	area.attract_target = self
 
 
 ## Returns the current scrap amount and resets it to 0
@@ -160,15 +155,3 @@ func transfer_scrap() -> int:
 	var output := roundi(data.collected_scrap)
 	data.collected_scrap = 0
 	return output
-
-
-# Setter for stats, prints warning if statically typed items are unequal
-#func set_stat(stat:String, value):
-#	if data.has(stat):
-#		if (typeof(data.get(stat))) != (typeof(value)):
-#			print_debug("WARNING: setting drone stat of type <", (typeof(data.get(stat))), "> with type <", (typeof(value)), ">")
-#		data[stat] = value
-
-
-
-

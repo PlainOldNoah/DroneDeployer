@@ -1,8 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://chcyg88atn7o5"]
+[gd_scene load_steps=5 format=3 uid="uid://cgb0hjnqj22g"]
 
-[ext_resource type="PackedScene" uid="uid://8c5vs6jxnlge" path="res://lvl_objects/base_pickup.tscn" id="1_vsc6o"]
+[ext_resource type="PackedScene" path="res://level_objects/base_pickup.tscn" id="1_vsc6o"]
 [ext_resource type="Texture2D" uid="uid://cyjq13tmcd5j6" path="res://assets/visual/splatter_spritesheet.png" id="2_5m44v"]
-[ext_resource type="Script" path="res://lvl_objects/enemy_drop.gd" id="2_jkol5"]
+[ext_resource type="Script" path="res://level_objects/enemy_drop.gd" id="2_jkol5"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_q20ad"]
 radius = 13.0

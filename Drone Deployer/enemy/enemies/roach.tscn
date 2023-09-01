@@ -1,0 +1,32 @@
+[gd_scene load_steps=8 format=3 uid="uid://da6phyx6p7d8l"]
+
+[ext_resource type="PackedScene" uid="uid://bli1nht8rstt8" path="res://enemy/enemies/base_enemy.tscn" id="1_hukca"]
+[ext_resource type="Script" path="res://enemy/enemies/roach.gd" id="1_lsbt8"]
+[ext_resource type="Texture2D" uid="uid://12ok6po7sk3k" path="res://assets/visual/roach.png" id="2_mhnil"]
+[ext_resource type="Script" path="res://enemy/enemy_drop.gd" id="3_mkesk"]
+[ext_resource type="PackedScene" uid="uid://bit6m1tc8743v" path="res://level_objects/scrap/slime.tscn" id="3_qucee"]
+
+[sub_resource type="Resource" id="Resource_s3jes"]
+script = ExtResource("3_mkesk")
+drop_scene = ExtResource("3_qucee")
+count = 15
+spread = 500
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xhers"]
+radius = 29.0
+height = 142.0
+
+[node name="Roach" instance=ExtResource("1_hukca")]
+scale = Vector2(0.5, 0.5)
+script = ExtResource("1_lsbt8")
+speed = 80
+damage = 1
+death_drops = Array[ExtResource("3_mkesk")]([SubResource("Resource_s3jes")])
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_mhnil")
+
+[node name="CollisionShape2D" parent="." index="2"]
+position = Vector2(-9, 0)
+rotation = 1.57079
+shape = SubResource("CapsuleShape2D_xhers")

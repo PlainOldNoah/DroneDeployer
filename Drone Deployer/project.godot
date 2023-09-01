@@ -21,7 +21,7 @@ config/icon="res://assets/visual/drone_x128.png"
 GameplayManager="*res://main/gameplay_manager/gameplay_manager.tscn"
 MenuManager="*res://ui/menu_manager.tscn"
 DroneManager="*res://drone_core/drone_manager.gd"
-EnemyManager="*res://enemies/enemy_manager.tscn"
+EnemyManager="*res://enemy/enemy_manager.tscn"
 AugmentFactory="*res://drone_mods/augment_factory.gd"
 CraftingDb="*res://databases/crafting_db.gd"
 

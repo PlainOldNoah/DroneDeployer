@@ -5,15 +5,15 @@ signal enemy_created(enemy:Node)
 
 var enemy_waves:Dictionary = {
 	3:{
-		"enemy":"res://enemies/roach.tscn",
+		"enemy":"res://enemy/enemies/roach.tscn",
 		"count":[1,1]
 	},
 	12:{
-		"enemy":"res://enemies/roach.tscn",
+		"enemy":"res://enemy/enemies/roach.tscn",
 		"count":[4,8]
 	},
 	24:{
-		"enemy":"res://enemies/roach.tscn",
+		"enemy":"res://enemy/enemies/roach.tscn",
 		"count":[10,20]
 	},
 }

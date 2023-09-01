@@ -1,11 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://e7ud1rls0atx"]
+[gd_scene load_steps=2 format=3 uid="uid://bli1nht8rstt8"]
 
-[ext_resource type="Script" path="res://enemies/base_enemy.gd" id="1_uxrr6"]
+[ext_resource type="Script" path="res://enemy/enemies/base_enemy.gd" id="1_cm8ia"]
 
 [node name="BaseEnemy" type="Area2D"]
 collision_layer = 4
 collision_mask = 0
-script = ExtResource("1_uxrr6")
+script = ExtResource("1_cm8ia")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 

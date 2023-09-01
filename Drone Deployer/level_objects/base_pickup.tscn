@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://8c5vs6jxnlge"]
+[gd_scene load_steps=2 format=3 uid="uid://c1rq7ccyghbnb"]
 
-[ext_resource type="Script" path="res://lvl_objects/base_pickup.gd" id="1_hqoa6"]
+[ext_resource type="Script" path="res://level_objects/base_pickup.gd" id="1_hqoa6"]
 
 [node name="BasePickup" type="Area2D"]
 collision_layer = 32

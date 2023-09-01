@@ -13,7 +13,6 @@
 process_mode = 3
 editor_description = "Handles all gameplay events such as spawning enemies, controlling difficulty, updating score, taking damage, etc."
 script = ExtResource("1_y4rj8")
-enable_enemy_spawning = false
 ddcc_max_health = 999
 starting_drones = 3
 
