@@ -1,10 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://3iosjnrxcewp"]
+[gd_scene load_steps=4 format=3 uid="uid://3iosjnrxcewp"]
 
 [ext_resource type="Script" path="res://main/gameboard.gd" id="1_1c46u"]
 [ext_resource type="PackedScene" uid="uid://cee1i6r18g6ut" path="res://drone_core/ddcc.tscn" id="2_uomh2"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_u7sq1"]
-size = Vector2(1920, 1080)
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ceo3k"]
 
@@ -40,14 +37,6 @@ layout_mode = 2
 
 [node name="DDCC" parent="Centerer/Midpoint" instance=ExtResource("2_uomh2")]
 scale = Vector2(0.8, 0.8)
-
-[node name="GameboardArea" type="Area2D" parent="Centerer/Midpoint"]
-collision_layer = 16
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Centerer/Midpoint/GameboardArea"]
-shape = SubResource("RectangleShape2D_u7sq1")
-debug_color = Color(0, 0.6, 0.701961, 0.0627451)
 
 [node name="MapBounds" type="StaticBody2D" parent="."]
 

@@ -42,6 +42,20 @@ func deploy_next_drone():
 		if drone != null:
 			drone.deploy(deploy_pnt.global_position, deployer.rotation)
 
+
+## When an enemy hits the shield take damage and remove the enemy
+func take_hit(enemy:BaseEnemy):
+	GameplayManager.ddcc_take_hit(enemy.damage)
+	enemy.queue_free()
+
+
+## When a scrap item enters the shield area, collect it
+func collect_scrap(scrap:Scrap):
+	GameplayManager.add_scrap(scrap._on_collected())
+#	GameplayManager.add_scrap(round(scrap.value))
+#	scrap.queue_free()
+
+
 # ----- Signals -----
 
 ## Drone enters the shield area
@@ -54,6 +68,13 @@ func _on_shield_area_body_exited(body):
 	if body.is_in_group("drone"):
 		body._on_ddcc_shield_area_exited()
 
+## Enemy enters shield area
+func _on_shield_area_area_entered(area):
+	if area.is_in_group("enemy"):
+		take_hit(area)
+	elif area.is_in_group("scrap"):
+		collect_scrap(area)
+
 ## Drone enters the collection area/point
 func _on_drone_collect_area_body_entered(body):
 	if body.is_in_group("drone"):
@@ -63,50 +84,3 @@ func _on_drone_collect_area_body_entered(body):
 func _on_drone_collect_area_body_exited(body):
 	if body.is_in_group("drone"):
 		body._on_ddcc_collection_pt_exited()
-
-## -=-=-=-=--=-=-=-=--=-=-=-=--=-=-=-=--=-=-=-=--=-=-=-=--=-=-=-=--=-=-=-=--=-=
-
-func _on_perimeter_area_entered(_area):
-	pass
-#	if area.is_in_group("enemy"):
-#		GameplayManager.ddcc_take_hit(area.damage)
-#		area.queue_free()
-#	elif area.is_in_group("scrap"):
-#		GameplayManager.add_scrap(area.scrap_value)
-#		area.queue_free()
-
-
-func _on_perimeter_body_entered(_body):
-	pass
-#	if body.is_in_group("drone") and body.collectable == true:
-#		GameplayManager.add_scrap(body.transfer_scrap())
-#		body.store()
-
-
-func _on_perimeter_body_exited(_body):
-	pass
-#	if body.is_in_group("drone"):
-#		body.collectable = true
-
-
-func _on_collection_range_body_entered(_body):
-	pass
-#	if body.is_in_group("drone") and body.collectable == true:
-#		body.ddcc_collection_range_entered()
-
-
-#func _on_collection_range_area_entered(area): # TODO
-#	if area.is_in_group("scrap"):
-#		print("SCRAP IN AREA")
-
-
-
-
-
-
-
-
-
-
-
-

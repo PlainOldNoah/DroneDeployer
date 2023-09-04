@@ -1,6 +1,10 @@
 extends Node
 
+## Drone Manager; Handles [Drone]s
+
+## Emitted when a drone is created
 signal drone_created(drone:Drone)
+## Emitted when a drone is deployed
 signal drone_deployed(drone:Drone)
 
 var drone_queue:Array = []

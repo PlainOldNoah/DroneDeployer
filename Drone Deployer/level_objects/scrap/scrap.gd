@@ -23,7 +23,7 @@ func _ready():
 	set_physics_process(false)
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	move_to(attract_target.global_position)
 
 
@@ -33,11 +33,19 @@ func randomize_texture_variation():
 	sprite.frame = randi_range(0, frame_count - 1)
 	sprite.rotate(randf_range(0, TAU))
 
+
 ## Scales up or down the scrap based on defined size_variance
 func randomize_size():
 	var rand_size_mult:float = randf_range(1 - size_variance, 1 + size_variance)
 	scale *= rand_size_mult
 
+
 ## Lerps from current position to location
 func move_to(location:Vector2):
 	global_position = global_position.lerp(location, 0.1)
+
+
+## Returns it's value and then frees itself
+func _on_collected():
+	queue_free()
+	return value

@@ -151,7 +151,7 @@ func _on_vacuum_area_area_entered(area):
 
 
 ## Returns the current scrap amount and resets it to 0
-func transfer_scrap() -> int:
+func get_and_reset_scrap() -> int:
 	var output := roundi(data.collected_scrap)
 	data.collected_scrap = 0
 	return output

@@ -1,8 +1,0 @@
-00 - Ground/Map
-30 - Drones
-
---- OLD ---
-
-20 - Enemies
-10 - Objects/Debris/Dead Drones
-35 - DDCC (Deployer/Cover)

@@ -109,10 +109,6 @@ func _on_drone_deploy_request():
 
 # =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
-## Pasues and unpauses the game
-#func toggle_pause(value:bool):
-#	get_tree().set_pause(value)
-
 
 ## Safely quits to the main menu
 func quit_to_title():

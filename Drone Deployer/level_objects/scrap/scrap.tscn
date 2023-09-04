@@ -3,6 +3,8 @@
 [ext_resource type="Script" path="res://level_objects/scrap/scrap.gd" id="1_w4hve"]
 
 [node name="Scrap" type="Area2D"]
+collision_layer = 32
+collision_mask = 0
 script = ExtResource("1_w4hve")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

@@ -22,3 +22,10 @@ func _on_add_scrap_pressed():
 func _on_add_health_pressed():
 	GameplayManager.ddcc_health += %HealthAmount.get_value()
 #	print("DEBUG // added health")
+
+
+## Set all active and arming drones to the returning state
+func recall_all_drones():
+	for i in DroneManager.drone_queue:
+		if i.is_current_state(DroneState.STATE.ACTIVE) or i.is_current_state(DroneState.STATE.ARMING):
+			i.drone_state_manager.change_state(DroneState.STATE.RETURNING)

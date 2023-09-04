@@ -1,6 +1,9 @@
 class_name BaseEnemy
 extends Area2D
 
+## Base class for enemies, handles basic enemy functions
+
+## Emitted when health is 0
 signal died(enemy:Node)
 
 @export_range(0,999) var speed = 100
