@@ -1,53 +1,35 @@
-[gd_scene load_steps=3 format=3 uid="uid://cjaeoy88yuim8"]
+[gd_scene load_steps=4 format=3 uid="uid://cjaeoy88yuim8"]
 
 [ext_resource type="PackedScene" uid="uid://cwwp6l365mm0f" path="res://ui/menus/base_menu.tscn" id="1_7dtce"]
 [ext_resource type="Script" path="res://ui/menus/hanger_menu.gd" id="2_3ppgg"]
+[ext_resource type="Texture2D" uid="uid://cy1vdsb4r5r5b" path="res://assets/visual/drone_x128.png" id="3_6p3u0"]
 
 [node name="HangerMenu" instance=ExtResource("1_7dtce")]
 anchors_preset = -1
 anchor_right = 0.5
 script = ExtResource("2_3ppgg")
-metadata/_edit_use_anchors_ = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="." index="1"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="FocusedDrone" type="Control" parent="HBoxContainer" index="0"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" index="0"]
 layout_mode = 2
-size_flags_horizontal = 3
-metadata/_edit_use_anchors_ = true
-
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/FocusedDrone" index="0"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
 theme_override_constants/separation = 10
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer/FocusedDrone/VBoxContainer" index="0"]
+[node name="CurrentDrone" type="HBoxContainer" parent="MarginContainer/VBoxContainer" index="0"]
 layout_mode = 2
-size_flags_vertical = 3
 theme_override_constants/separation = 10
 
-[node name="DroneIcon" type="TextureRect" parent="HBoxContainer/FocusedDrone/VBoxContainer/HBoxContainer2" index="0"]
-custom_minimum_size = Vector2(92, 92)
+[node name="DroneIcon" type="TextureRect" parent="MarginContainer/VBoxContainer/CurrentDrone" index="0"]
 layout_mode = 2
-size_flags_horizontal = 3
+texture = ExtResource("3_6p3u0")
+stretch_mode = 5
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/FocusedDrone/VBoxContainer/HBoxContainer2" index="1"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/CurrentDrone" index="1"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 4
 theme_override_constants/separation = 10
 
-[node name="DroneName" type="LineEdit" parent="HBoxContainer/FocusedDrone/VBoxContainer/HBoxContainer2/VBoxContainer" index="0"]
+[node name="DroneName" type="LineEdit" parent="MarginContainer/VBoxContainer/CurrentDrone/VBoxContainer" index="0"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
@@ -57,7 +39,7 @@ max_length = 20
 clear_button_enabled = true
 metadata/_edit_use_anchors_ = true
 
-[node name="DroneColorLabel" type="Label" parent="HBoxContainer/FocusedDrone/VBoxContainer/HBoxContainer2/VBoxContainer" index="1"]
+[node name="DroneColorLabel" type="Label" parent="MarginContainer/VBoxContainer/CurrentDrone/VBoxContainer" index="1"]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Drone Color"
@@ -65,54 +47,54 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/FocusedDrone/VBoxContainer" index="1"]
+[node name="Navigation" type="HBoxContainer" parent="MarginContainer/VBoxContainer" index="1"]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="PreviousDrone" type="Button" parent="HBoxContainer/FocusedDrone/VBoxContainer/HBoxContainer" index="0"]
+[node name="PreviousDrone" type="Button" parent="MarginContainer/VBoxContainer/Navigation" index="0"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "<"
+text = "Previous Drone"
 metadata/_edit_use_anchors_ = true
 
-[node name="NextDrone" type="Button" parent="HBoxContainer/FocusedDrone/VBoxContainer/HBoxContainer" index="1"]
+[node name="NextDrone" type="Button" parent="MarginContainer/VBoxContainer/Navigation" index="1"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = ">"
+text = "Next Drone"
 metadata/_edit_use_anchors_ = true
 
-[node name="DroneStats" type="Label" parent="HBoxContainer/FocusedDrone/VBoxContainer" index="2"]
+[node name="DroneStats" type="Label" parent="MarginContainer/VBoxContainer" index="2"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 text = "Drone Stats"
 metadata/_edit_use_anchors_ = true
 
-[node name="HSeparator" type="HSeparator" parent="HBoxContainer/FocusedDrone/VBoxContainer" index="3"]
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer" index="3"]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="AddedAugments" type="GridContainer" parent="HBoxContainer/FocusedDrone/VBoxContainer" index="4"]
+[node name="AddedAugments" type="GridContainer" parent="MarginContainer/VBoxContainer" index="4"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer" index="1"]
-visible = false
+[node name="ControlBtns" type="HBoxContainer" parent="MarginContainer/VBoxContainer" index="5"]
 layout_mode = 2
-size_flags_horizontal = 3
 
-[node name="AvailableAugments" type="GridContainer" parent="HBoxContainer/VBoxContainer" index="0"]
+[node name="AssembleBtn" type="Button" parent="MarginContainer/VBoxContainer/ControlBtns" index="0"]
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-columns = 5
-
-[node name="AssembleBtn" type="Button" parent="HBoxContainer/VBoxContainer" index="1"]
-layout_mode = 2
+size_flags_horizontal = 6
 text = "Assemble"
 
-[connection signal="text_submitted" from="HBoxContainer/FocusedDrone/VBoxContainer/HBoxContainer2/VBoxContainer/DroneName" to="." method="_on_drone_name_text_submitted"]
-[connection signal="pressed" from="HBoxContainer/FocusedDrone/VBoxContainer/HBoxContainer/PreviousDrone" to="." method="_on_previous_drone_pressed"]
-[connection signal="pressed" from="HBoxContainer/FocusedDrone/VBoxContainer/HBoxContainer/NextDrone" to="." method="_on_next_drone_pressed"]
-[connection signal="pressed" from="HBoxContainer/VBoxContainer/AssembleBtn" to="." method="_on_assemble_btn_pressed"]
+[node name="ClearBtn" type="Button" parent="MarginContainer/VBoxContainer/ControlBtns" index="1"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 6
+text = "Clear"
+
+[connection signal="text_submitted" from="MarginContainer/VBoxContainer/CurrentDrone/VBoxContainer/DroneName" to="." method="_on_drone_name_text_submitted"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Navigation/PreviousDrone" to="." method="_on_previous_drone_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Navigation/NextDrone" to="." method="_on_next_drone_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/ControlBtns/AssembleBtn" to="." method="_on_assemble_btn_pressed"]

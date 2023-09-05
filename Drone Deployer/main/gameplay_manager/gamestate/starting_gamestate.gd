@@ -5,3 +5,4 @@ extends BaseState
 func enter() -> void:
 	GameplayManager.reset_game()
 	GameplayManager.start_game()
+	

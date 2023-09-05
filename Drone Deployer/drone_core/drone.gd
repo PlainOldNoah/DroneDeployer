@@ -5,6 +5,8 @@ extends CharacterBody2D
 
 ## Emitted when any of the drone stats change
 signal stats_updated(drone:Drone)
+## Emitted when the [DroneState] changes
+signal state_changed(new_state:DroneState.STATE)
 
 ## Physical body; Only used in collisions/bounces
 @onready var collision_shape := $CollisionShape2D

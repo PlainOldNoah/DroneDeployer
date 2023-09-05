@@ -21,8 +21,8 @@ extends Control
 func _ready():
 	set_boundries()
 	set_process_input(false)
-	DroneManager.connect("drone_created", add_node_to_lvl_obj)
-	EnemyManager.connect("enemy_created", add_enemy_to_map)
+	DroneManager.drone_created.connect(add_node_to_lvl_obj)
+	EnemyManager.enemy_created.connect(add_enemy_to_map)
 	GameplayManager.request_drone_deploy.connect(ddcc.deploy_next_drone)
 
 

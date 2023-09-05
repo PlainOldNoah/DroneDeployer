@@ -40,7 +40,6 @@ var ddcc_health:int = ddcc_max_health:
 		emit_signal("ddcc_health_changed", ddcc_health)
 		if ddcc_health <= 0:
 			gamestate_manager.change_state(gamestate_manager.title_gamestate)
-#			GameplayManager.set_gamestate(GAMESTATE.ENDING)
 
 ## Total quantity of collected scrap
 var total_collected_scrap:int = 0:
@@ -62,9 +61,6 @@ var playtime:int = 0:
 	set(new_playtime):
 		playtime = new_playtime
 		emit_signal("playtime_updated", playtime)
-
-## Status if the game is running or not
-var game_running:bool = false
 
 
 func _ready():

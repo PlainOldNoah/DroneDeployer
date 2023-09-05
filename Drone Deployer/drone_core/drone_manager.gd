@@ -10,10 +10,16 @@ signal drone_deployed(drone:Drone)
 var drone_queue:Array = []
 @onready var drone_scene := preload("res://drone_core/drone.tscn")
 
+## Queue for deploying drones, first in first out
+var launch_queue:Array[Drone] = []
+## List of all drones in game
+var drone_library:Array[Drone] = []
+
 
 ## Makes a new drone instance
 func create_new_drone():
 	var drone_inst := drone_scene.instantiate()
+	drone_library.append(drone_inst)
 	emit_signal("drone_created", drone_inst)
 
 
@@ -49,12 +55,3 @@ func get_and_pop_next_drone():
 ## Moves the drone in position 0 to the end of the drone queue
 func skip_next_drone():
 	drone_queue.push_back(drone_queue.pop_front())
-
-
-## Controls what happens when a drone's state changes
-#func handle_drone_state_change(drone:Drone, state:int):
-#	match state:
-#		Drone.STATES.STORED:
-##			print_debug(drone, ": ", state)
-#			add_drone_to_queue(drone)
-		

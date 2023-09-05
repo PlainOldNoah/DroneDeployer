@@ -1,5 +1,7 @@
 extends DroneState
 
+## Idle State; Inside the DDCC
+
 func enter() -> void:
 	drone.set_physics_process(false)
 	drone.disable_collision_shapes(true, true)
@@ -9,6 +11,8 @@ func enter() -> void:
 	
 	DroneManager.add_drone_to_queue(drone)
 	offload_scrap()
+	
+	drone.emit_signal("state_changed", DroneState.STATE.IDLE)
 
 
 func process(delta: float) -> int:

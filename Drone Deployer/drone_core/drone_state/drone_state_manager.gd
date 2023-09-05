@@ -15,9 +15,14 @@ extends Node
 	DroneState.STATE.DEAD: $DeadDroneState, 
 }
 
-
-## The current state the state machine is in
+## The current state the state machine is in as a SCENE
 var current_state: DroneState
+## The current state the state machine is in as a DroneState.STATE
+var current_state_enum: DroneState.STATE
+#var current_state_enum: DroneState.STATE:
+#	set(new_state):
+#		current_state_enum = new_state
+#		get_parent().emit_signal("state_changed", current_state_enum)
 
 
 ## Intialize the state manager with the starting state
@@ -34,7 +39,9 @@ func change_state(new_state:int) -> void:
 		current_state.exit()
 	
 	current_state = states[new_state]
-	print("DS//", owner.name, ": ", current_state.name)
+	current_state_enum = new_state
+	
+	print(owner.name, " -> ", current_state.name)
 	current_state.enter()
 
 

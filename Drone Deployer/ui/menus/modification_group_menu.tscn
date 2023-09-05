@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=5 format=3 uid="uid://bkdnvd7rmbd2a"]
 
 [ext_resource type="Script" path="res://ui/menus/modification_group_menu.gd" id="1_3a0nx"]
 [ext_resource type="PackedScene" uid="uid://cjaeoy88yuim8" path="res://ui/menus/hanger_menu.tscn" id="1_r4umq"]
@@ -25,6 +25,28 @@ grow_vertical = 2
 [node name="Hanger" parent="HBoxContainer" instance=ExtResource("1_r4umq")]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Button" type="Button" parent="HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_vertical = 6
+text = "<"
+
+[node name="Button2" type="Button" parent="HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_vertical = 6
+text = ">"
+
+[node name="Button3" type="Button" parent="HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_vertical = 6
+text = "R"
 
 [node name="Storage" parent="HBoxContainer" instance=ExtResource("2_i55hd")]
 layout_mode = 2

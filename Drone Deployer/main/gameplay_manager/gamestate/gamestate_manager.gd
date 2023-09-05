@@ -33,7 +33,8 @@ func change_state(new_state:int) -> void:
 		current_state.exit()
 	
 	current_state = states[new_state]
-	print("CURRENT STATE: ", current_state.name)
+	print("GAME STATE: ", current_state.name)
+	
 	current_state.enter()
 
 
