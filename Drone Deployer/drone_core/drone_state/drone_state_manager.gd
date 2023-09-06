@@ -34,7 +34,7 @@ func init(linked_drone:Drone):
 
 
 ## Exit the old state and enter the new state
-func change_state(new_state:int) -> void:
+func change_state(new_state:DroneState.STATE) -> void:
 	if current_state:
 		current_state.exit()
 	

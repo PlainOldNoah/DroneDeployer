@@ -25,6 +25,7 @@ var data:DroneData = DroneData.new()
 func _ready():
 	add_to_group("drone")
 	set_z_index(30)
+	
 	debug_randomize_values()
 	
 	drone_state_manager.init(self)
@@ -73,18 +74,18 @@ func deploy(deploy_pos:Vector2, deploy_angle:float):
 	drone_state_manager.change_state(DroneState.STATE.ARMING)
 
 ## Returns the current state the drone is in
-func get_drone_state() -> DroneState:
-	return drone_state_manager.current_state
+func get_drone_state() -> DroneState.STATE:
+	return drone_state_manager.current_state_enum
 
-## Returns true if the current drone state matches the paramater match_state
-func is_current_state(match_state:DroneState.STATE) -> int:
-	return get_drone_state() == drone_state_manager.states[match_state]
+## Returns true if the current drone state (enum) matches the parameter state
+func is_drone_state(match_state:DroneState.STATE) -> bool:
+	return get_drone_state() == match_state
 
 # === DDCC Areas ===
 
 ## When the drone enters the shield area, go to the hanger
 func _on_ddcc_shield_area_entered():
-	if is_current_state(DroneState.STATE.ACTIVE):
+	if is_drone_state(DroneState.STATE.ACTIVE):
 		drone_state_manager.change_state(DroneState.STATE.RETURNING)
 
 ## When the drone exits the shield area for the first time
@@ -93,12 +94,12 @@ func _on_ddcc_shield_area_exited():
 
 ## When exiting the DDCC, enter the ACTIVE state if in the ARMING state
 func _on_ddcc_collection_pt_exited():
-	if is_current_state(DroneState.STATE.ARMING):
+	if is_drone_state(DroneState.STATE.ARMING):
 		drone_state_manager.change_state(DroneState.STATE.ACTIVE)
 
 ## When entering the DDCC, allow collection if ACTIVE or RETURNING
 func _on_ddcc_collection_pt_entered():
-	if is_current_state(DroneState.STATE.ACTIVE) or is_current_state(DroneState.STATE.RETURNING):
+	if is_drone_state(DroneState.STATE.ACTIVE) or is_drone_state(DroneState.STATE.RETURNING):
 		drone_state_manager.change_state(DroneState.STATE.IDLE)
 
 # === Velocity ===
@@ -122,8 +123,8 @@ func set_velocity_from_vector(vector:Vector2, speed:float=data.speed):
 
 func debug_randomize_values():
 	$Sprite.modulate = Color(randf(), randf(), randf())
-#	data.max_speed = randi_range(100, 300)
-#	data.damage = randi_range(1,10)
+	data.max_speed = randi_range(100, 300)
+	data.damage = randi_range(1,10)
 #	data.max_battery = randi_range(100,500)
 	emit_signal("stats_updated", self)
 

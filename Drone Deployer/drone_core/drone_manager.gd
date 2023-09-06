@@ -7,8 +7,10 @@ signal drone_created(drone:Drone)
 ## Emitted when a drone is deployed
 signal drone_deployed(drone:Drone)
 
-var drone_queue:Array = []
 @onready var drone_scene := preload("res://drone_core/drone.tscn")
+
+## Holds currently idle drones waiting for deployment
+var drone_queue:Array = []
 
 ## Queue for deploying drones, first in first out
 var launch_queue:Array[Drone] = []
@@ -20,6 +22,8 @@ var drone_library:Array[Drone] = []
 func create_new_drone():
 	var drone_inst := drone_scene.instantiate()
 	drone_library.append(drone_inst)
+	drone_inst.data.display_name = "Drone_%d" % (drone_library.size() - 1)
+	
 	emit_signal("drone_created", drone_inst)
 
 
