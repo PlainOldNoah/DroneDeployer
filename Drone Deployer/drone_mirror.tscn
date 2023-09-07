@@ -1,0 +1,35 @@
+[gd_scene load_steps=3 format=3 uid="uid://b5ixh51n72yq1"]
+
+[ext_resource type="Script" path="res://drone_mirror.gd" id="1_7cwro"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_nku1j"]
+load_path = "res://.godot/imported/drone_x128.png-cc7ed6b8b4107f66ad04ece81c003125.ctex"
+
+[node name="DroneMirror" type="Button"]
+custom_minimum_size = Vector2(128, 128)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+script = ExtResource("1_7cwro")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+texture = SubResource("CompressedTexture2D_nku1j")
+expand_mode = 1
+stretch_mode = 5

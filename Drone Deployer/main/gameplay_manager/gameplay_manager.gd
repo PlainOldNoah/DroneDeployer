@@ -39,7 +39,7 @@ var ddcc_health:int = ddcc_max_health:
 		ddcc_health = clampi(new_health, 0, ddcc_max_health)
 		emit_signal("ddcc_health_changed", ddcc_health)
 		if ddcc_health <= 0:
-			gamestate_manager.change_state(gamestate_manager.title_gamestate)
+			gamestate_manager.change_state(BaseState.STATE.GAMEOVER)
 
 ## Total quantity of collected scrap
 var total_collected_scrap:int = 0:

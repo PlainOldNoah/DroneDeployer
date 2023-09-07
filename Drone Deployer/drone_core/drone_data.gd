@@ -17,6 +17,9 @@ var collected_scrap:float = 0.0
 ## Point to return to when at low battery
 var home_pos:Vector2 = Vector2.ZERO
 
+## Color shifted of drone, will be changed later
+var modulate_color:Color = Color("ffffff")
+
 # === Speed ===
 
 ## Top speed of the drone

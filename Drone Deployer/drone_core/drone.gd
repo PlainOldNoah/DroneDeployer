@@ -122,7 +122,9 @@ func set_velocity_from_vector(vector:Vector2, speed:float=data.speed):
 # === Misc ===
 
 func debug_randomize_values():
-	$Sprite.modulate = Color(randf(), randf(), randf())
+	data.modulate_color = Color(randf(), randf(), randf())
+	$Sprite.modulate = data.modulate_color
+	
 	data.max_speed = randi_range(100, 300)
 	data.damage = randi_range(1,10)
 #	data.max_battery = randi_range(100,500)
