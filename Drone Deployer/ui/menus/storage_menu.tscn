@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://ui/menus/storage_menu.gd" id="1_j1nt6"]
 
 [node name="Storage" type="Control"]
+clip_contents = true
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -58,6 +59,26 @@ size_flags_vertical = 3
 theme_override_constants/h_separation = 10
 theme_override_constants/v_separation = 10
 columns = 5
+
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/AugmentStorage"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spacer2" type="Control" parent="MarginContainer/VBoxContainer/AugmentStorage"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spacer3" type="Control" parent="MarginContainer/VBoxContainer/AugmentStorage"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spacer4" type="Control" parent="MarginContainer/VBoxContainer/AugmentStorage"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spacer5" type="Control" parent="MarginContainer/VBoxContainer/AugmentStorage"]
+layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2

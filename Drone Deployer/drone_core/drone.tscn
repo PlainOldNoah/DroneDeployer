@@ -29,6 +29,7 @@ texture = ExtResource("2_a3kkh")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_3xr3n")
+debug_color = Color(0, 0.6, 0.701961, 0.12549)
 
 [node name="PseudoBody" type="Area2D" parent="."]
 editor_description = "Acts as the drone's body for Area based collisions. Drone root handles Body collisions"

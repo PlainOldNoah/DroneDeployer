@@ -15,10 +15,12 @@ func _ready():
 
 ## Shows the hanger and hides the fabricator
 func set_hanger_view():
-	hanger.show()
-	fabricator.hide()
+	pass
+#	hanger.show()
+#	fabricator.hide()
 
 ## Shows the fabricator and hides the hanger
 func set_fabricator_view():
-	hanger.hide()
-	fabricator.show()
+	pass
+#	hanger.hide()
+#	fabricator.show()

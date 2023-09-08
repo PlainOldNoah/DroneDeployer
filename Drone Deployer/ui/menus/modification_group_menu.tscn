@@ -53,5 +53,4 @@ layout_mode = 2
 size_flags_stretch_ratio = 1.5
 
 [node name="Fabricator" parent="HBoxContainer" instance=ExtResource("2_bmvsk")]
-visible = false
 layout_mode = 2

@@ -82,3 +82,4 @@ func _on_focus_drone_icon_pressed():
 ## Sets the focused_drone to drone
 func _on_new_drone_selected(drone:Drone):
 	focused_drone = drone
+	library_index = DroneManager.drone_library.find(focused_drone)

@@ -48,7 +48,7 @@ var battery:float = max_battery:
 var battery_drain:float = 0.0
 
 ## Percent of battery remaining that drone returns on
-var low_battery_threshold = 0.10
+var low_battery_threshold := 0.10
 
 # === Knockback ===
 

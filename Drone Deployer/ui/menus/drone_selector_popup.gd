@@ -4,7 +4,7 @@ extends MarginContainer
 
 signal d_mirror_selected(drone:Drone)
 
-@onready var display := $Panel/MarginContainer/GridContainer
+@onready var display := $Panel/MarginContainer/VBoxContainer/GridContainer
 
 @export var drone_mirror_scene:PackedScene = null
 
@@ -25,3 +25,7 @@ func close_popup():
 func _on_mirror_clicked(mirror:DroneMirror):
 	close_popup()
 	emit_signal("d_mirror_selected", mirror.linked_drone)
+
+## Close the popup when CloseBtn is pressed
+func _on_close_btn_pressed():
+	close_popup()

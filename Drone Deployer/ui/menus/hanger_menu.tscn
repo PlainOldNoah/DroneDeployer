@@ -1,13 +1,43 @@
-[gd_scene load_steps=7 format=3 uid="uid://cjaeoy88yuim8"]
+[gd_scene load_steps=10 format=3 uid="uid://cjaeoy88yuim8"]
 
 [ext_resource type="PackedScene" uid="uid://cwwp6l365mm0f" path="res://ui/menus/base_menu.tscn" id="1_7dtce"]
 [ext_resource type="Script" path="res://ui/menus/hanger_menu.gd" id="2_3ppgg"]
-[ext_resource type="Texture2D" uid="uid://cy1vdsb4r5r5b" path="res://assets/visual/drone_x128.png" id="3_6p3u0"]
 [ext_resource type="PackedScene" uid="uid://b5ixh51n72yq1" path="res://drone_mirror.tscn" id="4_hg4wp"]
 [ext_resource type="Script" path="res://ui/menus/drone_selector_popup.gd" id="5_1q42t"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fvqda"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6mm5d"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s6ubo"]
 bg_color = Color(0.380392, 0.380392, 0.380392, 1)
+
+[sub_resource type="InputEventKey" id="InputEventKey_lisq8"]
+device = -1
+keycode = 4194305
+
+[sub_resource type="Shortcut" id="Shortcut_5o2lo"]
+events = [SubResource("InputEventKey_lisq8")]
 
 [node name="HangerMenu" instance=ExtResource("1_7dtce")]
 anchors_preset = -1
@@ -23,22 +53,32 @@ theme_override_constants/separation = 10
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="DroneIcon" type="TextureRect" parent="MarginContainer/VBoxContainer/CurrentDrone" index="0"]
-visible = false
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/CurrentDrone" index="0"]
 layout_mode = 2
-texture = ExtResource("3_6p3u0")
-stretch_mode = 5
-metadata/_edit_use_anchors_ = true
 
-[node name="FocusDroneIcon" parent="MarginContainer/VBoxContainer/CurrentDrone" index="1" instance=ExtResource("4_hg4wp")]
+[node name="FocusDroneIcon" parent="MarginContainer/VBoxContainer/CurrentDrone/VBoxContainer2" index="0" instance=ExtResource("4_hg4wp")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/CurrentDrone" index="2"]
+[node name="Navigation" type="HBoxContainer" parent="MarginContainer/VBoxContainer/CurrentDrone/VBoxContainer2" index="1"]
+layout_mode = 2
+
+[node name="PreviousDrone" type="Button" parent="MarginContainer/VBoxContainer/CurrentDrone/VBoxContainer2/Navigation" index="0"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 4
+text = "<"
+metadata/_edit_use_anchors_ = true
+
+[node name="NextDrone" type="Button" parent="MarginContainer/VBoxContainer/CurrentDrone/VBoxContainer2/Navigation" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = ">"
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/CurrentDrone" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_constants/separation = 10
 
 [node name="DroneName" type="LineEdit" parent="MarginContainer/VBoxContainer/CurrentDrone/VBoxContainer" index="0"]
@@ -59,21 +99,10 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Navigation" type="HBoxContainer" parent="MarginContainer/VBoxContainer" index="1"]
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer" index="1"]
 layout_mode = 2
 theme_override_constants/separation = 10
-
-[node name="PreviousDrone" type="Button" parent="MarginContainer/VBoxContainer/Navigation" index="0"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Previous Drone"
-metadata/_edit_use_anchors_ = true
-
-[node name="NextDrone" type="Button" parent="MarginContainer/VBoxContainer/Navigation" index="1"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Next Drone"
-metadata/_edit_use_anchors_ = true
+theme_override_styles/separator = SubResource("StyleBoxFlat_fvqda")
 
 [node name="DroneStats" type="Label" parent="MarginContainer/VBoxContainer" index="2"]
 unique_name_in_owner = true
@@ -82,9 +111,10 @@ size_flags_vertical = 3
 text = "Drone Stats"
 metadata/_edit_use_anchors_ = true
 
-[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer" index="3"]
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/VBoxContainer" index="3"]
 layout_mode = 2
 theme_override_constants/separation = 10
+theme_override_styles/separator = SubResource("StyleBoxFlat_6mm5d")
 
 [node name="AddedAugments" type="GridContainer" parent="MarginContainer/VBoxContainer" index="4"]
 unique_name_in_owner = true
@@ -138,14 +168,24 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="GridContainer" type="GridContainer" parent="DroneSelectionPopup/Panel/MarginContainer" index="0"]
+[node name="VBoxContainer" type="VBoxContainer" parent="DroneSelectionPopup/Panel/MarginContainer" index="0"]
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="DroneSelectionPopup/Panel/MarginContainer/VBoxContainer" index="0"]
 layout_mode = 2
 theme_override_constants/h_separation = 10
 theme_override_constants/v_separation = 10
 columns = 5
 
-[connection signal="pressed" from="MarginContainer/VBoxContainer/CurrentDrone/FocusDroneIcon" to="." method="_on_focus_drone_icon_pressed"]
+[node name="CloseBtn" type="Button" parent="DroneSelectionPopup/Panel/MarginContainer/VBoxContainer" index="1"]
+layout_mode = 2
+size_flags_vertical = 10
+shortcut = SubResource("Shortcut_5o2lo")
+text = "Close"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/CurrentDrone/VBoxContainer2/FocusDroneIcon" to="." method="_on_focus_drone_icon_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/CurrentDrone/VBoxContainer2/Navigation/PreviousDrone" to="." method="_on_previous_drone_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/CurrentDrone/VBoxContainer2/Navigation/NextDrone" to="." method="_on_next_drone_pressed"]
 [connection signal="text_submitted" from="MarginContainer/VBoxContainer/CurrentDrone/VBoxContainer/DroneName" to="." method="_on_drone_name_text_submitted"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Navigation/PreviousDrone" to="." method="_on_previous_drone_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Navigation/NextDrone" to="." method="_on_next_drone_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/ControlBtns/AssembleBtn" to="." method="_on_assemble_btn_pressed"]
+[connection signal="pressed" from="DroneSelectionPopup/Panel/MarginContainer/VBoxContainer/CloseBtn" to="DroneSelectionPopup" method="_on_close_btn_pressed"]
