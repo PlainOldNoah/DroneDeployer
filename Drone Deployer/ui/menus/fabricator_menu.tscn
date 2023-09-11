@@ -103,6 +103,7 @@ size_flags_vertical = 3
 text = "UPGRADE: NULL"
 
 [node name="CraftControls" type="HBoxContainer" parent="MarginContainer/VBoxContainer" index="3"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 

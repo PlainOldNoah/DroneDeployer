@@ -4,7 +4,7 @@ extends Control
 ## Spend scrap to create augments and upgrades
 
 ## Emitted when a new augment is fabricated
-signal augment_fabricated(new_augment:Augment)
+#signal augment_fabricated(new_augment:Augment)
 
 @onready var ddcc_options := %DDCCOptions
 @onready var augment_options := %AugmentsOptions
@@ -57,7 +57,8 @@ func fabricate_item(item_type:String, item_name:String):
 #	3. Handles the specifics for each craftable item
 		match craft_db_item:
 			CraftingDb.drone_augments.random:
-				emit_signal("augment_fabricated", AugmentFactory.create_rand_augment())
+				AugmentFactory.create_rand_augment()
+#				emit_signal("augment_fabricated", AugmentFactory.create_rand_augment())
 			CraftingDb.general.stock_drone:
 				DroneManager.create_new_drone()
 			_:

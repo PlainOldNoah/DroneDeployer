@@ -11,7 +11,7 @@ extends Control
 
 ## Called when the node enters the scene tree for the first time.
 func _ready():
-	var _ok := fabricator.connect("augment_fabricated", storage.add_augment)
+	pass
 
 ## Shows the hanger and hides the fabricator
 func set_hanger_view():
