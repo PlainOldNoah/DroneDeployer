@@ -3,10 +3,15 @@ extends Control
 
 ## Takes an augment ([AugmentData]) and formats its information
 
+signal augment_selected(augment:AugmentDisplay)
+
 @onready var main_panel := $PanelContainer
 @onready var battery_drain_lbl := %BatteryDrainLabel
 @onready var icon := %AugmentIcon
 @onready var stat_lbl := %StatLabel
+
+## If the augment is selected or not, used with [StorageMenu]
+var selected:bool = false
 
 ## Augment itself; Where the display gets its info from
 var augment_data:AugmentData = null:
@@ -55,9 +60,9 @@ func update_display():
 	
 	for key in augment_data.stats.keys():
 		stat_lbl.text += "%s: %1.1f\n" % [stat_symbol[key], augment_data.stats[key]]
-#		print(stat_symbol[key])
-#	stat_lbl.text = str(augment_data.stats)
 
 
+## Echos the click signal
 func _on_click_area_pressed():
-	pass # Replace with function body.
+	selected = !selected
+	emit_signal("augment_selected", self)

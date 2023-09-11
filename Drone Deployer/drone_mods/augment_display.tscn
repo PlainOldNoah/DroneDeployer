@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://bsce8notrfxto"]
 
-[ext_resource type="Script" path="res://drone_mods/augment_display.gd" id="1_uy5xk"]
-[ext_resource type="FontFile" uid="uid://dcmpwu0s0vvy6" path="res://assets/font/ChakraPetch/ChakraPetch-Regular.ttf" id="2_jqtbp"]
-[ext_resource type="Texture2D" uid="uid://dj5gfcti0i2wu" path="res://assets/visual/augment.png" id="4_ougix"]
+[ext_resource type="Script" path="res://drone_mods/augment_display.gd" id="1_8rrx0"]
+[ext_resource type="FontFile" uid="uid://dcmpwu0s0vvy6" path="res://assets/font/ChakraPetch/ChakraPetch-Regular.ttf" id="2_w8aks"]
+[ext_resource type="Texture2D" uid="uid://dj5gfcti0i2wu" path="res://assets/visual/augment.png" id="3_exujj"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uq23t"]
 bg_color = Color(0.392157, 0.392157, 0.392157, 1)
@@ -17,7 +17,7 @@ corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
 
 [sub_resource type="Theme" id="Theme_svn3l"]
-default_font = ExtResource("2_jqtbp")
+default_font = ExtResource("2_w8aks")
 default_font_size = 12
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_uq23t")
 
@@ -36,10 +36,11 @@ offset_bottom = 50.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
-script = ExtResource("1_uy5xk")
+script = ExtResource("1_8rrx0")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 self_modulate = Color(0, 1, 1, 1)
+use_parent_material = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -67,7 +68,7 @@ layout_mode = 2
 unique_name_in_owner = true
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
-texture = ExtResource("4_ougix")
+texture = ExtResource("3_exujj")
 expand_mode = 1
 stretch_mode = 5
 
