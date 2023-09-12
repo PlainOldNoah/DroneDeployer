@@ -5,13 +5,13 @@ extends Control
 ##
 ## Augments and upgrades created in the fabricator are sent here
 
+signal augment_selected(augment:AugmentDisplay)
+
 @onready var augment_storage := %AugmentStorage
 
 ## [AugmentDisplay] file path
 @onready var augment_display_scene:PackedScene = preload("res://drone_mods/augment_display.tscn")
 
-## Array of all currently selected [AugmentDisplay]
-var selected_augments:Array[AugmentDisplay] = []
 
 func _ready():
 	AugmentFactory.augment_created.connect(add_augment)
@@ -28,9 +28,4 @@ func add_augment(augment:AugmentData):
 
 ## Emitted when [AugmentDisplay] in storage is clicked
 func _on_augment_selected(augment:AugmentDisplay):
-	if (augment.selected == false) and (selected_augments.has(augment)):
-		selected_augments.erase(augment)
-	else:
-		selected_augments.append(augment)
-	
-	print(selected_augments)
+	emit_signal("augment_selected", augment)
