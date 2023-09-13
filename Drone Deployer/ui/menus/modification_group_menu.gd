@@ -8,13 +8,17 @@ extends Control
 @onready var storage:StorageMenu = $HBoxContainer/Storage
 @onready var fabricator:Fabricator = $HBoxContainer/Fabricator
 
+## Currently selected augments from the [StorageMenu]
 var selected_augments:Array[AugmentDisplay] = []
+## 
+var augmented_drone_stats:DroneData = null
 
 
 ## Called when the node enters the scene tree for the first time.
 func _ready():
 	hanger.focused_drone_updated.connect(update_drone_stat_info)
 	storage.augment_selected.connect(_on_augment_selected)
+	hanger.augment_commit_request.connect(commit_augments_to_drone)
 #	storage.selected_augments_updated.connect(update_drone_stat_info)
 
 
@@ -42,5 +46,14 @@ func _on_augment_selected(augment:AugmentDisplay):
 
 ## Refresh the Hanger's selected drone's stat block
 func update_drone_stat_info():
-#	hanger.augment_drone_stats(storage.selected_augments)
-	hanger.update_display(selected_augments)
+	augmented_drone_stats = hanger.augment_drone_stats(selected_augments)
+	hanger.update_display(augmented_drone_stats)
+
+
+func commit_augments_to_drone():
+#	for i in selected_augments:
+#		i.queue_free()
+#
+	selected_augments.clear()
+	
+	hanger.focused_drone.data = augmented_drone_stats.duplicate()

@@ -3,7 +3,10 @@ extends Control
 
 ## [Drone] customization and enhancement menu
 
+## Emitted when the focus_drone is assigned
 signal focused_drone_updated()
+## Emitted when the user wants to 'assemble' the augments to the focused_drone
+signal augment_commit_request()
 
 @onready var drone_name := %DroneName
 @onready var stat_label:Label = %DroneStats
@@ -53,7 +56,7 @@ var stats_format_string:String = \
 	Vacuum Radius: %d
 "
 
-var augmented_drone_stats:DroneData = null
+#var augmented_drone_stats:DroneData = null
 #var selected_augments:Array[AugmentDisplay] = []
 
 func _ready():
@@ -72,9 +75,23 @@ func update_drone_list(drone:Drone):
 
 ## Applies each stat from each augment to the drone data
 ## Update to display the current focused_drone's stats
-func update_display(augments:Array[AugmentDisplay]=[]):
+func update_display(augmented_drone_stats:DroneData=null):
+#func update_display(augments:Array[AugmentDisplay]=[]):
 	drone_name.text = focused_drone.data.display_name
 	
+	# If no augments this is just the normal drone data
+	var d:DroneData = augmented_drone_stats if augmented_drone_stats != null else focused_drone.data
+	
+	# Set the stats display
+	drone_stats.text = stats_format_string % [\
+		d.damage, 0.0, 0.0,\
+		d.max_battery, d.battery, d.battery_drain, 0.0,\
+		d.acceleration, d.max_speed,\
+		d.mass, 0, 0.0]
+
+
+## Applies each stat from each augment to the drone data
+func augment_drone_stats(augments:Array[AugmentDisplay]=[]) -> DroneData:
 	var d:DroneData = focused_drone.data.duplicate()
 	
 	for i in augments:
@@ -93,36 +110,7 @@ func update_display(augments:Array[AugmentDisplay]=[]):
 				_:
 					print_debug("ERROR: stat <", j, "> is not defined")
 	
-#	var d:DroneData = augmented_drone_stats # Smaller var name
-
-	drone_stats.text = stats_format_string % [\
-		d.damage, 0.0, 0.0,\
-		d.max_battery, d.battery, d.battery_drain, 0.0,\
-		d.acceleration, d.max_speed,\
-		d.mass, 0, 0.0]
-
-
-## Applies each stat from each augment to the drone data
-#func augment_drone_stats(augments:Array[AugmentDisplay]=[]):
-#	var d:DroneData = focused_drone.data.duplicate()
-#
-#	for i in augments:
-#		for j in i.augment_data.stats:
-#			match j:
-#				"acceleration":
-#					d.acceleration += i.augment_data.stats[j]
-#				"damage":
-#					d.damage += i.augment_data.stats[j]
-#				"mass":
-#					d.mass += i.augment_data.stats[j]
-#				"max_battery":
-#					d.max_battery += i.augment_data.stats[j]
-#				"max_speed":
-#					d.max_speed += i.augment_data.stats[j]
-#				_:
-#					print_debug("ERROR: stat <", j, "> is not defined")
-#
-#	augmented_drone_stats = d
+	return d
 
 
 ## Sets the focused_drone to the drone in the library at position 'index'
@@ -154,6 +142,13 @@ func _on_new_drone_selected(drone:Drone):
 # CURRENTLY USED FOR DEBUGGING PURPOSES
 ## Applies the selected augments to the currently focused [Drone]
 func _on_assemble_btn_pressed():
-	for i in DroneManager.drone_library:
-		if i.is_drone_state(DroneState.STATE.IDLE):
-			print(i)
+	# remove all selected augments
+	# change the stats of the focused drone
+	# update the display
+	
+	emit_signal("augment_commit_request")
+	
+	pass
+#	for i in DroneManager.drone_library:
+#		if i.is_drone_state(DroneState.STATE.IDLE):
+#			print(i)
