@@ -25,6 +25,12 @@ var focused_drone:Drone = null:
 		drone_icon.linked_drone = focused_drone
 		emit_signal("focused_drone_updated")
 
+## Currently selected augments from the [StorageMenu]
+var selected_augments:Array[AugmentDisplay] = []
+
+## Drone data with augments applied, used in the display
+var staged_drone_data:DroneData
+
 ## Current position when cycling though drones in the drone library
 var library_index:int = 0:
 	set(new_index):
@@ -39,21 +45,21 @@ var library_index:int = 0:
 ## How the drone stats are displayed in the window
 var stats_format_string:String = \
 "
-	Damage: %d
-	Critical Chance: %.2f%%
-	Critical Damage: %.2f
+	Damage: %d (%d)
+	Critical Chance: %.2f%% (%.2f%%)
+	Critical Damage: %.2f (%.2f)
 
-	Max Battery: %.2f
-	Current Battery: %.2f
-	Battery Drain: %.2f p/sec
-	Recharge Rate: %.2f p/sec
+	Max Battery: %.2f (%.2f)
+	Current Battery: %.2f (%.2f)
+	Battery Drain: %.2f p/sec (%.2f)
+	Recharge Rate: %.2f p/sec (%.2f)
 
-	Acceleration: %.2f
-	Max Speed: %d
+	Acceleration: %.2f (%.2f)
+	Max Speed: %d (%d)
 
-	Mass: %.2f
-	Storage Capacity: %d
-	Vacuum Radius: %d
+	Mass: %.2f (%.2f)
+	Storage Capacity: %d (%d)
+	Vacuum Radius: %d (%d)
 "
 
 #var augmented_drone_stats:DroneData = null
@@ -70,31 +76,46 @@ func update_drone_list(drone:Drone):
 	
 	if (focused_drone == null) and (not DroneManager.drone_library.is_empty()):
 		select_focus_drone(library_index)
-		
 		update_display()
 
-## Applies each stat from each augment to the drone data
-## Update to display the current focused_drone's stats
-func update_display(augmented_drone_stats:DroneData=null):
-#func update_display(augments:Array[AugmentDisplay]=[]):
-	drone_name.text = focused_drone.data.display_name
+
+## Refreshes the display with correct drone-augment data/stats
+## [br]New Drone, New focused_drone, selecting augments, assembling
+func update_display():
+	# Real Data
+	var rd:DroneData = focused_drone.data
+	# Augmented Data
+	var ad:DroneData = augment_drone_data(rd)
 	
-	# If no augments this is just the normal drone data
-	var d:DroneData = augmented_drone_stats if augmented_drone_stats != null else focused_drone.data
+	drone_name.text = rd.display_name
 	
 	# Set the stats display
 	drone_stats.text = stats_format_string % [\
-		d.damage, 0.0, 0.0,\
-		d.max_battery, d.battery, d.battery_drain, 0.0,\
-		d.acceleration, d.max_speed,\
-		d.mass, 0, 0.0]
+		rd.damage,ad.damage,\
+		0.0,0.0,\
+		0.0,0.0,\
+		rd.max_battery,ad.max_battery,\
+		rd.battery,ad.battery,\
+		rd.battery_drain,ad.battery_drain,\
+		0.0,0.0,\
+		rd.acceleration,ad.acceleration,\
+		rd.max_speed,ad.max_speed,\
+		rd.mass,ad.mass,\
+		0,0,\
+		0.0,0.0,\
+		]
 
 
-## Applies each stat from each augment to the drone data
-func augment_drone_stats(augments:Array[AugmentDisplay]=[]) -> DroneData:
-	var d:DroneData = focused_drone.data.duplicate()
+## Return a unique version of drone_data, modified by selected_augments
+func augment_drone_data(drone_data:DroneData) -> DroneData:
+	# Create new DroneData resource
+	var d:DroneData = DroneData.new()
 	
-	for i in augments:
+	# '.duplicate' doesn't work correctly, need to do it manually
+	d.clone_from(drone_data)
+	
+	# Apply the augments
+	for i in selected_augments:
 		for j in i.augment_data.stats:
 			match j:
 				"acceleration":
@@ -113,10 +134,11 @@ func augment_drone_stats(augments:Array[AugmentDisplay]=[]) -> DroneData:
 	return d
 
 
+## --- Focus Drone selection ---
+
 ## Sets the focused_drone to the drone in the library at position 'index'
 func select_focus_drone(index:int):
 	focused_drone = DroneManager.drone_library[index]
-
 
 ## Cycles to the next drone library
 func _on_next_drone_pressed():
@@ -128,7 +150,6 @@ func _on_previous_drone_pressed():
 	library_index -= 1
 	select_focus_drone(library_index)
 
-
 ## Open the drone selector screen
 func _on_focus_drone_icon_pressed():
 	drone_selection_popup.show()
@@ -137,18 +158,30 @@ func _on_focus_drone_icon_pressed():
 func _on_new_drone_selected(drone:Drone):
 	focused_drone = drone
 	library_index = DroneManager.drone_library.find(focused_drone)
-	
-	
-# CURRENTLY USED FOR DEBUGGING PURPOSES
+
+## --- Misc Signals ---
+
 ## Applies the selected augments to the currently focused [Drone]
 func _on_assemble_btn_pressed():
-	# remove all selected augments
-	# change the stats of the focused drone
-	# update the display
+	focused_drone.data = augment_drone_data(focused_drone.data)
 	
-	emit_signal("augment_commit_request")
+	for i in selected_augments:
+		i.queue_free()
 	
-	pass
-#	for i in DroneManager.drone_library:
-#		if i.is_drone_state(DroneState.STATE.IDLE):
-#			print(i)
+	selected_augments.clear()
+	update_display()
+
+
+## Recieved from [StorageMenu] when augment is clicked
+func _on_augment_selected(augment:AugmentDisplay):
+	if (augment.selected == false) and (selected_augments.has(augment)):
+		selected_augments.erase(augment)
+	else:
+		selected_augments.append(augment)
+	
+	update_display()
+
+
+## Changes the focused drone's name from the line edit
+func _on_drone_name_text_submitted(new_text):
+	focused_drone.data.display_name = new_text

@@ -28,10 +28,15 @@ func move(delta:float):
 	
 #	print(knockback_velocity.length(), " // ", knockback_velocity)
 	
+	# Doing knockback
 	if drone.data.knockback_velocity.length() > drone.data.knockback_cutoff:
 		handle_knockback(delta)
 		drone.move_and_collide(drone.data.knockback_velocity * delta)
+	# Regular movement
 	else:
+		speed_up(delta)
+#		drone.set_velocity_from_radians(drone.velocity.angle(), drone.data.speed)
+		
 		collision = drone.move_and_collide(drone.velocity * delta)
 		drone.set_facing_direction(false)
 	
@@ -42,6 +47,8 @@ func move(delta:float):
 ## Handles what happens when drone is colliding
 func handle_collision(collision:KinematicCollision2D):
 	var collider = collision.get_collider()
+#	drone.data.speed = 0
+	
 	# Hit drone
 	if collider.is_in_group("drone"):
 		drone.data.knockback_velocity = collider.global_position.direction_to(drone.global_position) * 50
@@ -51,6 +58,13 @@ func handle_collision(collision:KinematicCollision2D):
 		
 	else:
 		drone.set_velocity_from_vector(drone.velocity.bounce(collision.get_normal()))
+
+#var direction:Vector2 = Vector2.ZERO
+func speed_up(delta:float):
+#	print(drone.data.speed, ", ", drone.data.max_speed)
+	print(drone.data.speed)
+	drone.data.speed = lerp(drone.data.speed, drone.data.max_speed, drone.data.acceleration * delta)
+	drone.velocity = drone.velocity.normalized() * drone.data.speed
 
 
 ## Lerps the knockback_velocity to 0

@@ -23,14 +23,14 @@ var modulate_color:Color = Color("ffffff")
 # === Speed ===
 
 ## Top speed of the drone
-var max_speed:int = 200
+var max_speed:float = 200
 
 ## Current moving speed
-var speed:float = 200:
+var speed:float = max_speed:
 	set(new_speed):
 		speed = clampf(new_speed, 0.0, max_speed)
 
-var acceleration:float = 20.0
+var acceleration:float = 10.0
 
 # === Battery ===
 
@@ -58,7 +58,7 @@ var knockback_velocity:Vector2
 ## How much the drone is affected by knockback
 var mass:float = 10.0
 
-## Value in which knockback is no longer significient
+## Value in which knockback is no longer significant
 var knockback_cutoff:float = 10.0
 
 # === Statistics ===
@@ -72,3 +72,22 @@ var knockback_cutoff:float = 10.0
 #var enemies_defeated:int = 0
 ### Sum of all scrap collected
 #var lifetime_collected_scrap:int = 0
+
+## [b]Duplication doesn't work, this is the workaround[/b]
+## [br]Populate all values from another DroneData
+func clone_from(d:DroneData):
+	display_name = d.display_name
+	damage = d.damage
+	collected_scrap = d.collected_scrap
+	home_pos = d.home_pos
+	modulate_color = d.modulate_color
+	max_speed = d.max_speed
+	speed = d.speed
+	acceleration = d.acceleration
+	max_battery = d.max_battery
+	battery = d.battery
+	battery_drain = d.battery_drain
+	low_battery_threshold = d.low_battery_threshold
+	knockback_velocity = d.knockback_velocity
+	mass = d.mass
+	knockback_cutoff = d.knockback_cutoff

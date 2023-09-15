@@ -22,6 +22,7 @@ var drone_library:Array[Drone] = []
 func create_new_drone():
 	var drone_inst := drone_scene.instantiate()
 	drone_library.append(drone_inst)
+	
 	drone_inst.data.display_name = "Drone_%d" % (drone_library.size() - 1)
 	
 	emit_signal("drone_created", drone_inst)

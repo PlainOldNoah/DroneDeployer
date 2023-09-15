@@ -69,6 +69,7 @@ func charge_battery(delta:float) -> bool:
 func deploy(deploy_pos:Vector2, deploy_angle:float):
 	set_global_position(deploy_pos)
 	set_velocity_from_radians(deploy_angle)
+#	set_velocity_from_vector(Vector2.from_angle(deploy_angle))
 	set_facing_direction(true)
 	
 	drone_state_manager.change_state(DroneState.STATE.ARMING)
@@ -126,7 +127,8 @@ func debug_randomize_values():
 	$Sprite.modulate = data.modulate_color
 	
 	data.max_speed = randi_range(100, 300)
-	data.damage = randi_range(1,10)
+#	data.damage = randi_range(1,10)
+	data.damage = 5
 #	data.max_battery = randi_range(100,500)
 	emit_signal("stats_updated", self)
 
