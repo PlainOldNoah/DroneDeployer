@@ -2,4 +2,5 @@ extends MovingDroneState
 
 
 func enter() -> void:
-	drone.set_velocity_from_vector(drone.data.home_pos - drone.get_global_position()) # go home
+	drone.facing = (drone.data.home_pos - drone.get_global_position())
+#	drone.set_velocity_from_vector(drone.data.home_pos - drone.get_global_position()) # go home

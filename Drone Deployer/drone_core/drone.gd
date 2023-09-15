@@ -68,9 +68,11 @@ func charge_battery(delta:float) -> bool:
 ## Activates a Drone for the map with a starting point and angle (in radians)
 func deploy(deploy_pos:Vector2, deploy_angle:float):
 	set_global_position(deploy_pos)
-	set_velocity_from_radians(deploy_angle)
+	facing = Vector2.from_angle(deploy_angle)
+	update_velocity()
+#	set_velocity_from_radians(deploy_angle)
 #	set_velocity_from_vector(Vector2.from_angle(deploy_angle))
-	set_facing_direction(true)
+#	set_facing_direction(true)
 	
 	drone_state_manager.change_state(DroneState.STATE.ARMING)
 
@@ -106,19 +108,40 @@ func _on_ddcc_collection_pt_entered():
 # === Velocity ===
 
 ## Sets the rotation to the direction of the velocity; Gradually or instantly
-func set_facing_direction(instantly:bool=true):
-	if instantly:
-		set_rotation(velocity.angle() + PI/2)
-	else:
-		rotation = lerp_angle(rotation, velocity.angle() + PI/2, 0.15)
+#func set_facing_direction(instantly:bool=true):
+#	if instantly:
+#		set_rotation(velocity.angle() + PI/2)
+#	else:
+#		rotation = lerp_angle(rotation, velocity.angle() + PI/2, 0.15)
+
+# ====================================================================================
+
+## What direction the drone is facing
+var facing:Vector2 = Vector2.ZERO:
+	set(new_facing):
+		facing = new_facing
+		update_velocity()
+
+#func set_speed(new_speed):
+#	data.speed = new_speed
+#	update_velocity()
+
+## Sets the velocity to the current speed and facing direction
+func update_velocity():
+	velocity = data.speed * facing.normalized()
+	
+	rotation = lerp_angle(rotation, facing.angle() + PI/2, 0.15)
+
 
 ## Sets the velocity from a provided angle in radians and speed
-func set_velocity_from_radians(radians:float, speed:float=data.speed):
-	set_velocity_from_vector(Vector2.from_angle(radians), speed)
+#func set_velocity_from_radians(radians:float, speed:float=data.speed):
+#	set_velocity_from_vector(Vector2.from_angle(radians), speed)
 
 ## Sets the velocity from a provided vector
-func set_velocity_from_vector(vector:Vector2, speed:float=data.speed):
-	set_velocity(vector.normalized() * speed)
+#func set_velocity_from_vector(vector:Vector2, speed:float=data.speed):
+#	set_velocity(vector.normalized() * speed)
+
+# ====================================================================================
 
 # === Misc ===
 
@@ -126,7 +149,7 @@ func debug_randomize_values():
 	data.modulate_color = Color(randf(), randf(), randf())
 	$Sprite.modulate = data.modulate_color
 	
-	data.max_speed = randi_range(100, 300)
+	data.max_speed = randi_range(200, 400)
 #	data.damage = randi_range(1,10)
 	data.damage = 5
 #	data.max_battery = randi_range(100,500)

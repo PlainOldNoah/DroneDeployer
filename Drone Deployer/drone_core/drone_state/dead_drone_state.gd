@@ -4,7 +4,10 @@ extends DroneState
 func enter() -> void:
 	drone.set_physics_process(false)
 	drone.disable_collision_shapes(false, true)
-	drone.set_velocity_from_vector(drone.velocity, 0)
+#	drone.set_velocity_from_vector(drone.velocity, 0)
+	drone.data.speed = 0
+	drone.update_velocity()
+	
 
 func exit() -> void:
 	pass

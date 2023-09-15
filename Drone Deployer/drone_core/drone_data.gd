@@ -26,11 +26,11 @@ var modulate_color:Color = Color("ffffff")
 var max_speed:float = 200
 
 ## Current moving speed
-var speed:float = max_speed:
+var speed:float = 0:
 	set(new_speed):
 		speed = clampf(new_speed, 0.0, max_speed)
 
-var acceleration:float = 10.0
+var acceleration:float = 2
 
 # === Battery ===
 
