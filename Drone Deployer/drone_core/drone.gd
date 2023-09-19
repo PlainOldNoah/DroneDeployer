@@ -8,6 +8,9 @@ signal stats_updated(drone:Drone)
 ## Emitted when the [DroneState] changes
 signal state_changed(new_state:DroneState.STATE)
 
+## Lerp weight for changing rotation
+const LERP_ROT_WEIGHT:float = 0.10
+
 ## Physical body; Only used in collisions/bounces
 @onready var collision_shape := $CollisionShape2D
 ## Acts as the drone's body for collection items and hitting enemies
@@ -24,6 +27,8 @@ var data:DroneData = DroneData.new()
 
 func _ready():
 	add_to_group("drone")
+	pseudo_body.add_to_group("drone")
+	
 	set_z_index(30)
 	
 	debug_randomize_values()
@@ -69,7 +74,7 @@ func charge_battery(delta:float) -> bool:
 func deploy(deploy_pos:Vector2, deploy_angle:float):
 	set_global_position(deploy_pos)
 	facing = Vector2.from_angle(deploy_angle)
-	update_velocity()
+	update_velocity(true)
 #	set_velocity_from_radians(deploy_angle)
 #	set_velocity_from_vector(Vector2.from_angle(deploy_angle))
 #	set_facing_direction(true)
@@ -127,10 +132,14 @@ var facing:Vector2 = Vector2.ZERO:
 #	update_velocity()
 
 ## Sets the velocity to the current speed and facing direction
-func update_velocity():
+## [br] instant_rot to rotate immediately
+func update_velocity(instant_rot:bool=false):
 	velocity = data.speed * facing.normalized()
 	
-	rotation = lerp_angle(rotation, facing.angle() + PI/2, 0.15)
+	if instant_rot:
+		set_rotation(facing.angle() + PI/2)
+	else:
+		rotation = lerp_angle(rotation, facing.angle() + PI/2, LERP_ROT_WEIGHT)
 
 
 ## Sets the velocity from a provided angle in radians and speed

@@ -28,6 +28,7 @@ func rotate_deployer():
 
 ## Returns true if the deployer is free from obstacles
 func is_deployer_clear() -> bool:
+#	return true
 	if deploy_clearing.get_overlapping_bodies().size() == 0:
 		return true
 	else:
@@ -36,7 +37,7 @@ func is_deployer_clear() -> bool:
 
 ## Deploy the drone next in queue if the deploy_clearing is open
 func deploy_next_drone():
-	if deploy_clearing.get_overlapping_bodies().size() == 0:
+	if is_deployer_clear():
 
 		var drone:Drone = DroneManager.get_and_pop_next_drone()
 		if drone != null:
@@ -59,14 +60,16 @@ func collect_scrap(scrap:Scrap):
 # ----- Signals -----
 
 ## Drone enters the shield area
-func _on_shield_area_body_entered(body):
-	if body.is_in_group("drone"):
-		body._on_ddcc_shield_area_entered()
+#func _on_shield_area_body_entered(body):
+#	pass
+#	if body.is_in_group("drone"):
+#		body._on_ddcc_shield_area_entered()
 
 ## Drone leaves the shield area
-func _on_shield_area_body_exited(body):
-	if body.is_in_group("drone"):
-		body._on_ddcc_shield_area_exited()
+#func _on_shield_area_body_exited(body):
+#	pass
+#	if body.is_in_group("drone"):
+#		body._on_ddcc_shield_area_exited()
 
 ## Enemy enters shield area
 func _on_shield_area_area_entered(area):
@@ -74,6 +77,13 @@ func _on_shield_area_area_entered(area):
 		take_hit(area)
 	elif area.is_in_group("scrap"):
 		collect_scrap(area)
+	elif area.is_in_group("drone"):
+		area.owner._on_ddcc_shield_area_entered() # pseduo_body owner is [Drone]
+
+
+func _on_shield_area_area_exited(_area):
+	pass
+
 
 ## Drone enters the collection area/point
 func _on_drone_collect_area_body_entered(body):
@@ -84,3 +94,5 @@ func _on_drone_collect_area_body_entered(body):
 func _on_drone_collect_area_body_exited(body):
 	if body.is_in_group("drone"):
 		body._on_ddcc_collection_pt_exited()
+
+
