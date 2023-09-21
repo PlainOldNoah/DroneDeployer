@@ -16,8 +16,8 @@ enum MENUS {
 @onready var menus:Dictionary = {
 	MENUS.MAIN: $MainMenu,
 	MENUS.PAUSE: $PauseMenu,
-	MENUS.HANGER: $ModificationGroupMenu,
-	MENUS.FABRICATOR: $ModificationGroupMenu,
+	MENUS.HANGER: $ModificationMenu,
+	MENUS.FABRICATOR: $ModificationMenu,
 	MENUS.GAMEOVER: $GameOverMenu,
 }
 

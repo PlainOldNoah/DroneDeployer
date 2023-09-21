@@ -3,39 +3,39 @@ extends Control
 
 ## Spend scrap to create augments and upgrades
 
-@onready var ddcc_options := %DDCCOptions
-@onready var augment_options := %AugmentsOptions
-@onready var upgrade_options := %UpgradesOptions
+#@onready var ddcc_options := %DDCCOptions
+#@onready var augment_options := %AugmentsOptions
+#@onready var upgrade_options := %UpgradesOptions
 @onready var scrap_amt_label := %ScrapAmount
 
 ## The different available crafting options
-enum CRAFT_CATEGORIES {DDCC, AUGMENT, UPGRADE}
+#enum CRAFT_CATEGORIES {DDCC, AUGMENT, UPGRADE}
 ## The currently selected crafting category
-var craft_category:CRAFT_CATEGORIES:
-	set(new_category):
-		if craft_category != new_category:
-			craft_category = new_category
-			change_craft_option_tab(new_category)
+#var craft_category:CRAFT_CATEGORIES:
+#	set(new_category):
+#		if craft_category != new_category:
+#			craft_category = new_category
+#			change_craft_option_tab(new_category)
 
 
 func _ready():
-	change_craft_option_tab(CRAFT_CATEGORIES.DDCC)
+#	change_craft_option_tab(CRAFT_CATEGORIES.DDCC)
 	var _ok := GameplayManager.connect("curr_scrap_updated", _on_update_scrap_label)
 
 
 ## Shows and hides the different craft option categories
-func change_craft_option_tab(new_category:CRAFT_CATEGORIES):
-	ddcc_options.hide()
-	augment_options.hide()
-	upgrade_options.hide()
+#func change_craft_option_tab(new_category:CRAFT_CATEGORIES):
+#	ddcc_options.hide()
+#	augment_options.hide()
+#	upgrade_options.hide()
 
-	match new_category:
-		CRAFT_CATEGORIES.DDCC:
-			ddcc_options.show()
-		CRAFT_CATEGORIES.AUGMENT:
-			augment_options.show()
-		CRAFT_CATEGORIES.UPGRADE:
-			upgrade_options.show()
+#	match new_category:
+#		CRAFT_CATEGORIES.DDCC:
+#			ddcc_options.show()
+#		CRAFT_CATEGORIES.AUGMENT:
+#			augment_options.show()
+#		CRAFT_CATEGORIES.UPGRADE:
+#			upgrade_options.show()
 
 
 ## Verifies item_name is in the CraftingDb then expends the scrap and sets the item to be made
@@ -69,8 +69,8 @@ func _on_update_scrap_label(scrap_value:float):
 
 
 ## Emitted when any of the craft option buttons are pressed
-func _on_craft_category_btn_pressed(new_category:CRAFT_CATEGORIES):
-	craft_category = new_category
+#func _on_craft_category_btn_pressed(new_category:CRAFT_CATEGORIES):
+#	craft_category = new_category
 
 
 ## All craft buttons connect here and pass item as a string to specify what they link to

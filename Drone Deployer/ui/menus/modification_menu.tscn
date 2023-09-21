@@ -1,18 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://bkdnvd7rmbd2a"]
+[gd_scene load_steps=5 format=3 uid="uid://duigatng7yimu"]
 
-[ext_resource type="Script" path="res://ui/menus/modification_group_menu.gd" id="1_3a0nx"]
-[ext_resource type="PackedScene" uid="uid://cjaeoy88yuim8" path="res://ui/menus/hanger_menu.tscn" id="1_r4umq"]
-[ext_resource type="PackedScene" uid="uid://wsn3sdtkkuiq" path="res://ui/menus/fabricator_menu.tscn" id="2_bmvsk"]
-[ext_resource type="PackedScene" uid="uid://cjm3ib45n2f7h" path="res://ui/menus/storage_menu.tscn" id="2_i55hd"]
+[ext_resource type="Script" path="res://ui/menus/modification_menu.gd" id="1_xpsyd"]
+[ext_resource type="PackedScene" uid="uid://cjaeoy88yuim8" path="res://ui/menus/hanger_menu.tscn" id="2_dhv6y"]
+[ext_resource type="PackedScene" uid="uid://cjm3ib45n2f7h" path="res://ui/menus/storage_menu.tscn" id="3_4gn2w"]
+[ext_resource type="PackedScene" uid="uid://wsn3sdtkkuiq" path="res://ui/menus/fabricator_menu.tscn" id="4_7l4h4"]
 
-[node name="ModificationGroupMenu" type="Control"]
+[node name="ModificationMenu" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_3a0nx")
+script = ExtResource("1_xpsyd")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -22,7 +22,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Hanger" parent="HBoxContainer" instance=ExtResource("1_r4umq")]
+[node name="Hanger" parent="HBoxContainer" instance=ExtResource("2_dhv6y")]
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -49,9 +49,9 @@ layout_mode = 2
 size_flags_vertical = 6
 text = "R"
 
-[node name="Storage" parent="HBoxContainer" instance=ExtResource("2_i55hd")]
+[node name="Storage" parent="HBoxContainer" instance=ExtResource("3_4gn2w")]
 layout_mode = 2
 size_flags_stretch_ratio = 1.5
 
-[node name="Fabricator" parent="HBoxContainer" instance=ExtResource("2_bmvsk")]
+[node name="Fabricator" parent="HBoxContainer" instance=ExtResource("4_7l4h4")]
 layout_mode = 2

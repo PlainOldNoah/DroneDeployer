@@ -26,6 +26,7 @@ func _on_add_health_pressed():
 
 ## Set all active and arming drones to the returning state
 func recall_all_drones():
-	for i in DroneManager.drone_queue:
-		if i.is_drone_state(DroneState.STATE.ACTIVE) or i.is_drone_state(DroneState.STATE.ARMING):
-			i.drone_state_manager.change_state(DroneState.STATE.RETURNING)
+	print_debug("Nothing set here")
+#	for i in DroneManager.drone_queue:
+#		if i.is_drone_state(DroneState.STATE.ACTIVE) or i.is_drone_state(DroneState.STATE.ARMING):
+#			i.drone_state_manager.change_state(DroneState.STATE.RETURNING)

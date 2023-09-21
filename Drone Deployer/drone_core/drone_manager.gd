@@ -10,10 +10,10 @@ signal drone_deployed(drone:Drone)
 @onready var drone_scene := preload("res://drone_core/drone.tscn")
 
 ## Holds currently idle drones waiting for deployment
-var drone_queue:Array = []
+var drone_queue:Array[Drone] = []
 
 ## Queue for deploying drones, first in first out
-var launch_queue:Array[Drone] = []
+#var launch_queue:Array[Drone] = []
 ## List of all drones in game
 var drone_library:Array[Drone] = []
 
@@ -54,7 +54,8 @@ func get_drone_queue():
 
 ## Returns the next drone in the queue and removes it from the queue
 func get_and_pop_next_drone():
-	return null if drone_queue.is_empty() else drone_queue.pop_front()
+	return drone_queue.pop_front()
+#	return null if drone_queue.is_empty() else drone_queue.pop_front()
 
 
 ## Moves the drone in position 0 to the end of the drone queue
