@@ -3,39 +3,10 @@ extends Control
 
 ## Spend scrap to create augments and upgrades
 
-#@onready var ddcc_options := %DDCCOptions
-#@onready var augment_options := %AugmentsOptions
-#@onready var upgrade_options := %UpgradesOptions
 @onready var scrap_amt_label := %ScrapAmount
 
-## The different available crafting options
-#enum CRAFT_CATEGORIES {DDCC, AUGMENT, UPGRADE}
-## The currently selected crafting category
-#var craft_category:CRAFT_CATEGORIES:
-#	set(new_category):
-#		if craft_category != new_category:
-#			craft_category = new_category
-#			change_craft_option_tab(new_category)
-
-
 func _ready():
-#	change_craft_option_tab(CRAFT_CATEGORIES.DDCC)
 	var _ok := GameplayManager.connect("curr_scrap_updated", _on_update_scrap_label)
-
-
-## Shows and hides the different craft option categories
-#func change_craft_option_tab(new_category:CRAFT_CATEGORIES):
-#	ddcc_options.hide()
-#	augment_options.hide()
-#	upgrade_options.hide()
-
-#	match new_category:
-#		CRAFT_CATEGORIES.DDCC:
-#			ddcc_options.show()
-#		CRAFT_CATEGORIES.AUGMENT:
-#			augment_options.show()
-#		CRAFT_CATEGORIES.UPGRADE:
-#			upgrade_options.show()
 
 
 ## Verifies item_name is in the CraftingDb then expends the scrap and sets the item to be made
@@ -51,12 +22,15 @@ func fabricate_item(item_type:String, item_name:String):
 #	2. Checks if the necessary scrap is available
 	if GameplayManager.remove_scrap(craft_db_item["base_cost"]):
 		
+#		print_debug(craft_db_item, " // ", CraftingDb[item_type][item_name])
 #	3. Handles the specifics for each craftable item
 		match craft_db_item:
 			CraftingDb.drone_augments.random:
 				AugmentFactory.create_rand_augment()
 			CraftingDb.general.stock_drone:
 				DroneManager.create_new_drone()
+			CraftingDb.general.repair_kit:
+				print_debug("This should heal some health")
 			_:
 				print_debug("ERROR: unable to complete craft")
 	else:
@@ -68,11 +42,6 @@ func _on_update_scrap_label(scrap_value:float):
 	scrap_amt_label.text = "Scrap: %d" % scrap_value
 
 
-## Emitted when any of the craft option buttons are pressed
-#func _on_craft_category_btn_pressed(new_category:CRAFT_CATEGORIES):
-#	craft_category = new_category
-
-
 ## All craft buttons connect here and pass item as a string to specify what they link to
 func _on_fabricate_item_button_pressed(item:String):
 	match item:
@@ -80,5 +49,7 @@ func _on_fabricate_item_button_pressed(item:String):
 			fabricate_item("drone_augments", "random")
 		"new_stock_drone":
 			fabricate_item("general", "stock_drone")
+		"repair_kit":
+			fabricate_item("general", "repair_kit")
 		_:
 			print_debug("ERROR: Unknown item_specific <", item, ">")

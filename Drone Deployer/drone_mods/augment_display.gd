@@ -33,19 +33,20 @@ var tier_colors:Dictionary = {
 
 
 #var stat_symbol:Dictionary = {
-#	"acceleration":"⏩",
-#	"damage":"⚔",
-#	"mass":"⚖",
-#	"max_battery":"🔋",
-#	"max_speed":"⚡",
+#	"ACCELERATION":"⏩",
+#	"DAMAGE":"⚔",
+#	"MASS":"⚖",
+#	"MAX_BATTERY":"🔋",
+#	"MAX_SPEED":"⚡",
 #}
 
+## What is shown to the player vs what is seen by the game
 var stat_symbol:Dictionary = {
-	"acceleration":"Acceleration",
-	"damage":"Damage",
-	"mass":"Mass",
-	"max_battery":"Battery",
-	"max_speed":"Speed",
+	"ACCELERATION":"Acceleration",
+	"DAMAGE":"Damage",
+	"MASS":"Mass",
+	"MAX_BATTERY":"Battery",
+	"MAX_SPEED":"Speed",
 }
 
 func clear_display():

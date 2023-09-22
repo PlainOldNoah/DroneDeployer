@@ -1,7 +1,7 @@
 class_name AugmentData
 extends Resource
 
-## List of stat-value pairs that the augment contains
+## List of stat-value pairs that the augment contains, {stat:value}
 var stats:Dictionary = {}
 ## How much battery this augment will drain per/sec when added
 var battery_drain:float = 0.0

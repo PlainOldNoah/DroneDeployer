@@ -20,7 +20,7 @@ var general:Dictionary = {
 	},
 	## Restore HP to DDCC
 	"repair_kit":{
-		"base_cost":10
+		"base_cost":0
 	},
 }
 
