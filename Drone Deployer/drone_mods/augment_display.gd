@@ -11,7 +11,11 @@ signal augment_selected(augment:AugmentDisplay)
 @onready var stat_lbl := %StatLabel
 
 ## If the augment is selected or not, used with [StorageMenu]
-var selected:bool = false
+var selected:bool = false:
+	set(new_state):
+		selected = new_state
+		emit_signal("augment_selected", self)
+
 
 ## Augment itself; Where the display gets its info from
 var augment_data:AugmentData = null:
@@ -54,16 +58,18 @@ func clear_display():
 	battery_drain_lbl.text = ""
 	stat_lbl.text = ""
 
-## Populates display with info from augment_display
+## Populates display with info from augment_display for FLOATS and INTS
 func update_display():
 	main_panel.self_modulate = tier_colors[augment_data.tier]
 	battery_drain_lbl.text = "🔌 %2.1f" % augment_data.battery_drain
 	
 	for key in augment_data.stats.keys():
-		stat_lbl.text += "%s: %1.1f\n" % [stat_symbol[key], augment_data.stats[key]]
+		if augment_data.stats[key] is int:
+			stat_lbl.text += "%s: %d\n" % [stat_symbol[key], augment_data.stats[key]]
+		else:
+			stat_lbl.text += "%s: %1.1f\n" % [stat_symbol[key], augment_data.stats[key]]
 
 
 ## Echos the click signal
 func _on_click_area_pressed():
 	selected = !selected
-	emit_signal("augment_selected", self)

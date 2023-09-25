@@ -8,14 +8,6 @@ signal augment_created(augment:AugmentData)
 ## Resource containing data used in augment generation; [AugmentFactoryData]
 var aug_factory_data:AugmentFactoryData = AugmentFactoryData.new()
 
-# ==============================================================================
-## 1. select tier
-## 2. add unadded stats up to tier amount
-## 3. assign values to each stat
-## 4. sort by highest to lowest value
-## 5. return new dict
-# ==============================================================================
-
 
 ## Main creation function for creating augments
 func create_rand_augment():

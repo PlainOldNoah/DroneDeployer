@@ -9,8 +9,10 @@ signal augment_selected(augment:AugmentDisplay)
 
 @onready var augment_storage := %AugmentStorage
 
+#@onready var augment_display_scene:PackedScene = preload("res://drone_mods/augment_display.tscn")
+
 ## [AugmentDisplay] file path
-@onready var augment_display_scene:PackedScene = preload("res://drone_mods/augment_display.tscn")
+@export var augment_display_scene:PackedScene
 
 
 func _ready():
@@ -21,6 +23,7 @@ func _ready():
 func add_augment(augment:AugmentData):
 	var aug_display:AugmentDisplay = augment_display_scene.instantiate()
 	augment_storage.add_child(aug_display)
+	augment_storage.move_child(aug_display, 0)
 	aug_display.augment_selected.connect(_on_augment_selected)
 	
 	aug_display.augment_data = augment

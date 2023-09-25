@@ -1,20 +1,29 @@
-[gd_scene load_steps=3 format=3 uid="uid://wsn3sdtkkuiq"]
+[gd_scene load_steps=7 format=3 uid="uid://cnxilth1fthiu"]
 
-[ext_resource type="PackedScene" uid="uid://cwwp6l365mm0f" path="res://ui/menus/base_menu.tscn" id="1_v1d1b"]
-[ext_resource type="Script" path="res://ui/menus/fabricator.gd" id="2_o6opr"]
+[ext_resource type="PackedScene" uid="uid://cwwp6l365mm0f" path="res://ui/menus/base_menu.tscn" id="1_slcj8"]
+[ext_resource type="Script" path="res://ui/menus/modification_menus/fabricator.gd" id="2_pm7l0"]
+[ext_resource type="PackedScene" uid="uid://3aprw0b6r0fu" path="res://craftables/craftable_button.tscn" id="3_p51s8"]
+[ext_resource type="Resource" uid="uid://cddvjmyh3wq61" path="res://craftables/craft_random_augment.tres" id="4_cacy7"]
+[ext_resource type="Resource" uid="uid://ec26g3uuhbdu" path="res://craftables/craft_stock_drone.tres" id="5_pb2ym"]
+[ext_resource type="Resource" uid="uid://b0cb7p1dg5mtd" path="res://craftables/craft_repair_kit.tres" id="6_viwk7"]
 
-[node name="Fabricator" instance=ExtResource("1_v1d1b")]
+[node name="Fabricator" instance=ExtResource("1_slcj8")]
 anchors_preset = -1
 anchor_right = 0.399479
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = ExtResource("2_o6opr")
+script = ExtResource("2_pm7l0")
 metadata/_edit_use_anchors_ = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" index="0"]
 layout_mode = 2
 
-[node name="HeaderLabels" type="HBoxContainer" parent="MarginContainer/VBoxContainer" index="0"]
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer" index="0"]
+layout_mode = 2
+text = "Fabricator"
+horizontal_alignment = 1
+
+[node name="HeaderLabels" type="HBoxContainer" parent="MarginContainer/VBoxContainer" index="1"]
 layout_mode = 2
 
 [node name="ScrapAmount" type="Label" parent="MarginContainer/VBoxContainer/HeaderLabels" index="0"]
@@ -23,30 +32,39 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "Scrap: 000000"
 
-[node name="NamePlate" type="Label" parent="MarginContainer/VBoxContainer/HeaderLabels" index="1"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "DDCC Fabricator"
-horizontal_alignment = 2
-
-[node name="CraftOptions" type="GridContainer" parent="MarginContainer/VBoxContainer" index="1"]
+[node name="CraftOptions" type="GridContainer" parent="MarginContainer/VBoxContainer" index="2"]
 layout_mode = 2
 size_flags_vertical = 3
 columns = 2
 
 [node name="NewStockDrone" type="Button" parent="MarginContainer/VBoxContainer/CraftOptions" index="0"]
+visible = false
 layout_mode = 2
 text = "New Stock Drone"
 
 [node name="RandomAugment" type="Button" parent="MarginContainer/VBoxContainer/CraftOptions" index="1"]
+visible = false
 layout_mode = 2
 text = "Random Augment"
 
 [node name="RepairKit" type="Button" parent="MarginContainer/VBoxContainer/CraftOptions" index="2"]
+visible = false
 layout_mode = 2
 text = "Repair Kit"
 
-[node name="TEST_CraftControls" type="HBoxContainer" parent="MarginContainer/VBoxContainer" index="2"]
+[node name="CraftRandomAugment" parent="MarginContainer/VBoxContainer/CraftOptions" index="3" instance=ExtResource("3_p51s8")]
+layout_mode = 2
+craftable_data = ExtResource("4_cacy7")
+
+[node name="CraftStockDrone" parent="MarginContainer/VBoxContainer/CraftOptions" index="4" instance=ExtResource("3_p51s8")]
+layout_mode = 2
+craftable_data = ExtResource("5_pb2ym")
+
+[node name="CraftRepairKit" parent="MarginContainer/VBoxContainer/CraftOptions" index="5" instance=ExtResource("3_p51s8")]
+layout_mode = 2
+craftable_data = ExtResource("6_viwk7")
+
+[node name="TEST_CraftControls" type="HBoxContainer" parent="MarginContainer/VBoxContainer" index="3"]
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
@@ -80,3 +98,6 @@ Additional Info?"
 [connection signal="pressed" from="MarginContainer/VBoxContainer/CraftOptions/NewStockDrone" to="." method="_on_fabricate_item_button_pressed" binds= ["new_stock_drone"]]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/CraftOptions/RandomAugment" to="." method="_on_fabricate_item_button_pressed" binds= ["drone_augment_random"]]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/CraftOptions/RepairKit" to="." method="_on_fabricate_item_button_pressed" binds= ["repair_kit"]]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/CraftOptions/CraftRandomAugment" to="." method="_on_craft_random_augment_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/CraftOptions/CraftStockDrone" to="." method="_on_craft_stock_drone_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/CraftOptions/CraftRepairKit" to="." method="_on_craft_repair_kit_pressed"]

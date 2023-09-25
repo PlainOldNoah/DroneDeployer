@@ -118,15 +118,15 @@ func augment_drone_data(drone_data:DroneData) -> DroneData:
 	for i in selected_augments:
 		for j in i.augment_data.stats:
 			match j:
-				"acceleration":
+				"ACCELERATION":
 					d.acceleration += i.augment_data.stats[j]
-				"damage":
+				"DAMAGE":
 					d.damage += i.augment_data.stats[j]
-				"mass":
+				"MASS":
 					d.mass += i.augment_data.stats[j]
-				"max_battery":
+				"MAX_BATTERY":
 					d.max_battery += i.augment_data.stats[j]
-				"max_speed":
+				"MAX_SPEED":
 					d.max_speed += i.augment_data.stats[j]
 				_:
 					print_debug("ERROR: stat <", j, "> is not defined")
@@ -168,6 +168,12 @@ func _on_assemble_btn_pressed():
 	for i in selected_augments:
 		i.queue_free()
 	
+	selected_augments.clear()
+	update_display()
+
+
+## Unselects all currently selected augments
+func _on_clear_btn_pressed():
 	selected_augments.clear()
 	update_display()
 

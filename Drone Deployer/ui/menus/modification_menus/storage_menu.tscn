@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cjm3ib45n2f7h"]
+[gd_scene load_steps=3 format=3 uid="uid://pog2weprg7f7"]
 
-[ext_resource type="Script" path="res://ui/menus/storage_menu.gd" id="1_j1nt6"]
+[ext_resource type="Script" path="res://ui/menus/modification_menus/storage_menu.gd" id="1_j1nt6"]
+[ext_resource type="PackedScene" uid="uid://bsce8notrfxto" path="res://drone_mods/augment_display.tscn" id="2_jovxr"]
 
 [node name="Storage" type="Control"]
 clip_contents = true
@@ -12,6 +13,7 @@ grow_vertical = 2
 size_flags_horizontal = 3
 mouse_filter = 1
 script = ExtResource("1_j1nt6")
+augment_display_scene = ExtResource("2_jovxr")
 metadata/_edit_use_anchors_ = true
 
 [node name="Background" type="ColorRect" parent="."]
@@ -38,6 +40,11 @@ theme_override_constants/margin_bottom = 10
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Storage"
+horizontal_alignment = 1
+
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 
@@ -51,33 +58,34 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "Upgrade"
 
-[node name="AugmentStorage" type="GridContainer" parent="MarginContainer/VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+horizontal_scroll_mode = 0
+
+[node name="AugmentStorage" type="GridContainer" parent="MarginContainer/VBoxContainer/ScrollContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 2
-size_flags_vertical = 3
+size_flags_horizontal = 3
 theme_override_constants/h_separation = 10
 theme_override_constants/v_separation = 10
 columns = 4
 
-[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/AugmentStorage"]
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/ScrollContainer/AugmentStorage"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Spacer2" type="Control" parent="MarginContainer/VBoxContainer/AugmentStorage"]
+[node name="Spacer2" type="Control" parent="MarginContainer/VBoxContainer/ScrollContainer/AugmentStorage"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Spacer3" type="Control" parent="MarginContainer/VBoxContainer/AugmentStorage"]
+[node name="Spacer3" type="Control" parent="MarginContainer/VBoxContainer/ScrollContainer/AugmentStorage"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Spacer4" type="Control" parent="MarginContainer/VBoxContainer/AugmentStorage"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Spacer5" type="Control" parent="MarginContainer/VBoxContainer/AugmentStorage"]
-visible = false
+[node name="Spacer4" type="Control" parent="MarginContainer/VBoxContainer/ScrollContainer/AugmentStorage"]
 layout_mode = 2
 size_flags_horizontal = 3
 
