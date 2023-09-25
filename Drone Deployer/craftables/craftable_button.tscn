@@ -3,14 +3,15 @@
 [ext_resource type="Script" path="res://craftables/craftable_button.gd" id="1_m3a3p"]
 
 [node name="CraftableButton" type="Control"]
-custom_minimum_size = Vector2(256, 256)
+custom_minimum_size = Vector2(256, 160)
 layout_mode = 3
 anchor_right = 0.133333
-anchor_bottom = 0.237037
+anchor_bottom = 0.148148
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_m3a3p")
+metadata/_edit_use_anchors_ = true
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
@@ -43,18 +44,21 @@ mouse_filter = 2
 [node name="NameLabel" type="Label" parent="VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_vertical = 6
 text = "No Data"
 autowrap_mode = 3
 
 [node name="DescLabel" type="Label" parent="VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_vertical = 6
 text = "No Data"
 autowrap_mode = 3
 
 [node name="CostLabel" type="Label" parent="VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_vertical = 6
 text = "No Data"
 autowrap_mode = 3
 

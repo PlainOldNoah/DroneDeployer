@@ -23,7 +23,6 @@ MenuManager="*res://ui/menu_manager.tscn"
 DroneManager="*res://drone_core/drone_manager.gd"
 EnemyManager="*res://enemy/enemy_manager.tscn"
 AugmentFactory="*res://drone_mods/augment_factory.gd"
-CraftingDb="*res://databases/crafting_db.gd"
 
 [display]
 
