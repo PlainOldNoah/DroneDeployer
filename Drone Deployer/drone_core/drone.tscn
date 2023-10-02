@@ -1,13 +1,14 @@
-[gd_scene load_steps=12 format=3 uid="uid://cgx8q1e8vwntn"]
+[gd_scene load_steps=13 format=3 uid="uid://cgx8q1e8vwntn"]
 
 [ext_resource type="Script" path="res://drone_core/drone.gd" id="1_rtv2x"]
 [ext_resource type="Texture2D" uid="uid://cy1vdsb4r5r5b" path="res://assets/visual/drone_x128.png" id="2_a3kkh"]
 [ext_resource type="Script" path="res://drone_core/drone_state/drone_state_manager.gd" id="3_275fc"]
-[ext_resource type="PackedScene" uid="uid://b1opn2ph2xvsj" path="res://drone_core/drone_state/idle_drone_state.tscn" id="4_88xyg"]
-[ext_resource type="PackedScene" uid="uid://bkrgrtcw0njtb" path="res://drone_core/drone_state/arming_drone_state.tscn" id="5_kchnw"]
-[ext_resource type="PackedScene" uid="uid://dq880xcb8lo3v" path="res://drone_core/drone_state/active_drone_state.tscn" id="5_y68xj"]
-[ext_resource type="PackedScene" uid="uid://xxxovnei82h5" path="res://drone_core/drone_state/returning_drone_state.tscn" id="6_ruc6w"]
-[ext_resource type="PackedScene" uid="uid://dpsgcjbncvg0r" path="res://drone_core/drone_state/dead_drone_state.tscn" id="7_e0dg1"]
+[ext_resource type="PackedScene" uid="uid://b1ubjleut05jv" path="res://drone_core/drone_state/idle_drone_state.tscn" id="4_88xyg"]
+[ext_resource type="PackedScene" uid="uid://c3bihfn7u4ufy" path="res://drone_core/drone_state/active_drone_state.tscn" id="5_y68xj"]
+[ext_resource type="PackedScene" uid="uid://b4gortboybexj" path="res://drone_core/drone_state/dead_drone_state.tscn" id="7_e0dg1"]
+[ext_resource type="PackedScene" uid="uid://r3u1gdq884b5" path="res://drone_core/drone_state/preparing_drone_state.tscn" id="7_jccw8"]
+[ext_resource type="PackedScene" uid="uid://cqfgyhk6nhgw1" path="res://drone_core/drone_state/low_battery_drone_state.tscn" id="8_7vic3"]
+[ext_resource type="PackedScene" uid="uid://b6268sq7f6hq2" path="res://drone_core/drone_state/pending_retrieval_drone_state.tscn" id="9_rpr0y"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3xr3n"]
 radius = 64.0
@@ -19,7 +20,7 @@ radius = 64.0
 radius = 180.0
 
 [node name="Drone" type="CharacterBody2D"]
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.4, 0.4)
 collision_layer = 2
 collision_mask = 3
 script = ExtResource("1_rtv2x")
@@ -43,6 +44,7 @@ debug_color = Color(0.552941, 0.564706, 0, 0.235294)
 
 [node name="VacuumArea" type="Area2D" parent="."]
 editor_description = "Item pickup"
+visible = false
 collision_layer = 0
 collision_mask = 32
 
@@ -54,15 +56,17 @@ disabled = true
 script = ExtResource("3_275fc")
 starting_state = 1
 
-[node name="IdleDroneState" parent="DroneStateManager" instance=ExtResource("4_88xyg")]
+[node name="Idle" parent="DroneStateManager" instance=ExtResource("4_88xyg")]
 
-[node name="ArmingDroneState" parent="DroneStateManager" instance=ExtResource("5_kchnw")]
+[node name="Active" parent="DroneStateManager" instance=ExtResource("5_y68xj")]
 
-[node name="ActiveDroneState" parent="DroneStateManager" instance=ExtResource("5_y68xj")]
+[node name="Dead" parent="DroneStateManager" instance=ExtResource("7_e0dg1")]
 
-[node name="ReturningDroneState" parent="DroneStateManager" instance=ExtResource("6_ruc6w")]
+[node name="LowBattery" parent="DroneStateManager" instance=ExtResource("8_7vic3")]
 
-[node name="DeadDroneState" parent="DroneStateManager" instance=ExtResource("7_e0dg1")]
+[node name="PendingRetrieval" parent="DroneStateManager" instance=ExtResource("9_rpr0y")]
+
+[node name="Preparing" parent="DroneStateManager" instance=ExtResource("7_jccw8")]
 
 [connection signal="area_entered" from="PseudoBody" to="." method="_on_pseudo_body_area_entered"]
 [connection signal="area_entered" from="VacuumArea" to="." method="_on_vacuum_area_area_entered"]

@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dal2rtibeflr4"]
-
-[ext_resource type="Script" path="res://drone_core/drone_state/base_drone_state.gd" id="1_2afdf"]
-
-[node name="BaseDroneState" type="Node"]
-script = ExtResource("1_2afdf")

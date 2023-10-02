@@ -46,20 +46,20 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 6
 text = "No Data"
-autowrap_mode = 3
+autowrap_mode = 2
 
 [node name="DescLabel" type="Label" parent="VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 6
 text = "No Data"
-autowrap_mode = 3
+autowrap_mode = 2
 
 [node name="CostLabel" type="Label" parent="VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 6
 text = "No Data"
-autowrap_mode = 3
+autowrap_mode = 2
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

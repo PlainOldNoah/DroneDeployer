@@ -54,8 +54,9 @@ func drain_battery(delta:float) -> int:
 		
 #		NOTE: Check battery threshold after colliding since that's when drone can go home
 		
-#	elif (data.battery / data.max_battery) <= data.low_battery_threshold:
-#		return DroneState.STATE.RETURNING
+	elif (data.battery / data.max_battery) <= data.low_battery_threshold:
+		print_debug("LOW BATTERY")
+		return DroneState.STATE.LOW_BATTERY
 	
 	return DroneState.STATE.NULL
 
@@ -79,7 +80,7 @@ func deploy(deploy_pos:Vector2, deploy_angle:float):
 #	set_velocity_from_vector(Vector2.from_angle(deploy_angle))
 #	set_facing_direction(true)
 	
-	drone_state_manager.change_state(DroneState.STATE.ARMING)
+	drone_state_manager.change_state(DroneState.STATE.PREPARING)
 
 ## Returns the current state the drone is in
 func get_drone_state() -> DroneState.STATE:
@@ -93,8 +94,9 @@ func is_drone_state(match_state:DroneState.STATE) -> bool:
 
 ## When the drone enters the shield area, go to the hanger
 func _on_ddcc_shield_area_entered():
-	if is_drone_state(DroneState.STATE.ACTIVE):
-		drone_state_manager.change_state(DroneState.STATE.RETURNING)
+	print_debug("TODO")
+#	if is_drone_state(DroneState.STATE.ACTIVE):
+#		drone_state_manager.change_state(DroneState.STATE.RETURNING)
 
 ## When the drone exits the shield area for the first time
 func _on_ddcc_shield_area_exited():
@@ -102,13 +104,14 @@ func _on_ddcc_shield_area_exited():
 
 ## When exiting the DDCC, enter the ACTIVE state if in the ARMING state
 func _on_ddcc_collection_pt_exited():
-	if is_drone_state(DroneState.STATE.ARMING):
-		drone_state_manager.change_state(DroneState.STATE.ACTIVE)
+	print_debug("TODO")
+#	if is_drone_state(DroneState.STATE.ARMING):
+#		drone_state_manager.change_state(DroneState.STATE.ACTIVE)
 
 ## When entering the DDCC, allow collection if ACTIVE or RETURNING
 func _on_ddcc_collection_pt_entered():
-	if is_drone_state(DroneState.STATE.ACTIVE) or is_drone_state(DroneState.STATE.RETURNING):
-		drone_state_manager.change_state(DroneState.STATE.IDLE)
+#	if is_drone_state(DroneState.STATE.ACTIVE) or is_drone_state(DroneState.STATE.RETURNING):
+	drone_state_manager.change_state(DroneState.STATE.IDLE)
 
 # === Velocity ===
 
@@ -160,7 +163,7 @@ func debug_randomize_values():
 	
 	data.max_speed = randi_range(200, 400)
 #	data.damage = randi_range(1,10)
-	data.damage = 5
+	data.damage = 1
 #	data.max_battery = randi_range(100,500)
 	emit_signal("stats_updated", self)
 

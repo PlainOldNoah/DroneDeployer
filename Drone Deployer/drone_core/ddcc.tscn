@@ -1,42 +1,60 @@
-[gd_scene load_steps=6 format=3 uid="uid://cee1i6r18g6ut"]
+[gd_scene load_steps=8 format=3 uid="uid://cee1i6r18g6ut"]
 
 [ext_resource type="Script" path="res://drone_core/ddcc.gd" id="1_g45i4"]
-[ext_resource type="Texture2D" uid="uid://vmkhwgme4i7l" path="res://assets/visual/ddcc_x256.png" id="2_avquc"]
+[ext_resource type="Texture2D" uid="uid://c73ad46yelomj" path="res://assets/visual/ddcc_x256_v4.png" id="2_67cik"]
+[ext_resource type="Texture2D" uid="uid://cigk2qx2n8gj2" path="res://assets/visual/ddcc_hex.png" id="3_y53hn"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hi0gs"]
-radius = 45.0
-height = 120.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nvb16"]
+size = Vector2(68.2353, 77.6471)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_reul3"]
+size = Vector2(62.3529, 77.647)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8xjsk"]
-radius = 128.0
+radius = 116.004
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yahjk"]
 radius = 4.0
 
 [node name="DDCC" type="Node2D"]
 editor_description = "Drone Deploying Control Core. Central HUB that deploys drones and serves as the \"character\""
+scale = Vector2(0.85, 0.85)
 script = ExtResource("1_g45i4")
+rotation_weight = 5.0
 
-[node name="Sprites" type="Node2D" parent="."]
-modulate = Color(1, 1, 1, 0.313726)
-
-[node name="Core" type="Sprite2D" parent="Sprites"]
-rotation = 1.55334
-texture = ExtResource("2_avquc")
-vframes = 3
-frame = 2
-
-[node name="Shield" type="Sprite2D" parent="Sprites"]
-texture = ExtResource("2_avquc")
-vframes = 3
-
-[node name="Inside" type="Sprite2D" parent="Sprites"]
-rotation = 1.55334
-texture = ExtResource("2_avquc")
-vframes = 3
+[node name="Background" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("2_67cik")
+vframes = 5
 frame = 1
 
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+z_index = 1
+texture = ExtResource("2_67cik")
+vframes = 5
+frame = 4
+
+[node name="Sprites" type="Node2D" parent="."]
+
+[node name="Core" type="Sprite2D" parent="Sprites"]
+rotation = 1.5708
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_y53hn")
+
+[node name="Shield" type="Sprite2D" parent="Sprites"]
+texture = ExtResource("2_67cik")
+vframes = 5
+
+[node name="Inside" type="Sprite2D" parent="Sprites"]
+visible = false
+rotation = 1.55334
+texture = ExtResource("2_67cik")
+vframes = 5
+frame = 3
+
 [node name="DeployPoint" type="Marker2D" parent="Sprites"]
+position = Vector2(54.1176, 0)
 
 [node name="DeploymentClearing" type="Area2D" parent="Sprites"]
 z_index = 1
@@ -44,12 +62,23 @@ collision_layer = 0
 collision_mask = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprites/DeploymentClearing"]
-position = Vector2(45, 0)
+position = Vector2(88.2353, 4.47369e-06)
 rotation = -3.14159
-shape = SubResource("CapsuleShape2D_hi0gs")
+shape = SubResource("RectangleShape2D_nvb16")
 debug_color = Color(0, 0.631373, 0.454902, 0.258824)
 
+[node name="Receiver" type="Area2D" parent="Sprites"]
+position = Vector2(-62.353, 0)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprites/Receiver"]
+position = Vector2(-31.1765, 1.12197e-06)
+shape = SubResource("RectangleShape2D_reul3")
+debug_color = Color(0.866667, 0, 0.858824, 0.054902)
+
 [node name="ShieldArea" type="Area2D" parent="."]
+visible = false
 collision_layer = 16
 collision_mask = 38
 
@@ -58,6 +87,7 @@ shape = SubResource("CircleShape2D_8xjsk")
 debug_color = Color(0, 0.6, 0.701961, 0.0392157)
 
 [node name="DroneCollectArea" type="Area2D" parent="."]
+visible = false
 z_index = 1
 collision_layer = 8
 collision_mask = 2
@@ -66,7 +96,9 @@ collision_mask = 2
 shape = SubResource("CircleShape2D_yahjk")
 debug_color = Color(0.764706, 0.172549, 1, 0.0392157)
 
+[connection signal="body_entered" from="Sprites/Receiver" to="." method="_on_receiver_body_entered"]
 [connection signal="area_entered" from="ShieldArea" to="." method="_on_shield_area_area_entered"]
 [connection signal="area_exited" from="ShieldArea" to="." method="_on_shield_area_area_exited"]
+[connection signal="body_exited" from="ShieldArea" to="." method="_on_shield_area_body_exited"]
 [connection signal="body_entered" from="DroneCollectArea" to="." method="_on_drone_collect_area_body_entered"]
 [connection signal="body_exited" from="DroneCollectArea" to="." method="_on_drone_collect_area_body_exited"]

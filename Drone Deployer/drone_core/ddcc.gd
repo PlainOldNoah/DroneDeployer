@@ -16,14 +16,14 @@ extends Node2D
 #	$Sprites/Inside.set_z_index(20)
 
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
-	rotate_deployer()
+func _process(delta):
+	rotate_deployer(delta)
 
 
 ## Follow the mouse cursor and ease the deployer to face in that direction
-func rotate_deployer():
+func rotate_deployer(delta:float):
 	var angle = (get_global_mouse_position() - self.global_position).angle()
-	deployer.global_rotation = lerp_angle(deployer.global_rotation, angle, rotation_weight)
+	deployer.global_rotation = lerp_angle(deployer.global_rotation, angle, rotation_weight * delta)
 
 
 ## Returns true if the deployer is free from obstacles
@@ -87,12 +87,24 @@ func _on_shield_area_area_exited(_area):
 
 ## Drone enters the collection area/point
 func _on_drone_collect_area_body_entered(body):
-	if body.is_in_group("drone"):
-		body._on_ddcc_collection_pt_entered()
+	pass
+#	if body.is_in_group("drone"):
+#		body._on_ddcc_collection_pt_entered()
 
 ## Drone leaves the collection area/point
 func _on_drone_collect_area_body_exited(body):
+	pass
+#	if body.is_in_group("drone"):
+#		body._on_ddcc_collection_pt_exited()
+
+
+
+
+func _on_receiver_body_entered(body):
 	if body.is_in_group("drone"):
-		body._on_ddcc_collection_pt_exited()
+		body._on_ddcc_collection_pt_entered()
 
 
+func _on_shield_area_body_exited(body):
+	if body.is_in_group("drone"):
+		body.drone_state_manager.change_state(DroneState.STATE.ACTIVE)

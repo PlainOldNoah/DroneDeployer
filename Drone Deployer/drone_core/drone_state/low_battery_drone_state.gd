@@ -5,11 +5,6 @@ extends DroneState
 const LERP_WEIGHT:int = 10
 
 
-func process(delta: float) -> int:
-	drone.scale = drone.scale.lerp(Vector2(0.25, 0.25), delta * 1)
-	return drone.drain_battery(delta)
-
-
 func physics_process(delta: float) -> int:
 	move(delta)
 	lerp_home(delta)

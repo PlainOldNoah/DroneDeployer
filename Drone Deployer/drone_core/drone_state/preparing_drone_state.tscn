@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://r3u1gdq884b5"]
+
+[ext_resource type="PackedScene" path="res://drone_core/drone_state/drone_state.tscn" id="1_b2o8f"]
+[ext_resource type="Script" path="res://drone_core/drone_state/preparing_drone_state.gd" id="2_5x6t0"]
+
+[node name="Preparing" instance=ExtResource("1_b2o8f")]
+script = ExtResource("2_5x6t0")

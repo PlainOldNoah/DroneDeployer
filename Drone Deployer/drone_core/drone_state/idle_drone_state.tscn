@@ -1,7 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://b1opn2ph2xvsj"]
+[gd_scene load_steps=3 format=3 uid="uid://b1ubjleut05jv"]
 
-[ext_resource type="PackedScene" uid="uid://dal2rtibeflr4" path="res://drone_core/drone_state/base_drone_state.tscn" id="1_dltq3"]
+[ext_resource type="PackedScene" path="res://drone_core/drone_state/drone_state.tscn" id="1_dltq3"]
 [ext_resource type="Script" path="res://drone_core/drone_state/idle_drone_state.gd" id="2_1qyg3"]
 
-[node name="IdleDroneState" instance=ExtResource("1_dltq3")]
+[node name="Idle" instance=ExtResource("1_dltq3")]
 script = ExtResource("2_1qyg3")
