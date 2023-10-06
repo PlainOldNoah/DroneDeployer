@@ -45,7 +45,7 @@ var battery:float = max_battery:
 		battery = clampf(new_battery, 0.0, max_battery)
 
 ## Battery depleted per second
-var battery_drain:float = 0.0
+var battery_drain:float = 25.0
 
 ## Percent of battery remaining that drone returns on
 var low_battery_threshold := 0.10

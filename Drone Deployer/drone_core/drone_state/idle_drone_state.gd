@@ -6,7 +6,7 @@ func enter() -> void:
 	drone.set_physics_process(false)
 	drone.disable_collision_shapes(true, true)
 	drone.set_visible(false)
-#	drone.set_velocity_from_vector(Vector2i.ZERO, 0)
+
 	drone.data.speed = 0
 	drone.update_velocity()
 	
@@ -18,9 +18,10 @@ func enter() -> void:
 	drone.emit_signal("state_changed", DroneState.STATE.IDLE)
 
 
-func process(delta: float) -> int:
+func process(delta: float) -> STATE:
 	if drone.charge_battery(delta):
 		drone.set_process(false)
+	
 	return STATE.NULL
 
 

@@ -17,7 +17,7 @@ radius = 29.0
 height = 142.0
 
 [node name="Roach" instance=ExtResource("1_hukca")]
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.3, 0.3)
 script = ExtResource("1_lsbt8")
 speed = 80
 damage = 1

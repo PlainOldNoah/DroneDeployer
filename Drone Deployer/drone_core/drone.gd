@@ -16,12 +16,18 @@ const LERP_ROT_WEIGHT:float = 0.10
 ## Acts as the drone's body for collection items and hitting enemies
 @onready var pseudo_body := $PseudoBody
 ## Area2D responsible for pulling map items towards self
-@onready var collection_range := $VacuumArea
+@onready var vacuum_area := $VacuumArea
 ## Drone State Manager, handles drone states
 @onready var drone_state_manager:DroneStateManager = $DroneStateManager
 
 ## Create a new DroneData resource
 var data:DroneData = DroneData.new()
+
+## What direction the drone is facing
+var facing:Vector2 = Vector2.ZERO:
+	set(new_facing):
+		facing = new_facing
+		update_velocity()
 
 # === Overridden ===
 
@@ -45,17 +51,15 @@ func _process(delta):
 # === Battery ===
 
 ## Drains the battery and returns a [DroneState]
-func drain_battery(delta:float) -> int:
+func drain_battery(delta:float) -> DroneState.STATE:
 	data.battery = clamp(data.battery - (data.battery_drain * delta), 0.0, data.max_battery)
 	emit_signal("stats_updated", self)
 	
 	if data.battery <= 0.0: # Dead Battery
 		return DroneState.STATE.DEAD
 		
-#		NOTE: Check battery threshold after colliding since that's when drone can go home
-		
-#	elif (data.battery / data.max_battery) <= data.low_battery_threshold:
-#		return DroneState.STATE.RETURNING
+	elif (data.battery / data.max_battery) <= data.low_battery_threshold:
+		return DroneState.STATE.LOW_BATTERY
 	
 	return DroneState.STATE.NULL
 
@@ -79,7 +83,7 @@ func deploy(deploy_pos:Vector2, deploy_angle:float):
 #	set_velocity_from_vector(Vector2.from_angle(deploy_angle))
 #	set_facing_direction(true)
 	
-	drone_state_manager.change_state(DroneState.STATE.ARMING)
+	drone_state_manager.change_state(DroneState.STATE.PREPARING)
 
 ## Returns the current state the drone is in
 func get_drone_state() -> DroneState.STATE:
@@ -93,8 +97,9 @@ func is_drone_state(match_state:DroneState.STATE) -> bool:
 
 ## When the drone enters the shield area, go to the hanger
 func _on_ddcc_shield_area_entered():
-	if is_drone_state(DroneState.STATE.ACTIVE):
-		drone_state_manager.change_state(DroneState.STATE.RETURNING)
+	print_debug("TODO")
+#	if is_drone_state(DroneState.STATE.ACTIVE):
+#		drone_state_manager.change_state(DroneState.STATE.RETURNING)
 
 ## When the drone exits the shield area for the first time
 func _on_ddcc_shield_area_exited():
@@ -102,13 +107,14 @@ func _on_ddcc_shield_area_exited():
 
 ## When exiting the DDCC, enter the ACTIVE state if in the ARMING state
 func _on_ddcc_collection_pt_exited():
-	if is_drone_state(DroneState.STATE.ARMING):
-		drone_state_manager.change_state(DroneState.STATE.ACTIVE)
+	print_debug("TODO")
+#	if is_drone_state(DroneState.STATE.ARMING):
+#		drone_state_manager.change_state(DroneState.STATE.ACTIVE)
 
 ## When entering the DDCC, allow collection if ACTIVE or RETURNING
 func _on_ddcc_collection_pt_entered():
-	if is_drone_state(DroneState.STATE.ACTIVE) or is_drone_state(DroneState.STATE.RETURNING):
-		drone_state_manager.change_state(DroneState.STATE.IDLE)
+#	if is_drone_state(DroneState.STATE.ACTIVE) or is_drone_state(DroneState.STATE.RETURNING):
+	drone_state_manager.change_state(DroneState.STATE.IDLE)
 
 # === Velocity ===
 
@@ -121,11 +127,7 @@ func _on_ddcc_collection_pt_entered():
 
 # ====================================================================================
 
-## What direction the drone is facing
-var facing:Vector2 = Vector2.ZERO:
-	set(new_facing):
-		facing = new_facing
-		update_velocity()
+
 
 #func set_speed(new_speed):
 #	data.speed = new_speed
@@ -160,15 +162,16 @@ func debug_randomize_values():
 	
 	data.max_speed = randi_range(200, 400)
 #	data.damage = randi_range(1,10)
-	data.damage = 5
+	data.damage = 1
 #	data.max_battery = randi_range(100,500)
 	emit_signal("stats_updated", self)
 
-## Toggle both the solid colliding body as well as the area2d scanners
-func disable_collision_shapes(solid_body_value:bool, scanner_value:bool):
+
+## Toggle the CharacterBody2D collisions and/or the Area2D collision shapes
+func disable_collision_shapes(solid_body_value:bool, area_value:bool):
 	collision_shape.set_deferred("disabled", solid_body_value)
-	pseudo_body.get_node("CollisionShape2D").set_deferred("disabled", scanner_value)
-	collection_range.get_node("CollisionShape2D").set_deferred("disabled", scanner_value)
+	pseudo_body.get_node("CollisionShape2D").set_deferred("disabled", area_value)
+	vacuum_area.get_node("CollisionShape2D").set_deferred("disabled", area_value)
 
 
 ## When an enemy or pickup enters the Drone's "Body"

@@ -8,11 +8,14 @@ extends Node
 
 ## State enums for state names that way every script has the same interface
 @onready var states:Dictionary = {
-	DroneState.STATE.IDLE: $IdleDroneState,
-	DroneState.STATE.ARMING: $ArmingDroneState,
-	DroneState.STATE.ACTIVE: $ActiveDroneState,
-	DroneState.STATE.RETURNING: $ReturningDroneState,
-	DroneState.STATE.DEAD: $DeadDroneState, 
+	DroneState.STATE.IDLE: $Idle,
+#	DroneState.STATE.ARMING: $ArmingDroneState,
+	DroneState.STATE.ACTIVE: $Active,
+#	DroneState.STATE.RETURNING: $ReturningDroneState,
+	DroneState.STATE.DEAD: $Dead, 
+	DroneState.STATE.PENDING_RETRIEVAL: $PendingRetrieval,
+	DroneState.STATE.PREPARING: $Preparing,
+	DroneState.STATE.LOW_BATTERY: $LowBattery,
 }
 
 ## The current state the state machine is in as a SCENE
