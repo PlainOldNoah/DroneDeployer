@@ -18,5 +18,5 @@ func get_input():
 	var input_direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	offset += input_direction * 10
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	get_input()

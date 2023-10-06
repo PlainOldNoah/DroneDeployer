@@ -1,6 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://b5ixh51n72yq1"]
+[gd_scene load_steps=3 format=3 uid="uid://dn1lffykcmbgp"]
 
-[ext_resource type="Script" path="res://drone_mirror.gd" id="1_7cwro"]
+[ext_resource type="Script" path="res://drone_core/drone_mirror.gd" id="1_prg84"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_nku1j"]
 load_path = "res://.godot/imported/drone_x128.png-cc7ed6b8b4107f66ad04ece81c003125.ctex"
@@ -13,7 +13,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 6
-script = ExtResource("1_7cwro")
+script = ExtResource("1_prg84")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1

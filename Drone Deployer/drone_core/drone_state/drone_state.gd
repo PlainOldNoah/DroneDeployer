@@ -10,10 +10,8 @@ extends Node
 enum STATE {
 	NULL, ## No State
 	IDLE, ## Waiting to be deployed
-#	ARMING, ## Preparing to be active
 	PREPARING, ## Getting ready to be Active
 	ACTIVE, ## Currently deployed
-#	RETURNING, ## Low battery, going home
 	LOW_BATTERY, ## Battery is below the set threshold
 	PENDING_RETRIEVAL, ## Drone is waiting to be collected
 	DEAD, ## No battery, dead in the water
@@ -21,72 +19,94 @@ enum STATE {
 
 var drone:Drone
 
-
 func enter() -> void:
 	pass
 
 func exit() -> void:
 	pass
 
-func input(_event: InputEvent) -> int:
+func input(_event: InputEvent) -> STATE:
 	return STATE.NULL
 
-func process(_delta: float) -> int:
+func process(_delta: float) -> STATE:
 	return STATE.NULL
 
-func physics_process(_delta: float) -> int:
+func physics_process(_delta: float) -> STATE:
 	return STATE.NULL
 
 
 # === ADDITIONAL FUNCTIONS ===
 
+# --- Movement ---
+
 ## Moves and collides both normally and with knockback
-func move(delta:float):
-	var collision:KinematicCollision2D
-	
+func move(delta:float) -> STATE:
 	# Doing knockback
 	if drone.data.knockback_velocity.length() > drone.data.knockback_cutoff:
-		knockback_movement(delta)
+		return knockback_movement(delta)
 	# Regular movement
 	else:
-		default_movement(delta)
+		return default_movement(delta)
 
 
 ## Reduces the 'knockback_velocity' and calls 'move_and_collide' with that velocity
-func knockback_movement(delta:float):
+func knockback_movement(delta:float) -> STATE:
 	drone.data.knockback_velocity = drone.data.knockback_velocity.lerp(Vector2.ZERO, drone.data.acceleration * delta)
 	var collision:KinematicCollision2D = drone.move_and_collide(drone.data.knockback_velocity * delta)
 	if collision:
 		handle_collision(collision)
+	
+	return STATE.NULL
 
 
 ## How should the drone move when not affected by knockback or other effects
-func default_movement(delta:float):
+func default_movement(delta:float) -> STATE:
 	speed_up(delta)
 	var collision:KinematicCollision2D = drone.move_and_collide(drone.velocity * delta)
 	if collision:
-			handle_collision(collision)
+			return handle_collision(collision)
+	
+	return STATE.NULL
 
+# --- Collisions ---
 
 ## Handles what happens when drone is colliding
-func handle_collision(collision:KinematicCollision2D):
+func handle_collision(collision:KinematicCollision2D) -> STATE:
 	var collider = collision.get_collider()
 	
 	# Stop movement
 	drone.data.speed = 0
 	
-	# Hit drone
+	print(name, " IS COLLIDING WITH: ", collider.name)
+	
+	# Drone collision
 	if collider.is_in_group("drone"):
-		drone.data.knockback_velocity = collider.global_position.direction_to(drone.global_position) * 50 # Drone Mass
-	# Hit anything else
+		return drone_collision(collision)
+	# DDCC collision
+	elif collider.is_in_group("ddcc"):
+		return ddcc_collision(collision)
+	# Anything else collision
 	else:
-		default_collision(collision)
+		return default_collision(collision)
 
+
+## For collisions involving [Drone]
+func drone_collision(collision:KinematicCollision2D) -> STATE:
+	var collider = collision.get_collider()
+	drone.data.knockback_velocity = collider.global_position.direction_to(drone.global_position) * 50 # Drone Mass
+	return STATE.NULL
+
+## For collisions involving [DDCC]
+func ddcc_collision(collision:KinematicCollision2D) -> STATE:
+	default_collision(collision)
+	return STATE.NULL
 
 ## For normal collisions just bounce off of the collider
-func default_collision(collision:KinematicCollision2D):
+func default_collision(collision:KinematicCollision2D) -> STATE:
 	drone.facing = drone.velocity.bounce(collision.get_normal())
+	return STATE.NULL
 
+# --- Misc ---
 
 ## Lerps from current speed to max speed at the rate of acceleration
 func speed_up(delta:float):

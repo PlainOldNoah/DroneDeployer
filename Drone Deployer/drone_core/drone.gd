@@ -16,7 +16,7 @@ const LERP_ROT_WEIGHT:float = 0.10
 ## Acts as the drone's body for collection items and hitting enemies
 @onready var pseudo_body := $PseudoBody
 ## Area2D responsible for pulling map items towards self
-@onready var collection_range := $VacuumArea
+@onready var vacuum_area := $VacuumArea
 ## Drone State Manager, handles drone states
 @onready var drone_state_manager:DroneStateManager = $DroneStateManager
 
@@ -51,13 +51,12 @@ func _process(delta):
 # === Battery ===
 
 ## Drains the battery and returns a [DroneState]
-func drain_battery(delta:float) -> int:
+func drain_battery(delta:float) -> DroneState.STATE:
 	data.battery = clamp(data.battery - (data.battery_drain * delta), 0.0, data.max_battery)
 	emit_signal("stats_updated", self)
 	
 	if data.battery <= 0.0: # Dead Battery
-		pass
-#		return DroneState.STATE.DEAD
+		return DroneState.STATE.DEAD
 		
 	elif (data.battery / data.max_battery) <= data.low_battery_threshold:
 		return DroneState.STATE.LOW_BATTERY
@@ -167,11 +166,12 @@ func debug_randomize_values():
 #	data.max_battery = randi_range(100,500)
 	emit_signal("stats_updated", self)
 
-## Toggle both the solid colliding body as well as the area2d scanners
-func disable_collision_shapes(solid_body_value:bool, scanner_value:bool):
+
+## Toggle the CharacterBody2D collisions and/or the Area2D collision shapes
+func disable_collision_shapes(solid_body_value:bool, area_value:bool):
 	collision_shape.set_deferred("disabled", solid_body_value)
-	pseudo_body.get_node("CollisionShape2D").set_deferred("disabled", scanner_value)
-	collection_range.get_node("CollisionShape2D").set_deferred("disabled", scanner_value)
+	pseudo_body.get_node("CollisionShape2D").set_deferred("disabled", area_value)
+	vacuum_area.get_node("CollisionShape2D").set_deferred("disabled", area_value)
 
 
 ## When an enemy or pickup enters the Drone's "Body"

@@ -8,14 +8,13 @@ func enter() -> void:
 	drone.disable_collision_shapes(false, false)
 	drone.set_visible(true)
 	
-#	drone.set_collision_mask_value(2, false)
+	drone.set_collision_mask_value(2, false)
+	drone.set_collision_mask_value(4, false)
 
-#func process(delta: float) -> int:
-##	drone.scale = drone.scale.lerp(Vector2(0.5, 0.5), delta * 1)
-#	return drone.drain_battery(delta)
+func exit() -> void:
+	drone.set_collision_mask_value(2, true)
+	drone.set_collision_mask_value(4, true)
 
 
-func physics_process(delta: float) -> int:
-	move(delta)
-	return STATE.NULL
-
+func physics_process(delta: float) -> STATE:
+	return move(delta)

@@ -11,7 +11,8 @@ extends Node2D
 @onready var deploy_clearing := $Sprites/DeploymentClearing
 
 
-#func _ready():
+func _ready():
+	add_to_group("ddcc")
 #	$Sprites/Core.set_z_index(40)
 #	$Sprites/Inside.set_z_index(20)
 
@@ -23,7 +24,8 @@ func _process(delta):
 ## Follow the mouse cursor and ease the deployer to face in that direction
 func rotate_deployer(delta:float):
 	var angle = (get_global_mouse_position() - self.global_position).angle()
-	deployer.global_rotation = lerp_angle(deployer.global_rotation, angle, rotation_weight * delta)
+	global_rotation = lerp_angle(global_rotation, angle, rotation_weight * delta)
+#	deployer.global_rotation = lerp_angle(deployer.global_rotation, angle, rotation_weight * delta)
 
 
 ## Returns true if the deployer is free from obstacles
@@ -41,7 +43,7 @@ func deploy_next_drone():
 
 		var drone:Drone = DroneManager.get_and_pop_next_drone()
 		if drone != null:
-			drone.deploy(deploy_pnt.global_position, deployer.rotation)
+			drone.deploy(deploy_pnt.global_position, deployer.global_rotation)
 
 
 ## When an enemy hits the shield take damage and remove the enemy
@@ -86,13 +88,13 @@ func _on_shield_area_area_exited(_area):
 
 
 ## Drone enters the collection area/point
-func _on_drone_collect_area_body_entered(body):
+func _on_drone_collect_area_body_entered(_body):
 	pass
 #	if body.is_in_group("drone"):
 #		body._on_ddcc_collection_pt_entered()
 
 ## Drone leaves the collection area/point
-func _on_drone_collect_area_body_exited(body):
+func _on_drone_collect_area_body_exited(_body):
 	pass
 #	if body.is_in_group("drone"):
 #		body._on_ddcc_collection_pt_exited()
