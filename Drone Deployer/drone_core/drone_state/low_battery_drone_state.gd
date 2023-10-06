@@ -8,17 +8,7 @@ func process(delta: float) -> STATE:
 
 func physics_process(delta: float) -> STATE:
 	return move(delta)
-#	return STATE.NULL
 
-
-## Inject code to navigate to home for each collision
-#func handle_collision(collision:KinematicCollision2D):
-#	super(collision)
-#	drone.facing = drone.data.home_pos - drone.get_global_position()
-
-
-func ddcc_collision(_collision:KinematicCollision2D) -> STATE:
-	return STATE.PENDING_RETRIEVAL
 
 ## For collisions involving [Drone]
 func drone_collision(collision:KinematicCollision2D) -> STATE:

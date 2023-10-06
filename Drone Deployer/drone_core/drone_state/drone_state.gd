@@ -77,8 +77,6 @@ func handle_collision(collision:KinematicCollision2D) -> STATE:
 	# Stop movement
 	drone.data.speed = 0
 	
-	print(name, " IS COLLIDING WITH: ", collider.name)
-	
 	# Drone collision
 	if collider.is_in_group("drone"):
 		return drone_collision(collision)
@@ -112,6 +110,3 @@ func default_collision(collision:KinematicCollision2D) -> STATE:
 func speed_up(delta:float):
 	drone.data.speed = lerp(drone.data.speed, drone.data.max_speed, drone.data.acceleration * delta)
 	drone.update_velocity()
-
-
-

@@ -29,6 +29,7 @@ var facing:Vector2 = Vector2.ZERO:
 		facing = new_facing
 		update_velocity()
 
+
 # === Overridden ===
 
 func _ready():
@@ -48,6 +49,7 @@ func _physics_process(delta):
 func _process(delta):
 	drone_state_manager.process(delta)
 
+
 # === Battery ===
 
 ## Drains the battery and returns a [DroneState]
@@ -56,7 +58,8 @@ func drain_battery(delta:float) -> DroneState.STATE:
 	emit_signal("stats_updated", self)
 	
 	if data.battery <= 0.0: # Dead Battery
-		return DroneState.STATE.DEAD
+		return DroneState.STATE.NULL
+#		return DroneState.STATE.DEAD
 		
 	elif (data.battery / data.max_battery) <= data.low_battery_threshold:
 		return DroneState.STATE.LOW_BATTERY
@@ -72,6 +75,7 @@ func charge_battery(delta:float) -> bool:
 		return true
 	return false
 
+
 # === Drone State ===
 
 ## Activates a Drone for the map with a starting point and angle (in radians)
@@ -79,11 +83,12 @@ func deploy(deploy_pos:Vector2, deploy_angle:float):
 	set_global_position(deploy_pos)
 	facing = Vector2.from_angle(deploy_angle)
 	update_velocity(true)
-#	set_velocity_from_radians(deploy_angle)
-#	set_velocity_from_vector(Vector2.from_angle(deploy_angle))
-#	set_facing_direction(true)
 	
 	drone_state_manager.change_state(DroneState.STATE.PREPARING)
+
+## Puts the drone back into the DDCC as the Idle State
+func collect():
+	drone_state_manager.change_state(DroneState.STATE.IDLE)
 
 ## Returns the current state the drone is in
 func get_drone_state() -> DroneState.STATE:
@@ -93,45 +98,21 @@ func get_drone_state() -> DroneState.STATE:
 func is_drone_state(match_state:DroneState.STATE) -> bool:
 	return get_drone_state() == match_state
 
+
 # === DDCC Areas ===
 
-## When the drone enters the shield area, go to the hanger
-func _on_ddcc_shield_area_entered():
-	print_debug("TODO")
-#	if is_drone_state(DroneState.STATE.ACTIVE):
-#		drone_state_manager.change_state(DroneState.STATE.RETURNING)
+## Drone leaves the DDCC shield area
+func ddcc_shield_area_exited():
+	if get_drone_state() == DroneState.STATE.PREPARING:
+		drone_state_manager.change_state(DroneState.STATE.ACTIVE)
 
-## When the drone exits the shield area for the first time
-func _on_ddcc_shield_area_exited():
-	pass
-
-## When exiting the DDCC, enter the ACTIVE state if in the ARMING state
-func _on_ddcc_collection_pt_exited():
-	print_debug("TODO")
-#	if is_drone_state(DroneState.STATE.ARMING):
-#		drone_state_manager.change_state(DroneState.STATE.ACTIVE)
-
-## When entering the DDCC, allow collection if ACTIVE or RETURNING
-func _on_ddcc_collection_pt_entered():
-#	if is_drone_state(DroneState.STATE.ACTIVE) or is_drone_state(DroneState.STATE.RETURNING):
-	drone_state_manager.change_state(DroneState.STATE.IDLE)
-
-# === Velocity ===
-
-## Sets the rotation to the direction of the velocity; Gradually or instantly
-#func set_facing_direction(instantly:bool=true):
-#	if instantly:
-#		set_rotation(velocity.angle() + PI/2)
-#	else:
-#		rotation = lerp_angle(rotation, velocity.angle() + PI/2, 0.15)
-
-# ====================================================================================
+## Drone enters the DDCC's shield area
+func ddcc_shield_area_entered():
+	if get_drone_state() == DroneState.STATE.LOW_BATTERY:
+		drone_state_manager.change_state(DroneState.STATE.PENDING_RETRIEVAL)
 
 
-
-#func set_speed(new_speed):
-#	data.speed = new_speed
-#	update_velocity()
+# === Misc ===
 
 ## Sets the velocity to the current speed and facing direction
 ## [br] instant_rot to rotate immediately
@@ -144,18 +125,7 @@ func update_velocity(instant_rot:bool=false):
 		rotation = lerp_angle(rotation, facing.angle() + PI/2, LERP_ROT_WEIGHT)
 
 
-## Sets the velocity from a provided angle in radians and speed
-#func set_velocity_from_radians(radians:float, speed:float=data.speed):
-#	set_velocity_from_vector(Vector2.from_angle(radians), speed)
-
-## Sets the velocity from a provided vector
-#func set_velocity_from_vector(vector:Vector2, speed:float=data.speed):
-#	set_velocity(vector.normalized() * speed)
-
-# ====================================================================================
-
-# === Misc ===
-
+## Randomizes some values for debugging purposes
 func debug_randomize_values():
 	data.modulate_color = Color(randf(), randf(), randf())
 	$Sprite.modulate = data.modulate_color

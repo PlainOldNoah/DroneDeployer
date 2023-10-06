@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cee1i6r18g6ut"]
+[gd_scene load_steps=7 format=3 uid="uid://cee1i6r18g6ut"]
 
 [ext_resource type="Script" path="res://drone_core/ddcc.gd" id="1_g45i4"]
 [ext_resource type="Texture2D" uid="uid://c73ad46yelomj" path="res://assets/visual/ddcc_x256_v4.png" id="2_67cik"]
@@ -11,10 +11,7 @@ size = Vector2(68.2353, 77.6471)
 size = Vector2(62.3529, 77.647)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8xjsk"]
-radius = 116.004
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_yahjk"]
-radius = 4.0
+radius = 125.882
 
 [node name="DDCC" type="StaticBody2D"]
 editor_description = "Drone Deploying Control Core. Central HUB that deploys drones and serves as the \"character\""
@@ -59,6 +56,7 @@ frame = 3
 position = Vector2(54.1176, 0)
 
 [node name="DeploymentClearing" type="Area2D" parent="Sprites"]
+visible = false
 z_index = 1
 collision_layer = 0
 collision_mask = 6
@@ -70,6 +68,7 @@ shape = SubResource("RectangleShape2D_nvb16")
 debug_color = Color(0, 0.631373, 0.454902, 0.258824)
 
 [node name="Receiver" type="Area2D" parent="Sprites"]
+visible = false
 position = Vector2(-62.353, 0)
 collision_layer = 0
 collision_mask = 2
@@ -81,10 +80,9 @@ debug_color = Color(0.866667, 0, 0.858824, 0.054902)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 self_modulate = Color(1, 1, 1, 0.0784314)
-polygon = PackedVector2Array(0, -62.3529, 62.3529, -38.8235, 62.3529, 38.8235, 0, 62.3529, -62.3529, 38.8235, -62.3529, -38.8235)
+polygon = PackedVector2Array(0, -62, 62, -39, 62, 39, 0, 62, -62, 39, -62, -39)
 
 [node name="ShieldArea" type="Area2D" parent="."]
-visible = false
 collision_layer = 16
 collision_mask = 38
 
@@ -92,19 +90,31 @@ collision_mask = 38
 shape = SubResource("CircleShape2D_8xjsk")
 debug_color = Color(0, 0.6, 0.701961, 0.0392157)
 
-[node name="DroneCollectArea" type="Area2D" parent="."]
+[node name="Marker2D" type="Marker2D" parent="."]
 visible = false
-z_index = 1
-collision_layer = 8
-collision_mask = 2
+position = Vector2(-31, -50.5)
+rotation = -0.349066
+gizmo_extents = 33.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DroneCollectArea"]
-shape = SubResource("CircleShape2D_yahjk")
-debug_color = Color(0.764706, 0.172549, 1, 0.0392157)
+[node name="Marker2D2" type="Marker2D" parent="."]
+visible = false
+position = Vector2(31, 50.5)
+rotation = -3.49066
+gizmo_extents = 33.0
+
+[node name="Marker2D3" type="Marker2D" parent="."]
+visible = false
+position = Vector2(-31, 50.5)
+rotation = -2.79253
+gizmo_extents = 33.0
+
+[node name="Marker2D4" type="Marker2D" parent="."]
+visible = false
+position = Vector2(31, -50.5)
+rotation = 0.349066
+gizmo_extents = 33.0
 
 [connection signal="body_entered" from="Sprites/Receiver" to="." method="_on_receiver_body_entered"]
 [connection signal="area_entered" from="ShieldArea" to="." method="_on_shield_area_area_entered"]
-[connection signal="area_exited" from="ShieldArea" to="." method="_on_shield_area_area_exited"]
+[connection signal="body_entered" from="ShieldArea" to="." method="_on_shield_area_body_entered"]
 [connection signal="body_exited" from="ShieldArea" to="." method="_on_shield_area_body_exited"]
-[connection signal="body_entered" from="DroneCollectArea" to="." method="_on_drone_collect_area_body_entered"]
-[connection signal="body_exited" from="DroneCollectArea" to="." method="_on_drone_collect_area_body_exited"]

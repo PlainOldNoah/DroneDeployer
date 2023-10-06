@@ -61,52 +61,30 @@ func collect_scrap(scrap:Scrap):
 
 # ----- Signals -----
 
-## Drone enters the shield area
-#func _on_shield_area_body_entered(body):
-#	pass
-#	if body.is_in_group("drone"):
-#		body._on_ddcc_shield_area_entered()
-
-## Drone leaves the shield area
-#func _on_shield_area_body_exited(body):
-#	pass
-#	if body.is_in_group("drone"):
-#		body._on_ddcc_shield_area_exited()
-
 ## Enemy enters shield area
 func _on_shield_area_area_entered(area):
 	if area.is_in_group("enemy"):
 		take_hit(area)
 	elif area.is_in_group("scrap"):
 		collect_scrap(area)
-	elif area.is_in_group("drone"):
-		area.owner._on_ddcc_shield_area_entered() # pseduo_body owner is [Drone]
 
 
-func _on_shield_area_area_exited(_area):
-	pass
+func _on_shield_area_body_exited(body):
+	if body is Drone:
+		body.ddcc_shield_area_exited()
 
 
-## Drone enters the collection area/point
-func _on_drone_collect_area_body_entered(_body):
-	pass
-#	if body.is_in_group("drone"):
-#		body._on_ddcc_collection_pt_entered()
-
-## Drone leaves the collection area/point
-func _on_drone_collect_area_body_exited(_body):
-	pass
-#	if body.is_in_group("drone"):
-#		body._on_ddcc_collection_pt_exited()
-
+func _on_shield_area_body_entered(body):
+	if body is Drone:
+		body.ddcc_shield_area_entered()
 
 
 
 func _on_receiver_body_entered(body):
-	if body.is_in_group("drone"):
-		body._on_ddcc_collection_pt_entered()
+	if body is Drone:
+		body.collect()
 
 
-func _on_shield_area_body_exited(body):
-	if body.is_in_group("drone"):
-		body.drone_state_manager.change_state(DroneState.STATE.ACTIVE)
+
+
+
