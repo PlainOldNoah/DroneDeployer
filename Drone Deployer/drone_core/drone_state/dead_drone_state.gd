@@ -20,7 +20,6 @@ func process(_delta: float) -> int:
 
 func physics_process(delta: float) -> int:
 	drone.data.speed = lerpf(drone.data.speed, 0.0, delta * 3)
-	print(drone.data.speed)
 	
 	if drone.data.speed <= 5:
 		drone.data.speed = 0

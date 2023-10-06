@@ -23,6 +23,12 @@ const LERP_ROT_WEIGHT:float = 0.10
 ## Create a new DroneData resource
 var data:DroneData = DroneData.new()
 
+## What direction the drone is facing
+var facing:Vector2 = Vector2.ZERO:
+	set(new_facing):
+		facing = new_facing
+		update_velocity()
+
 # === Overridden ===
 
 func _ready():
@@ -50,12 +56,10 @@ func drain_battery(delta:float) -> int:
 	emit_signal("stats_updated", self)
 	
 	if data.battery <= 0.0: # Dead Battery
-		return DroneState.STATE.DEAD
-		
-#		NOTE: Check battery threshold after colliding since that's when drone can go home
+		pass
+#		return DroneState.STATE.DEAD
 		
 	elif (data.battery / data.max_battery) <= data.low_battery_threshold:
-		print_debug("LOW BATTERY")
 		return DroneState.STATE.LOW_BATTERY
 	
 	return DroneState.STATE.NULL
@@ -124,11 +128,7 @@ func _on_ddcc_collection_pt_entered():
 
 # ====================================================================================
 
-## What direction the drone is facing
-var facing:Vector2 = Vector2.ZERO:
-	set(new_facing):
-		facing = new_facing
-		update_velocity()
+
 
 #func set_speed(new_speed):
 #	data.speed = new_speed

@@ -46,17 +46,26 @@ func move(delta:float):
 	
 	# Doing knockback
 	if drone.data.knockback_velocity.length() > drone.data.knockback_cutoff:
-		knockback_recovery(delta)
-		drone.move_and_collide(drone.data.knockback_velocity * delta)
+		knockback_movement(delta)
 	# Regular movement
 	else:
-		speed_up(delta)
-		drone.update_velocity()
-		
-		collision = drone.move_and_collide(drone.velocity * delta)
-	
+		default_movement(delta)
+
+
+## Reduces the 'knockback_velocity' and calls 'move_and_collide' with that velocity
+func knockback_movement(delta:float):
+	drone.data.knockback_velocity = drone.data.knockback_velocity.lerp(Vector2.ZERO, drone.data.acceleration * delta)
+	var collision:KinematicCollision2D = drone.move_and_collide(drone.data.knockback_velocity * delta)
 	if collision:
 		handle_collision(collision)
+
+
+## How should the drone move when not affected by knockback or other effects
+func default_movement(delta:float):
+	speed_up(delta)
+	var collision:KinematicCollision2D = drone.move_and_collide(drone.velocity * delta)
+	if collision:
+			handle_collision(collision)
 
 
 ## Handles what happens when drone is colliding
@@ -69,12 +78,14 @@ func handle_collision(collision:KinematicCollision2D):
 	# Hit drone
 	if collider.is_in_group("drone"):
 		drone.data.knockback_velocity = collider.global_position.direction_to(drone.global_position) * 50 # Drone Mass
-	# Battery low
-#	elif (drone.data.battery / drone.data.max_battery) <= drone.data.low_battery_threshold:
-#		drone.drone_state_manager.change_state(DroneState.STATE.RETURNING)
 	# Hit anything else
 	else:
-		drone.facing = drone.velocity.bounce(collision.get_normal())
+		default_collision(collision)
+
+
+## For normal collisions just bounce off of the collider
+func default_collision(collision:KinematicCollision2D):
+	drone.facing = drone.velocity.bounce(collision.get_normal())
 
 
 ## Lerps from current speed to max speed at the rate of acceleration
@@ -83,6 +94,4 @@ func speed_up(delta:float):
 	drone.update_velocity()
 
 
-## Lerps the knockback_velocity to 0
-func knockback_recovery(delta:float):
-	drone.data.knockback_velocity = drone.data.knockback_velocity.lerp(Vector2.ZERO, drone.data.acceleration * delta)
+
