@@ -5,8 +5,9 @@ extends CharacterBody2D
 
 ## Emitted when any of the drone stats change
 signal stats_updated(drone:Drone)
+
 ## Emitted when the [DroneState] changes
-signal state_changed(new_state:DroneState.STATE)
+#signal state_changed(new_state:DroneState.STATE)
 
 ## Lerp weight for changing rotation
 const LERP_ROT_WEIGHT:float = 0.10
@@ -17,6 +18,10 @@ const LERP_ROT_WEIGHT:float = 0.10
 @onready var pseudo_body := $PseudoBody
 ## Area2D responsible for pulling map items towards self
 @onready var vacuum_area := $VacuumArea
+
+## Parent node for hold all drone upgrades
+@onready var upgrades := $Upgrades
+
 ## Drone State Manager, handles drone states
 @onready var drone_state_manager:DroneStateManager = $DroneStateManager
 
@@ -58,8 +63,8 @@ func drain_battery(delta:float) -> DroneState.STATE:
 	emit_signal("stats_updated", self)
 	
 	if data.battery <= 0.0: # Dead Battery
-		return DroneState.STATE.NULL
-#		return DroneState.STATE.DEAD
+#		return DroneState.STATE.NULL
+		return DroneState.STATE.DEAD
 		
 	elif (data.battery / data.max_battery) <= data.low_battery_threshold:
 		return DroneState.STATE.LOW_BATTERY

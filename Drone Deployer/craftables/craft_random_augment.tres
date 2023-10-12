@@ -5,5 +5,5 @@
 [resource]
 script = ExtResource("1_lmypd")
 craftable_name = "Random Augment"
-base_cost = 1
+base_cost = 0
 description = "Create a random augment"

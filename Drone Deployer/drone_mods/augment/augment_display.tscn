@@ -1,11 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://bsce8notrfxto"]
+[gd_scene load_steps=7 format=3 uid="uid://wx1epvnksogd"]
 
-[ext_resource type="Script" path="res://drone_mods/augment_display.gd" id="1_8rrx0"]
-[ext_resource type="FontFile" uid="uid://dcmpwu0s0vvy6" path="res://assets/font/ChakraPetch/ChakraPetch-Regular.ttf" id="2_w8aks"]
-[ext_resource type="Texture2D" uid="uid://dj5gfcti0i2wu" path="res://assets/visual/augment.png" id="3_exujj"]
+[ext_resource type="Script" path="res://drone_mods/augment/augment_display.gd" id="1_ri3d3"]
+[ext_resource type="FontFile" uid="uid://dcmpwu0s0vvy6" path="res://assets/font/ChakraPetch/ChakraPetch-Regular.ttf" id="2_0ke7y"]
+[ext_resource type="Texture2D" uid="uid://dj5gfcti0i2wu" path="res://assets/visual/augment.png" id="3_ucye1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iqsc3"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uq23t"]
-bg_color = Color(0.392157, 0.392157, 0.392157, 1)
+bg_color = Color(0.360784, 0.360784, 0.360784, 1)
 border_width_left = 3
 border_width_top = 3
 border_width_right = 3
@@ -17,7 +19,7 @@ corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
 
 [sub_resource type="Theme" id="Theme_svn3l"]
-default_font = ExtResource("2_w8aks")
+default_font = ExtResource("2_0ke7y")
 default_font_size = 12
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_uq23t")
 
@@ -36,10 +38,19 @@ offset_bottom = 50.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
-script = ExtResource("1_8rrx0")
+script = ExtResource("1_ri3d3")
+
+[node name="Panel" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_iqsc3")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
-self_modulate = Color(0, 1, 1, 1)
 use_parent_material = true
 layout_mode = 1
 anchors_preset = 15
@@ -68,17 +79,18 @@ layout_mode = 2
 unique_name_in_owner = true
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
-texture = ExtResource("3_exujj")
+texture = ExtResource("3_ucye1")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="BatteryDrainLabel" type="Label" parent="PanelContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="BatteryDrainLabel" type="RichTextLabel" parent="PanelContainer/MarginContainer/HBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 6
 mouse_filter = 1
+bbcode_enabled = true
 text = "🔋 12 p/s"
-horizontal_alignment = 1
+fit_content = true
 
 [node name="VSeparator" type="VSeparator" parent="PanelContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2

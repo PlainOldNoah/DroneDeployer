@@ -9,9 +9,7 @@ extends Node
 ## State enums for state names that way every script has the same interface
 @onready var states:Dictionary = {
 	DroneState.STATE.IDLE: $Idle,
-#	DroneState.STATE.ARMING: $ArmingDroneState,
 	DroneState.STATE.ACTIVE: $Active,
-#	DroneState.STATE.RETURNING: $ReturningDroneState,
 	DroneState.STATE.DEAD: $Dead, 
 	DroneState.STATE.PENDING_RETRIEVAL: $PendingRetrieval,
 	DroneState.STATE.PREPARING: $Preparing,
@@ -22,10 +20,6 @@ extends Node
 var current_state: DroneState
 ## The current state the state machine is in as a DroneState.STATE
 var current_state_enum: DroneState.STATE
-#var current_state_enum: DroneState.STATE:
-#	set(new_state):
-#		current_state_enum = new_state
-#		get_parent().emit_signal("state_changed", current_state_enum)
 
 
 ## Intialize the state manager with the starting state
@@ -44,7 +38,9 @@ func change_state(new_state:DroneState.STATE) -> void:
 	current_state = states[new_state]
 	current_state_enum = new_state
 	
-	print(owner.name, " -> ", current_state.name)
+	print("%9s -> [%d] %s " % [owner.name, current_state_enum, current_state.name])
+#	drone.emit_signal("state_changed", current_state_enum)
+	
 	current_state.enter()
 
 

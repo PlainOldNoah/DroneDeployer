@@ -29,3 +29,16 @@ func _on_craft_stock_drone_pressed(craftable_data:CraftableData):
 func _on_craft_repair_kit_pressed(craftable_data:CraftableData):
 	if GameplayManager.remove_scrap(craftable_data.base_cost):
 		GameplayManager.ddcc_health += 3
+
+
+func _on_craft_drone_upgrade_pressed(craftable_data:CraftableData):
+	if GameplayManager.remove_scrap(craftable_data.base_cost):
+		create_mock_upgrade()
+
+
+# === Move Later ===
+func create_mock_upgrade():
+	var new_upgrade = preload("res://drone_mods/upgrades/mock_drone_upgrade.tscn").instantiate()
+	var new_upgrade_display = preload("res://drone_mods/upgrades/drone_upgrade_display.tscn").instantiate()
+	
+	print(new_upgrade.data.short_desc)

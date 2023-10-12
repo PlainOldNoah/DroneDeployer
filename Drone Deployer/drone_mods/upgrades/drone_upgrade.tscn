@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dtno732g6oge1"]
+
+[ext_resource type="Script" path="res://drone_mods/upgrades/drone_upgrade.gd" id="1_4vabp"]
+
+[node name="DroneUpgrade" type="Node2D"]
+script = ExtResource("1_4vabp")

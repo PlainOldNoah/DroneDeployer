@@ -14,8 +14,6 @@ func enter() -> void:
 	
 	DroneManager.add_drone_to_queue(drone)
 	offload_scrap()
-	
-	drone.emit_signal("state_changed", DroneState.STATE.IDLE)
 
 
 func process(delta: float) -> STATE:
