@@ -1,21 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://brk040r2gp3dk"]
+[gd_scene load_steps=4 format=3 uid="uid://brk040r2gp3dk"]
 
 [ext_resource type="PackedScene" uid="uid://dtno732g6oge1" path="res://drone_mods/upgrades/drone_upgrade.tscn" id="1_1hpa6"]
 [ext_resource type="Script" path="res://drone_mods/upgrades/mock_drone_upgrade.gd" id="2_5xpsn"]
 [ext_resource type="Texture2D" uid="uid://dj5gfcti0i2wu" path="res://assets/visual/augment.png" id="3_doc3n"]
-[ext_resource type="Script" path="res://drone_mods/upgrades/drone_upgrade_data.gd" id="4_jasjf"]
-
-[sub_resource type="Resource" id="Resource_xjh3t"]
-script = ExtResource("4_jasjf")
-short_desc = "A mock upgrade. Doesn't do anything."
-long_desc = "This is a mock upgrade based off of drone_upgrade.
-
-It currently doesn't do anything other than spin."
-icon = ExtResource("3_doc3n")
 
 [node name="MockDroneUpgrade" instance=ExtResource("1_1hpa6")]
 script = ExtResource("2_5xpsn")
-data = SubResource("Resource_xjh3t")
 
 [node name="Sprite2D" type="Sprite2D" parent="." index="0"]
 scale = Vector2(1.5, 1.5)

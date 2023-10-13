@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://cwwp6l365mm0f" path="res://ui/menus/base_menu.tscn" id="1_7dtce"]
 [ext_resource type="Script" path="res://ui/menus/modification_menus/hanger_menu.gd" id="2_3ppgg"]
-[ext_resource type="PackedScene" uid="uid://b5ixh51n72yq1" path="res://drone_core/drone_mirror.tscn" id="3_6uwb2"]
+[ext_resource type="PackedScene" uid="uid://dn1lffykcmbgp" path="res://drone_core/drone_mirror.tscn" id="3_6uwb2"]
 [ext_resource type="Script" path="res://ui/menus/modification_menus/drone_selector_popup.gd" id="5_1q42t"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fvqda"]
@@ -121,10 +121,11 @@ layout_mode = 2
 theme_override_constants/separation = 10
 theme_override_styles/separator = SubResource("StyleBoxFlat_6mm5d")
 
-[node name="AddedAugments" type="GridContainer" parent="MarginContainer/VBoxContainer" index="5"]
+[node name="AddedUpgrades" type="GridContainer" parent="MarginContainer/VBoxContainer" index="5"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
+columns = 4
 
 [node name="ControlBtns" type="HBoxContainer" parent="MarginContainer/VBoxContainer" index="6"]
 layout_mode = 2

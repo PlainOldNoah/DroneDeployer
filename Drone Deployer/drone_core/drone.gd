@@ -63,8 +63,8 @@ func drain_battery(delta:float) -> DroneState.STATE:
 	emit_signal("stats_updated", self)
 	
 	if data.battery <= 0.0: # Dead Battery
-#		return DroneState.STATE.NULL
-		return DroneState.STATE.DEAD
+		return DroneState.STATE.NULL
+#		return DroneState.STATE.DEAD
 		
 	elif (data.battery / data.max_battery) <= data.low_battery_threshold:
 		return DroneState.STATE.LOW_BATTERY

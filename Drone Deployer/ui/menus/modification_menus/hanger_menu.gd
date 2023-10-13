@@ -13,8 +13,8 @@ signal augment_commit_request()
 @onready var drone_stats := %DroneStats
 @onready var drone_icon:DroneMirror = %FocusDroneIcon
 @onready var drone_selection_popup := %DroneSelectionPopup
+@onready var added_upgrades := %AddedUpgrades
 
-#@onready var added_augment_view := %AddedAugments
 #@onready var available_augments := $HBoxContainer/VBoxContainer/AvailableAugments
 
 ## Current drone to apply augments & operations to
@@ -178,6 +178,11 @@ func _on_clear_btn_pressed():
 	update_display()
 
 
+## Changes the focused drone's name from the line edit
+func _on_drone_name_text_submitted(new_text):
+	focused_drone.data.display_name = new_text
+
+
 ## Recieved from [StorageMenu] when augment is clicked
 func _on_augment_selected(augment:AugmentDisplay):
 	if (augment.selected == false) and (selected_augments.has(augment)):
@@ -188,6 +193,8 @@ func _on_augment_selected(augment:AugmentDisplay):
 	update_display()
 
 
-## Changes the focused drone's name from the line edit
-func _on_drone_name_text_submitted(new_text):
-	focused_drone.data.display_name = new_text
+#func _on_upgrade_selected(upgrade:UpgradeDisplay):
+#	print_debug()
+#	upgrade.get_parent().remove_child(upgrade)
+#	added_upgrades.add_child(upgrade)
+#	upgrade.owner = self

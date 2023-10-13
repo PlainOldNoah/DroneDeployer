@@ -4,12 +4,15 @@
 [ext_resource type="Texture2D" uid="uid://dj5gfcti0i2wu" path="res://assets/visual/augment.png" id="1_gw6b8"]
 
 [node name="DroneUpgradeDisplay" type="Control"]
-custom_minimum_size = Vector2(64, 64)
+custom_minimum_size = Vector2(92, 92)
 layout_mode = 3
-anchor_right = 0.0333333
-anchor_bottom = 0.0592593
+anchor_right = 0.0479167
+anchor_bottom = 0.0851852
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
 script = ExtResource("1_fekrw")
 metadata/_edit_use_anchors_ = true
 
@@ -20,9 +23,31 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="Icon" type="TextureRect" parent="PanelContainer"]
 layout_mode = 2
+mouse_filter = 2
 texture = ExtResource("1_gw6b8")
 expand_mode = 1
 stretch_mode = 5
+
+[node name="Label" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="InteractionArea" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_default_cursor_shape = 2
+flat = true
+
+[connection signal="mouse_entered" from="InteractionArea" to="." method="_on_interaction_area_mouse_entered"]
+[connection signal="mouse_exited" from="InteractionArea" to="." method="_on_interaction_area_mouse_exited"]
+[connection signal="pressed" from="InteractionArea" to="." method="_on_interaction_area_pressed"]

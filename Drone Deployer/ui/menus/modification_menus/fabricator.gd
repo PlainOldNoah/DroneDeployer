@@ -3,6 +3,9 @@ extends Control
 
 ## Spend scrap to create augments and upgrades
 
+## Emitted when new upgrade data is created
+signal create_upgrade(new_upgrade:DroneUpgradeData)
+
 @onready var scrap_amt_label := %ScrapAmount
 
 func _ready():
@@ -38,7 +41,5 @@ func _on_craft_drone_upgrade_pressed(craftable_data:CraftableData):
 
 # === Move Later ===
 func create_mock_upgrade():
-	var new_upgrade = preload("res://drone_mods/upgrades/mock_drone_upgrade.tscn").instantiate()
-	var new_upgrade_display = preload("res://drone_mods/upgrades/drone_upgrade_display.tscn").instantiate()
-	
-	print(new_upgrade.data.short_desc)
+	var new_upgrade:DroneUpgradeData = load("res://drone_mods/upgrades/mock_upgrade_data.tres")
+	emit_signal("create_upgrade", new_upgrade)

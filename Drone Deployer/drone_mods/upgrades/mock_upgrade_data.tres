@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="DroneUpgradeData" load_steps=4 format=3 uid="uid://duvx8iucf74ke"]
+
+[ext_resource type="Script" path="res://drone_mods/upgrades/drone_upgrade_data.gd" id="1_bgtel"]
+[ext_resource type="Texture2D" uid="uid://dj5gfcti0i2wu" path="res://assets/visual/augment.png" id="1_gs4bd"]
+[ext_resource type="PackedScene" uid="uid://brk040r2gp3dk" path="res://drone_mods/upgrades/mock_drone_upgrade.tscn" id="3_je84r"]
+
+[resource]
+script = ExtResource("1_bgtel")
+short_desc = "SD: For testing purposes only"
+long_desc = "LD: This doesn't do anything really. The mock upgrade is for testing to make sure that upgrades work.
+
+This is a new line to see how that works
+
+If the upgrade works the drone should have a rotating disk below it"
+icon = ExtResource("1_gs4bd")
+upgrade_behavior = ExtResource("3_je84r")

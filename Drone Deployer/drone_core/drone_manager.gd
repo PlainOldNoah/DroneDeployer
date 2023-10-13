@@ -61,3 +61,14 @@ func get_and_pop_next_drone():
 ## Moves the drone in position 0 to the end of the drone queue
 func skip_next_drone():
 	drone_queue.push_back(drone_queue.pop_front())
+
+
+## Adds the UpgradeBehavior from 'upgrade_data' to 'drone'
+func add_upgrade_to_drone(drone:Drone, upgrade_data:DroneUpgradeData):
+	var upgrade_behavior:DroneUpgrade = upgrade_data.upgrade_behavior.instantiate()
+	upgrade_data.behavior_scene_ref = upgrade_behavior
+	drone.upgrades.add_child(upgrade_behavior)
+
+## Removes the UpgradeBehavior from 'upgrade_data' to 'drone'
+func remove_upgrade_from_drone(_drone:Drone, upgrade_data:DroneUpgradeData):
+	upgrade_data.behavior_scene_ref.queue_free()

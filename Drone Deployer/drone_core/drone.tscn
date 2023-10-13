@@ -1,8 +1,7 @@
-[gd_scene load_steps=14 format=3 uid="uid://cgx8q1e8vwntn"]
+[gd_scene load_steps=13 format=3 uid="uid://cgx8q1e8vwntn"]
 
 [ext_resource type="Script" path="res://drone_core/drone.gd" id="1_rtv2x"]
 [ext_resource type="Texture2D" uid="uid://cy1vdsb4r5r5b" path="res://assets/visual/drone_x128.png" id="2_a3kkh"]
-[ext_resource type="PackedScene" uid="uid://brk040r2gp3dk" path="res://drone_mods/upgrades/mock_drone_upgrade.tscn" id="3_0wp2x"]
 [ext_resource type="Script" path="res://drone_core/drone_state/drone_state_manager.gd" id="3_275fc"]
 [ext_resource type="PackedScene" uid="uid://b1ubjleut05jv" path="res://drone_core/drone_state/idle_drone_state.tscn" id="4_88xyg"]
 [ext_resource type="PackedScene" uid="uid://c3bihfn7u4ufy" path="res://drone_core/drone_state/active_drone_state.tscn" id="5_y68xj"]
@@ -55,8 +54,6 @@ disabled = true
 
 [node name="Upgrades" type="Node2D" parent="."]
 show_behind_parent = true
-
-[node name="MockDroneUpgrade" parent="Upgrades" instance=ExtResource("3_0wp2x")]
 
 [node name="DroneStateManager" type="Node" parent="."]
 script = ExtResource("3_275fc")

@@ -6,6 +6,7 @@ extends Control
 signal upgrade_selected(upgrade:UpgradeDisplay) 
 
 @onready var icon := $PanelContainer/Icon
+@onready var hover_text_box := $Label
 
 ## If the augment is selected or not, used with [StorageMenu]
 var selected:bool = false:
@@ -13,18 +14,27 @@ var selected:bool = false:
 		selected = new_state
 		emit_signal("upgrade_selected", self)
 
+
 ## Augment itself; Where the display gets its info from
 var upgrade_data:DroneUpgradeData = null:
 	set(new_data):
 		upgrade_data = new_data
 		if upgrade_data != null:
-			clear_display()
 			update_display()
-
-## Sets all visible elements to their default values
-func clear_display():
-	icon.texture = null
 
 
 func update_display():
-	pass
+	hover_text_box.text = upgrade_data.short_desc
+
+
+func _on_interaction_area_pressed():
+#	selected = !selected
+	emit_signal("upgrade_selected", self)
+
+
+func _on_interaction_area_mouse_entered():
+	hover_text_box.visible = true
+
+
+func _on_interaction_area_mouse_exited():
+	hover_text_box.visible = false

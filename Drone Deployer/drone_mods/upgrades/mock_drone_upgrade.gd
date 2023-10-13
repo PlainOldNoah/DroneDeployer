@@ -1,4 +1,4 @@
 extends DroneUpgrade
 
-func _process(delta):
+func _process(_delta):
 	$Sprite2D.rotate(0.1)
