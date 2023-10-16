@@ -7,7 +7,7 @@ extends CharacterBody2D
 signal stats_updated(drone:Drone)
 
 ## Emitted when the [DroneState] changes
-#signal state_changed(new_state:DroneState.STATE)
+signal state_changed(new_state:DroneState.STATE)
 
 ## Lerp weight for changing rotation
 const LERP_ROT_WEIGHT:float = 0.10

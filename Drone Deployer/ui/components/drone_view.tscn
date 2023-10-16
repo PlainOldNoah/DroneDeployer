@@ -1,0 +1,76 @@
+[gd_scene load_steps=3 format=3 uid="uid://bby1xtse0hqpe"]
+
+[ext_resource type="Texture2D" uid="uid://bc6kl6xwi5sh4" path="res://assets/visual/damage_icon.png" id="1_fnfn0"]
+[ext_resource type="Texture2D" uid="uid://cy1vdsb4r5r5b" path="res://assets/visual/drone_x128.png" id="2_m1dmf"]
+
+[node name="DroneView" type="Control"]
+custom_minimum_size = Vector2(192, 192)
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -90.0
+offset_top = -90.0
+offset_right = 90.0
+offset_bottom = 90.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="ProgressBar" type="ProgressBar" parent="PanelContainer/MarginContainer"]
+show_behind_parent = true
+layout_mode = 2
+size_flags_vertical = 1
+value = 50.0
+fill_mode = 3
+show_percentage = false
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="DroneIcon" type="TextureRect" parent="PanelContainer/MarginContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 10
+texture = ExtResource("2_m1dmf")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="DroneName" type="Label" parent="PanelContainer/MarginContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "DroneName"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StatusIcon" type="TextureRect" parent="PanelContainer/MarginContainer/MarginContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = ExtResource("1_fnfn0")
+expand_mode = 1
+stretch_mode = 4

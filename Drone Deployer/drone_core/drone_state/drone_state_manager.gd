@@ -20,10 +20,12 @@ extends Node
 var current_state: DroneState
 ## The current state the state machine is in as a DroneState.STATE
 var current_state_enum: DroneState.STATE
-
+## Reference to parent Drone
+var drone:Drone
 
 ## Intialize the state manager with the starting state
 func init(linked_drone:Drone):
+	drone = linked_drone
 	for child in get_children():
 		child.drone = linked_drone
 		
@@ -39,7 +41,7 @@ func change_state(new_state:DroneState.STATE) -> void:
 	current_state_enum = new_state
 	
 	print("%9s -> [%d] %s " % [owner.name, current_state_enum, current_state.name])
-#	drone.emit_signal("state_changed", current_state_enum)
+	drone.emit_signal("state_changed", current_state_enum)
 	
 	current_state.enter()
 

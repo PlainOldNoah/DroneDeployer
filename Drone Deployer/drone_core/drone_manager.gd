@@ -67,6 +67,8 @@ func add_upgrade_to_drone(drone:Drone, upgrade_data:DroneUpgradeData):
 	var upgrade_behavior:DroneUpgrade = upgrade_data.upgrade_behavior.instantiate()
 	upgrade_data.behavior_scene_ref = upgrade_behavior
 	drone.upgrades.add_child(upgrade_behavior)
+	
+	upgrade_behavior.init(drone)
 
 
 ## Removes the UpgradeBehavior from 'upgrade_data' to 'drone'

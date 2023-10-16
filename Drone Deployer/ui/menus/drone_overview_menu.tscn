@@ -1,0 +1,59 @@
+[gd_scene load_steps=3 format=3 uid="uid://d2whwf2asgm1x"]
+
+[ext_resource type="PackedScene" uid="uid://cwwp6l365mm0f" path="res://ui/menus/base_menu.tscn" id="1_sbpv0"]
+[ext_resource type="PackedScene" uid="uid://bby1xtse0hqpe" path="res://ui/components/drone_view.tscn" id="2_tbqqu"]
+
+[node name="DroneOverviewMenu" instance=ExtResource("1_sbpv0")]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" index="0"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" index="0"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer/HBoxContainer" index="0"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+columns = 8
+
+[node name="DroneView" parent="MarginContainer/VBoxContainer/HBoxContainer/GridContainer" index="0" instance=ExtResource("2_tbqqu")]
+layout_mode = 2
+
+[node name="DroneView2" parent="MarginContainer/VBoxContainer/HBoxContainer/GridContainer" index="1" instance=ExtResource("2_tbqqu")]
+layout_mode = 2
+
+[node name="DroneView3" parent="MarginContainer/VBoxContainer/HBoxContainer/GridContainer" index="2" instance=ExtResource("2_tbqqu")]
+layout_mode = 2
+
+[node name="DroneView4" parent="MarginContainer/VBoxContainer/HBoxContainer/GridContainer" index="3" instance=ExtResource("2_tbqqu")]
+layout_mode = 2
+
+[node name="DroneView5" parent="MarginContainer/VBoxContainer/HBoxContainer/GridContainer" index="4" instance=ExtResource("2_tbqqu")]
+layout_mode = 2
+
+[node name="DroneView6" parent="MarginContainer/VBoxContainer/HBoxContainer/GridContainer" index="5" instance=ExtResource("2_tbqqu")]
+layout_mode = 2
+
+[node name="DroneView7" parent="MarginContainer/VBoxContainer/HBoxContainer/GridContainer" index="6" instance=ExtResource("2_tbqqu")]
+layout_mode = 2
+
+[node name="DroneView8" parent="MarginContainer/VBoxContainer/HBoxContainer/GridContainer" index="7" instance=ExtResource("2_tbqqu")]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer" index="1"]
+custom_minimum_size = Vector2(290, 0)
+layout_mode = 2
+size_flags_vertical = 1
+text = "Information about what's being shown goes here"
+autowrap_mode = 3
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer" index="1"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2" index="0"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Doesn't do anything yet"

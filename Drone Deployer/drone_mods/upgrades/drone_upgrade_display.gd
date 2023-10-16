@@ -9,10 +9,10 @@ signal upgrade_selected(upgrade:UpgradeDisplay)
 @onready var hover_text_box := $Label
 
 ## If the augment is selected or not, used with [StorageMenu]
-var selected:bool = false:
-	set(new_state):
-		selected = new_state
-		emit_signal("upgrade_selected", self)
+#var selected:bool = false:
+#	set(new_state):
+#		selected = new_state
+#		emit_signal("upgrade_selected", self)
 
 
 ## Augment itself; Where the display gets its info from
