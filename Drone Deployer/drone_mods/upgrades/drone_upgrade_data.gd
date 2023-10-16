@@ -14,4 +14,7 @@ extends Resource
 @export var upgrade_behavior:PackedScene = null
 
 ## Specific reference to the 'upgrade_behavior' created
-var behavior_scene_ref:DroneUpgrade = null
+var behavior_scene_ref = null#:
+#	set(new_beh):
+#		behavior_scene_ref = new_beh
+#		print_debug(behavior_scene_ref)

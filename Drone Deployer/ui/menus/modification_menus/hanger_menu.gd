@@ -62,6 +62,9 @@ var stats_format_string:String = \
 	Vacuum Radius: %d (%d)
 "
 
+## Drones with their added upgrades
+var drone_upgrades:Dictionary = {}
+
 #var augmented_drone_stats:DroneData = null
 #var selected_augments:Array[AugmentDisplay] = []
 
@@ -104,6 +107,8 @@ func update_display():
 		0,0,\
 		0.0,0.0,\
 		]
+	
+	show_drone_upgrades()
 
 
 ## Return a unique version of drone_data, modified by selected_augments
@@ -134,7 +139,33 @@ func augment_drone_data(drone_data:DroneData) -> DroneData:
 	return d
 
 
-## --- Focus Drone selection ---
+## === Drone Upgrades ===
+
+## Links the current upgrade to the 'focused_drone' mirror
+func link_upgrade(upgrade:UpgradeDisplay):
+	if drone_upgrades.has(focused_drone):
+		drone_upgrades[focused_drone].append(upgrade)
+	else:
+		drone_upgrades[focused_drone] = [upgrade]
+
+
+## Removes the upgrade from the currently focused_drone it was attached to
+func unlink_upgrade(upgrade:UpgradeDisplay):
+	if drone_upgrades.has(focused_drone) and drone_upgrades[focused_drone].has(upgrade):
+		drone_upgrades[focused_drone].erase(upgrade)
+
+
+## Shows upgrades linked to the focused drone and hide all others
+func show_drone_upgrades():
+	var visible_upgrades:Array = drone_upgrades[focused_drone] if drone_upgrades.has(focused_drone) else []
+	for i in added_upgrades.get_children():
+		if visible_upgrades.has(i):
+			i.show()
+		else:
+			i.hide()
+
+
+## === Focus Drone selection ===
 
 ## Sets the focused_drone to the drone in the library at position 'index'
 func select_focus_drone(index:int):
@@ -159,7 +190,7 @@ func _on_new_drone_selected(drone:Drone):
 	focused_drone = drone
 	library_index = DroneManager.drone_library.find(focused_drone)
 
-## --- Misc Signals ---
+## === Misc Signals ===
 
 ## Applies the selected augments to the currently focused [Drone]
 func _on_assemble_btn_pressed():
@@ -191,10 +222,3 @@ func _on_augment_selected(augment:AugmentDisplay):
 		selected_augments.append(augment)
 	
 	update_display()
-
-
-#func _on_upgrade_selected(upgrade:UpgradeDisplay):
-#	print_debug()
-#	upgrade.get_parent().remove_child(upgrade)
-#	added_upgrades.add_child(upgrade)
-#	upgrade.owner = self

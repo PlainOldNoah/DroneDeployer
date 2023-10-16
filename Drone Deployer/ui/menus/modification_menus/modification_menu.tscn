@@ -1,9 +1,63 @@
-[gd_scene load_steps=5 format=3 uid="uid://bvwr2nvdtjqep"]
+[gd_scene load_steps=12 format=3 uid="uid://bvwr2nvdtjqep"]
 
 [ext_resource type="Script" path="res://ui/menus/modification_menus/modification_menu.gd" id="1_jeisk"]
 [ext_resource type="PackedScene" uid="uid://xjf514n0gujb" path="res://ui/menus/modification_menus/hanger_menu.tscn" id="2_a2unt"]
 [ext_resource type="PackedScene" uid="uid://c3oaq5ksseclc" path="res://ui/menus/modification_menus/storage_menu.tscn" id="3_e721m"]
 [ext_resource type="PackedScene" uid="uid://cnxilth1fthiu" path="res://ui/menus/modification_menus/fabricator_menu.tscn" id="4_1dq3y"]
+[ext_resource type="Script" path="res://drone_mods/augment/augment_display.gd" id="4_thm5l"]
+[ext_resource type="FontFile" uid="uid://dcmpwu0s0vvy6" path="res://assets/font/ChakraPetch/ChakraPetch-Regular.ttf" id="5_lylby"]
+[ext_resource type="Texture2D" uid="uid://dj5gfcti0i2wu" path="res://assets/visual/augment.png" id="6_p8hla"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iqsc3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uq23t"]
+bg_color = Color(0.360784, 0.360784, 0.360784, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="Theme" id="Theme_svn3l"]
+default_font = ExtResource("5_lylby")
+default_font_size = 12
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_uq23t")
+
+[sub_resource type="PackedScene" id="PackedScene_hxyal"]
+resource_local_to_scene = true
+_bundled = {
+"conn_count": 1,
+"conns": PackedInt32Array(1073741837, 1073741836, 112, 111, 2, 0, 0),
+"editable_instances": [],
+"names": PackedStringArray("AugmentDisplay", "Control", "custom_minimum_size", "layout_mode", "anchors_preset", "anchor_left", "anchor_top", "anchor_right", "anchor_bottom", "offset_left", "offset_top", "offset_right", "offset_bottom", "grow_horizontal", "grow_vertical", "size_flags_horizontal", "script", "Panel", "PanelContainer", "visible", "layout_mode", "anchors_preset", "anchor_right", "anchor_bottom", "grow_horizontal", "grow_vertical", "theme_override_styles/panel", "PanelContainer", "PanelContainer", "use_parent_material", "layout_mode", "anchors_preset", "anchor_right", "anchor_bottom", "grow_horizontal", "grow_vertical", "size_flags_horizontal", "mouse_filter", "theme", "MarginContainer", "MarginContainer", "layout_mode", "theme_override_constants/margin_left", "theme_override_constants/margin_top", "theme_override_constants/margin_right", "theme_override_constants/margin_bottom", "HBoxContainer", "HBoxContainer", "layout_mode", "VBoxContainer", "VBoxContainer", "layout_mode", "AugmentIcon", "TextureRect", "unique_name_in_owner", "custom_minimum_size", "layout_mode", "texture", "expand_mode", "stretch_mode", "BatteryDrainLabel", "RichTextLabel", "unique_name_in_owner", "layout_mode", "size_flags_vertical", "mouse_filter", "bbcode_enabled", "text", "fit_content", "VSeparator", "VSeparator", "layout_mode", "mouse_filter", "theme_override_constants/separation", "StatLabel", "RichTextLabel", "unique_name_in_owner", "layout_mode", "size_flags_horizontal", "size_flags_vertical", "mouse_filter", "bbcode_enabled", "text", "fit_content", "threaded", "StatLabel3", "RichTextLabel", "visible", "layout_mode", "size_flags_horizontal", "size_flags_vertical", "mouse_filter", "bbcode_enabled", "text", "fit_content", "threaded", "StatLabel2", "RichTextLabel", "visible", "layout_mode", "size_flags_horizontal", "size_flags_vertical", "mouse_filter", "text", "threaded", "ClickArea", "Button", "layout_mode", "focus_mode", "mouse_default_cursor_shape", "flat", "_on_click_area_pressed", "pressed"),
+"node_count": 13,
+"node_paths": [NodePath("."), NodePath("."), NodePath("./PanelContainer"), NodePath("./PanelContainer/MarginContainer"), NodePath("./PanelContainer/MarginContainer/HBoxContainer"), NodePath("./PanelContainer/MarginContainer/HBoxContainer/VBoxContainer"), NodePath("./PanelContainer/MarginContainer/HBoxContainer/VBoxContainer"), NodePath("./PanelContainer/MarginContainer/HBoxContainer"), NodePath("./PanelContainer/MarginContainer/HBoxContainer"), NodePath("./PanelContainer/MarginContainer/HBoxContainer"), NodePath("./PanelContainer/MarginContainer/HBoxContainer"), NodePath("./PanelContainer"), NodePath("."), NodePath("PanelContainer/ClickArea")],
+"nodes": PackedInt32Array(-1, -1, 1, 0, -1, 15, 2, 0, 3, 1, 4, 2, 5, 3, 6, 4, 7, 5, 8, 6, 9, 7, 10, 8, 11, 9, 12, 10, 13, 11, 14, 12, 15, 13, 16, 14, 0, 1073741824, 0, 18, 17, -1, 8, 19, 15, 20, 16, 21, 17, 22, 18, 23, 19, 24, 20, 25, 21, 26, 22, 0, 1073741825, 0, 28, 27, -1, 10, 29, 23, 30, 24, 31, 25, 32, 26, 33, 27, 34, 28, 35, 29, 36, 30, 37, 31, 38, 32, 0, 1073741826, 0, 40, 39, -1, 5, 41, 33, 42, 34, 43, 35, 44, 36, 45, 37, 0, 1073741827, 0, 47, 46, -1, 1, 48, 38, 0, 1073741828, 0, 50, 49, -1, 1, 51, 39, 0, 1073741829, 0, 53, 52, -1, 6, 54, 40, 55, 41, 56, 42, 57, 43, 58, 44, 59, 45, 0, 1073741830, 0, 61, 60, -1, 7, 62, 46, 63, 47, 64, 48, 65, 49, 66, 50, 67, 51, 68, 52, 0, 1073741831, 0, 70, 69, -1, 3, 71, 53, 72, 54, 73, 55, 0, 1073741832, 0, 75, 74, -1, 9, 76, 56, 77, 57, 78, 58, 79, 59, 80, 60, 81, 61, 82, 62, 83, 63, 84, 64, 0, 1073741833, 0, 86, 85, -1, 9, 87, 65, 88, 66, 89, 67, 90, 68, 91, 69, 92, 70, 93, 71, 94, 72, 95, 73, 0, 1073741834, 0, 97, 96, -1, 7, 98, 74, 99, 75, 100, 76, 101, 77, 102, 78, 103, 79, 104, 80, 0, 1073741835, 0, 106, 105, -1, 4, 107, 81, 108, 82, 109, 83, 110, 84, 0),
+"variants": [Vector2(140, 100), 3, 8, 0.5, 0.5, 0.5, 0.5, -70.0, -50.0, 70.0, 50.0, 2, 2, 3, ExtResource("4_thm5l"), false, 1, 15, 1.0, 1.0, 2, 2, SubResource("StyleBoxFlat_iqsc3"), true, 1, 15, 1.0, 1.0, 2, 2, 3, 1, SubResource("Theme_svn3l"), 2, 5, 5, 5, 5, 2, 2, true, Vector2(50, 50), 2, ExtResource("6_p8hla"), 1, 5, true, 2, 6, 1, true, "🔋 12 p/s", true, 2, 1, 5, true, 2, 3, 3, 1, true, "Line1: 999
+Line2: 999
+Line3: 999
+Line4: 999
+Line5: 999", true, true, false, 2, 3, 3, 1, true, "[b]acceleration: 999[/b]
+[img=16]res://assets/visual/drone_x128.png[/img]: 999
+damage: 999
+mass: 999
+max_battery: 999
+max_speed: 999
+critical_chance: 999
+critical_damage: 999
+recharge_speed: 999
+storage_capacity: 999
+vacuum_radius: 999", true, true, false, 2, 3, 3, 1, "⚡: 120
+⚔: 3
+🔘: 201
+🎯: 39%
+💥: 999%", true, 2, 0, 2, true],
+"version": 3
+}
 
 [node name="ModificationMenu" type="Control"]
 layout_mode = 3
@@ -52,6 +106,7 @@ text = "R"
 [node name="Storage" parent="HBoxContainer" instance=ExtResource("3_e721m")]
 layout_mode = 2
 size_flags_stretch_ratio = 1.4
+augment_display_scene = SubResource("PackedScene_hxyal")
 
 [node name="Fabricator" parent="HBoxContainer" instance=ExtResource("4_1dq3y")]
 layout_mode = 2

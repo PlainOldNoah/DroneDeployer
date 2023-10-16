@@ -55,7 +55,6 @@ func get_drone_queue():
 ## Returns the next drone in the queue and removes it from the queue
 func get_and_pop_next_drone():
 	return drone_queue.pop_front()
-#	return null if drone_queue.is_empty() else drone_queue.pop_front()
 
 
 ## Moves the drone in position 0 to the end of the drone queue
@@ -69,6 +68,8 @@ func add_upgrade_to_drone(drone:Drone, upgrade_data:DroneUpgradeData):
 	upgrade_data.behavior_scene_ref = upgrade_behavior
 	drone.upgrades.add_child(upgrade_behavior)
 
+
 ## Removes the UpgradeBehavior from 'upgrade_data' to 'drone'
 func remove_upgrade_from_drone(_drone:Drone, upgrade_data:DroneUpgradeData):
 	upgrade_data.behavior_scene_ref.queue_free()
+	upgrade_data.behavior_scene_ref = null

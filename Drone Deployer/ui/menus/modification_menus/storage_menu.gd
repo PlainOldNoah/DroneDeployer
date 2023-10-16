@@ -39,9 +39,12 @@ func _on_augment_selected(augment:AugmentDisplay):
 func _on_upgrade_created(new_upgrade:DroneUpgradeData):
 	var upgrade_display = preload("res://drone_mods/upgrades/drone_upgrade_display.tscn").instantiate()
 	augment_storage.add_child(upgrade_display)
+	
+	upgrade_display.modulate = Color(randf(), randf(), randf())
+	
 	upgrade_display.owner = self
 	upgrade_display.upgrade_selected.connect(_on_upgrade_selected)
-	upgrade_display.upgrade_data = new_upgrade
+	upgrade_display.upgrade_data = new_upgrade.duplicate()
 
 
 ## Emit 'upgrade_selected' when [UpgradeDisplay] in storage is clicked
