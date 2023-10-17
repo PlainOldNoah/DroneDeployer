@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://bby1xtse0hqpe"]
+[gd_scene load_steps=4 format=3 uid="uid://bby1xtse0hqpe"]
 
 [ext_resource type="Texture2D" uid="uid://bc6kl6xwi5sh4" path="res://assets/visual/damage_icon.png" id="1_fnfn0"]
+[ext_resource type="Script" path="res://ui/components/drone_view.gd" id="1_nrp3a"]
 [ext_resource type="Texture2D" uid="uid://cy1vdsb4r5r5b" path="res://assets/visual/drone_x128.png" id="2_m1dmf"]
 
 [node name="DroneView" type="Control"]
@@ -17,6 +18,7 @@ offset_right = 90.0
 offset_bottom = 90.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_nrp3a")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -33,7 +35,8 @@ theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="ProgressBar" type="ProgressBar" parent="PanelContainer/MarginContainer"]
+[node name="BatteryPercentBar" type="ProgressBar" parent="PanelContainer/MarginContainer"]
+unique_name_in_owner = true
 show_behind_parent = true
 layout_mode = 2
 size_flags_vertical = 1
@@ -52,6 +55,7 @@ theme_override_constants/margin_bottom = 3
 layout_mode = 2
 
 [node name="DroneIcon" type="TextureRect" parent="PanelContainer/MarginContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -61,12 +65,14 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="DroneName" type="Label" parent="PanelContainer/MarginContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "DroneName"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="StatusIcon" type="TextureRect" parent="PanelContainer/MarginContainer/MarginContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 size_flags_horizontal = 0
