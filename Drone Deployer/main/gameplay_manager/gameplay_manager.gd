@@ -39,7 +39,8 @@ var ddcc_health:int = ddcc_max_health:
 		ddcc_health = clampi(new_health, 0, ddcc_max_health)
 		emit_signal("ddcc_health_changed", ddcc_health)
 		if ddcc_health <= 0:
-			gamestate_manager.change_state(BaseState.STATE.GAMEOVER)
+			MenuManager.request_menu(Menu.MENU.GAMEOVER)
+#			gamestate_manager.change_state(GameState.STATE.GAMEOVER)
 
 ## Total quantity of collected scrap
 var total_collected_scrap:int = 0:
@@ -110,7 +111,8 @@ func _on_drone_deploy_request():
 func quit_to_title():
 	end_game()
 	reset_game()
-	gamestate_manager.change_state(BaseState.STATE.TITLE)
+	MenuManager.request_menu(Menu.MENU.MAIN)
+#	gamestate_manager.change_state(GameState.STATE.TITLE)
 
 
 ## Reduces the [DDCC] health, setter handles the rest
@@ -138,15 +140,16 @@ func remove_scrap(amount:int) -> bool:
 
 ## User input on resume button in pause menu
 func _on_resume_game_requested():
-	gamestate_manager.change_state(BaseState.STATE.RUNNING)
+	gamestate_manager.change_state(GameState.STATE.RUNNING)
 
 ## When we want the game to start call this
 func _on_start_game_requested():
-	gamestate_manager.change_state(BaseState.STATE.STARTING)
+#	gamestate_manager.change_state(GameState.STATE.STARTING)
+	print_debug("No longer in use")
 
 ## When the game as finished initializating
 func _on_game_initialized():
-	gamestate_manager.change_state(BaseState.STATE.RUNNING)
+	gamestate_manager.change_state(GameState.STATE.RUNNING)
 
 ## Increments playtime by 1
 func _on_gameplay_timer_timeout():

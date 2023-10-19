@@ -1,8 +1,15 @@
-extends Control
+extends Menu
 
 @onready var view_container := %ViewContainer
 
 var drone_view_scene := preload("res://ui/components/drone_view.tscn")
+
+
+
+func input(event: InputEvent) -> MENU:
+	if event.is_action_pressed("ui_cancel"):
+		return MENU.NONE
+	return MENU.NULL
 
 
 func _ready():

@@ -1,4 +1,4 @@
-extends BaseState
+extends GameState
 
 ## Menu Gamestate; Menus except for Pause and Debug
 

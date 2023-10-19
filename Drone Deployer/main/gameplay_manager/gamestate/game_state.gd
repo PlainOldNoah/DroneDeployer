@@ -1,4 +1,4 @@
-class_name BaseState
+class_name GameState
 extends Node
 
 ## Base state for all of the Gamestates

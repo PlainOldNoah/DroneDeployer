@@ -1,4 +1,4 @@
-extends BaseState
+extends GameState
 
 ## Starting Gamestate; Initialize the game
 

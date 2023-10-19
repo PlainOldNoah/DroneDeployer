@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bbnte6vksg3yh"]
-
-[ext_resource type="Script" path="res://main/gameplay_manager/gamestate/base_gamestate.gd" id="1_kcgvo"]
-
-[node name="BaseState" type="Node"]
-script = ExtResource("1_kcgvo")

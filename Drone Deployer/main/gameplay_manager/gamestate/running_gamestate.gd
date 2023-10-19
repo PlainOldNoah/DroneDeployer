@@ -1,4 +1,4 @@
-extends BaseState
+extends GameState
 
 ## Running Gamestate; Middle of gameplay
 

@@ -1,7 +1,16 @@
-extends Control
+extends Menu
+
+## Main Menu; Starting point of the game
+
+func open():
+	show()
+
+func close():
+	hide()
 
 
 func _on_start_game_btn_pressed():
+	MenuManager.request_menu(Menu.MENU.NONE)
 	GameplayManager._on_start_game_requested()
 
 

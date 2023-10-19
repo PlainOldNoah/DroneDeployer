@@ -1,4 +1,4 @@
-extends Control
+extends Menu
 
 ## Group menu consisting of [HangerMenu], [StorageMenu], and [Fabricator]
 ##
@@ -14,6 +14,12 @@ var selected_augments:Array[AugmentDisplay] = []
 var augmented_drone_stats:DroneData = null
 
 
+func input(event: InputEvent) -> MENU:
+	if event.is_action_pressed("ui_cancel") or event.is_action_pressed("toggle_modification_menu"):
+		return MENU.NONE
+	return MENU.NULL
+
+
 ## Called when the node enters the scene tree for the first time.
 func _ready():
 	# Tell hanger about currently selected augments/upgrades
@@ -21,18 +27,6 @@ func _ready():
 	storage.upgrade_selected.connect(_on_upgrade_selected)
 	# Storage handles putting upgrades together
 	fabricator.create_upgrade.connect(storage._on_upgrade_created)
-
-
-## Shows the hanger and hides the fabricator
-func set_hanger_view():
-	pass
-#	hanger.show()
-#	fabricator.hide()
-## Shows the fabricator and hides the hanger
-func set_fabricator_view():
-	pass
-#	hanger.hide()
-#	fabricator.show()
 
 
 ## Controls the flow of Upgrades between Storage and Hanger

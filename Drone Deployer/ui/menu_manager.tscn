@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" path="res://ui/menus/pause_menu.tscn" id="4_qysh2"]
 [ext_resource type="PackedScene" path="res://ui/menus/game_over_menu.tscn" id="5_culkg"]
 [ext_resource type="PackedScene" uid="uid://cihk4xoa3wwe2" path="res://ui/menus/debug_menu.tscn" id="6_lsmdn"]
-[ext_resource type="PackedScene" uid="uid://cnxilth1fthiu" path="res://ui/menus/modification_menus/fabricator_menu.tscn" id="7_rdxf7"]
+[ext_resource type="Script" path="res://ui/menus/no_menu.gd" id="8_6y7g7"]
 [ext_resource type="PackedScene" uid="uid://bvwr2nvdtjqep" path="res://ui/menus/modification_menus/modification_menu.tscn" id="8_f8efg"]
 [ext_resource type="PackedScene" uid="uid://d2whwf2asgm1x" path="res://ui/menus/drone_overview_menu.tscn" id="8_s8vya"]
 
@@ -14,23 +14,38 @@ process_mode = 3
 editor_description = "Handles GUI menus including requesting, dismissing, and restricting invalid menu tranisitions"
 layer = 2
 script = ExtResource("1_7q1n8")
-
-[node name="DroneOverviewMenu" parent="." instance=ExtResource("8_s8vya")]
+starting_menu = 1
 
 [node name="MainMenu" parent="." instance=ExtResource("2_os7te")]
 visible = false
+gamestate = 1
 
 [node name="PauseMenu" parent="." instance=ExtResource("4_qysh2")]
 visible = false
+gamestate = 4
 
 [node name="GameOverMenu" parent="." instance=ExtResource("5_culkg")]
 visible = false
+gamestate = 1
 
 [node name="DebugMenu" parent="." instance=ExtResource("6_lsmdn")]
 visible = false
-
-[node name="Fabricator" parent="." instance=ExtResource("7_rdxf7")]
-visible = false
+gamestate = 4
 
 [node name="ModificationMenu" parent="." instance=ExtResource("8_f8efg")]
 visible = false
+gamestate = 4
+
+[node name="DroneOverviewMenu" parent="." instance=ExtResource("8_s8vya")]
+visible = false
+gamestate = 4
+
+[node name="NoMenu" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("8_6y7g7")
+pause_game = false
+gamestate = 3

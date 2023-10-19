@@ -1,4 +1,4 @@
-extends Control
+extends Menu
 
 func _on_tgm_button_pressed():
 	GameplayManager.ddcc_invincible = !GameplayManager.ddcc_invincible

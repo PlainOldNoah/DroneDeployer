@@ -1,6 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://cujradf08j1kp"]
+[gd_scene load_steps=3 format=3]
 
-[ext_resource type="PackedScene" uid="uid://bbnte6vksg3yh" path="res://main/gameplay_manager/gamestate/base_gamestate.tscn" id="1_p1sb0"]
+[ext_resource type="PackedScene" path="res://main/gameplay_manager/gamestate/game_state.tscn" id="1_p1sb0"]
 [ext_resource type="Script" path="res://main/gameplay_manager/gamestate/menu_gamestate.gd" id="2_4a6v8"]
 
 [node name="MenuGamestate" instance=ExtResource("1_p1sb0")]

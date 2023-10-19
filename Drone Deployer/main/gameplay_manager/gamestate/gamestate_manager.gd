@@ -4,21 +4,21 @@ extends Node
 ## Handles changing gamestate and passing data into them
 
 ## The state that the game starts in
-@export var starting_state:BaseState.STATE
+@export var starting_state:GameState.STATE
 
 ## State enums for state names that way every script has the same interface
 @onready var states:Dictionary = {
-	BaseState.STATE.TITLE: $TitleGamestate,
-	BaseState.STATE.STARTING: $StartingGamestate,
-	BaseState.STATE.RUNNING: $RunningGamestate,
-	BaseState.STATE.PAUSED: $PausedGamestate,
-	BaseState.STATE.GAMEOVER: $GameoverGamestate,
-	BaseState.STATE.MENU: $MenuGamestate,
+	GameState.STATE.TITLE: $TitleGamestate,
+#	GameState.STATE.STARTING: $StartingGamestate,
+	GameState.STATE.RUNNING: $RunningGamestate,
+	GameState.STATE.PAUSED: $PausedGamestate,
+#	GameState.STATE.GAMEOVER: $GameoverGamestate,
+#	GameState.STATE.MENU: $MenuGamestate,
 }
 
 
 ## The current state the state machine is in
-var current_state: BaseState
+var current_state: GameState
 
 
 ## Intialize the state manager with the starting state
