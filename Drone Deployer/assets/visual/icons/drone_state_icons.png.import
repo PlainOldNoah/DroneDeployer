@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cbrqas51t5se3"
-path="res://.godot/imported/battery_drain_icon.png-8e35dac9ce5e55e3c465c54fed019f25.ctex"
+uid="uid://cd7nb3fjuvaun"
+path="res://.godot/imported/drone_state_icons.png-457e778513f474af7b899d54d20ce6ce.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/visual/battery_drain_icon.png"
-dest_files=["res://.godot/imported/battery_drain_icon.png-8e35dac9ce5e55e3c465c54fed019f25.ctex"]
+source_file="res://assets/visual/icons/drone_state_icons.png"
+dest_files=["res://.godot/imported/drone_state_icons.png-457e778513f474af7b899d54d20ce6ce.ctex"]
 
 [params]
 

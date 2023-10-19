@@ -3,6 +3,15 @@ extends Resource
 
 ## Data & Stats for Drones
 
+
+# === Signals ===
+
+## Emitted when the battery value changes
+signal battery_updated(battery:float)
+
+
+# === Variables ===
+
 ## Drone name as appears to the player
 var display_name:String = "Drone"
 
@@ -43,6 +52,7 @@ var max_battery:float = 100.0:
 var battery:float = max_battery:
 	set(new_battery):
 		battery = clampf(new_battery, 0.0, max_battery)
+		emit_signal("battery_updated", battery)
 
 ## Battery depleted per second
 var battery_drain:float = 30.0

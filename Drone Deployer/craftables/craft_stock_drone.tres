@@ -5,5 +5,5 @@
 [resource]
 script = ExtResource("1_ma675")
 craftable_name = "Stock Drone"
-base_cost = 3
+base_cost = 0
 description = "Build a new, blank, drone"

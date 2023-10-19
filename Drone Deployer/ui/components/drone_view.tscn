@@ -1,8 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://bby1xtse0hqpe"]
+[gd_scene load_steps=5 format=3 uid="uid://bilh43ooebja4"]
 
-[ext_resource type="Texture2D" uid="uid://bc6kl6xwi5sh4" path="res://assets/visual/damage_icon.png" id="1_fnfn0"]
 [ext_resource type="Script" path="res://ui/components/drone_view.gd" id="1_nrp3a"]
 [ext_resource type="Texture2D" uid="uid://cy1vdsb4r5r5b" path="res://assets/visual/drone_x128.png" id="2_m1dmf"]
+[ext_resource type="Texture2D" uid="uid://cd7nb3fjuvaun" path="res://assets/visual/icons/drone_state_icons.png" id="3_jjnio"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ksx3k"]
+resource_local_to_scene = true
+atlas = ExtResource("3_jjnio")
+region = Rect2(0, 0, 64, 64)
 
 [node name="DroneView" type="Control"]
 custom_minimum_size = Vector2(192, 192)
@@ -77,6 +82,6 @@ custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-texture = ExtResource("1_fnfn0")
+texture = SubResource("AtlasTexture_ksx3k")
 expand_mode = 1
 stretch_mode = 4
