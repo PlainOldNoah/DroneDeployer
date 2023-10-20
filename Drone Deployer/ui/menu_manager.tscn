@@ -48,6 +48,4 @@ offset_bottom = 40.0
 mouse_filter = 2
 script = ExtResource("8_6y7g7")
 pause_game = false
-exclusive = null
-toggle = null
 gamestate = 3

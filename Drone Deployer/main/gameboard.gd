@@ -66,18 +66,6 @@ func _on_enemy_death(enemy:BaseEnemy):
 	enemy.queue_free()
 
 
-## Takes a loot item and spawns in in the given location with count/quan and item spread
-#func spawn_loot_to_map(loot_item:String, location:Vector2, value:float=0.0, count:int=1, spread:int=0):
-#	var loot_scene = load(loot_item)
-#	for i in count:
-#		var loot_inst = loot_scene.instantiate()
-#		var offset:Vector2 = Vector2(randf_range(-spread, spread), randf_range(-spread, spread))
-#		loot_inst.global_position = location + offset
-#		loot_inst.scrap_value = value
-#		loot_inst.randomize_sprite()
-#		add_node_to_lvl_obj(loot_inst)
-
-
 ## Return a random position around the gameboard some distance away
 func get_random_offscreen_point() -> Vector2i:
 	var output:Vector2i = Vector2i.ZERO

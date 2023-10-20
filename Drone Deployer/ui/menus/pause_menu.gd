@@ -2,8 +2,6 @@ extends Menu
 
 ## Pause Menu
 
-
-
 func input(event: InputEvent) -> MENU:
 	if event.is_action_pressed("ui_cancel"):
 		return MENU.NONE

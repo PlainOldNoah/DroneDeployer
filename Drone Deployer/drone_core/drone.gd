@@ -3,8 +3,6 @@ extends CharacterBody2D
 
 ## Deployable object that can defeat enemies and pick up items
 
-## Emitted when any of the drone stats change
-#signal stats_updated(drone:Drone)
 
 ## Emitted when the [DroneState] changes
 signal state_changed(new_state:DroneState.STATE)
@@ -79,7 +77,6 @@ func drain_battery(delta:float) -> DroneState.STATE:
 ## Charges the battery, returns true when battery is full
 func charge_battery(delta:float) -> bool:
 	data.battery = clamp(data.battery + (data.battery_drain * 2 * delta), 0.0, data.max_battery)
-#	emit_signal("stats_updated", self)
 	
 	if data.battery == data.max_battery:
 		return true
@@ -144,7 +141,6 @@ func debug_randomize_values():
 #	data.damage = randi_range(1,10)
 	data.damage = 1
 #	data.max_battery = randi_range(100,500)
-#	emit_signal("stats_updated", self)
 
 
 ## Toggle the CharacterBody2D collisions and/or the Area2D collision shapes
