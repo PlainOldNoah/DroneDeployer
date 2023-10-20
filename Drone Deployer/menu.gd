@@ -5,14 +5,14 @@ extends Control
 
 ## List of all available menus
 enum MENU {
-	NULL, 
 	NONE, ## No menu shown, typically gameboard
 	MAIN,
 	PAUSE,
 	GAMEOVER,
-	DEBUG,
 	MODIFICATION,
 	DRONE_OVERVIEW,
+	DEBUG,
+	NULL, 
 }
 
 ## Pause the game while open and resume when closed
@@ -34,6 +34,7 @@ func close():
 	hide()
 	if pause_game:
 		get_tree().set_pause(false)
+
 
 func input(_event: InputEvent) -> MENU:
 	return MENU.NULL

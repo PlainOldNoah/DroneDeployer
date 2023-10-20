@@ -9,7 +9,7 @@ extends Node
 ## State enums for state names that way every script has the same interface
 @onready var states:Dictionary = {
 	GameState.STATE.TITLE: $TitleGamestate,
-#	GameState.STATE.STARTING: $StartingGamestate,
+	GameState.STATE.STARTING: $StartingGamestate,
 	GameState.STATE.RUNNING: $RunningGamestate,
 	GameState.STATE.PAUSED: $PausedGamestate,
 #	GameState.STATE.GAMEOVER: $GameoverGamestate,
@@ -19,12 +19,13 @@ extends Node
 
 ## The current state the state machine is in
 var current_state: GameState
-
+##
+var current_state_enum:int
 
 ## Intialize the state manager with the starting state
 func init():
 	await MenuManager.ready
-	change_state(starting_state)
+#	change_state(starting_state)
 
 
 ## Exit the old state and enter the new state
@@ -33,6 +34,7 @@ func change_state(new_state:int) -> void:
 		current_state.exit()
 	
 	current_state = states[new_state]
+	current_state_enum = new_state
 	print("GAME STATE: ", current_state.name)
 	
 	current_state.enter()

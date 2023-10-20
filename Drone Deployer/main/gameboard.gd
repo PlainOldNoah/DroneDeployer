@@ -23,7 +23,7 @@ func _ready():
 	set_process_input(false)
 	DroneManager.drone_created.connect(add_node_to_lvl_obj)
 	EnemyManager.enemy_created.connect(add_enemy_to_map)
-	GameplayManager.request_drone_deploy.connect(ddcc.deploy_next_drone)
+	GameplayManager.deploy_drone_requested.connect(ddcc.deploy_next_drone)
 
 
 ## Adjusts the world borders to the edge of the map

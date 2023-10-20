@@ -11,9 +11,9 @@ signal curr_scrap_updated(scrap:float)
 ## Emitted when the total collected scrap changes
 signal total_scrap_updated(TCS:float)
 ## Emitted when drone needs to be deployed; Running Gamestate
-signal request_drone_deploy()
+signal deploy_drone_requested()
 
-@onready var gamestate_manager:GamestateManager = $GamestateManager
+#@onready var gamestate_manager:GamestateManager = $GamestateManager
 @onready var gameplay_timer := $GameplayTimer
 
 @export_category("Enemies")
@@ -64,18 +64,35 @@ var playtime:int = 0:
 		emit_signal("playtime_updated", playtime)
 
 
-func _ready():
-	gamestate_manager.init()
+#func _ready():
+#	gamestate_manager.init()
 
 
-func _unhandled_input(event):
-	if event.is_action_pressed("toggle_debug_menu"):
-		print_debug("TOGGLE DEBUG MODE")
-	gamestate_manager.input(event)
+#func _unhandled_input(event):
+#	if event.is_action_pressed("toggle_debug_menu"):
+#		print_debug("TOGGLE DEBUG MODE")
+#	gamestate_manager.input(event)
+
+
+# === Runner Controls ===
+
+## During normal gameplay set to TRUE, FALSE during title screen
+var in_game:bool = false
+
+## If in the TITLE state allow the game to start
+func request_start_game():
+#	if gamestate_manager.current_state_enum == GameState.STATE.TITLE:
+	if not in_game:
+		MenuManager.request_menu(Menu.MENU.NONE)
+		start_game()
+	else:
+		print_debug("ERROR: Unable to start game")
 
 
 ## Runs though all the steps required to start the game
 func start_game():
+	in_game = true
+	
 	starting_drones = clampi(starting_drones, 1, max_drones)
 	
 	for i in starting_drones:
@@ -83,11 +100,12 @@ func start_game():
 	
 	gameplay_timer.start()
 	
-	_on_game_initialized()
+#	gamestate_manager.change_state(GameState.STATE.RUNNING)
 
 
 ## Runs though all the steps needed to safely end the game
 func end_game():
+	in_game = false
 	gameplay_timer.stop()
 
 
@@ -100,9 +118,9 @@ func reset_game():
 
 	DroneManager.clear_drone_queue()
 
-## Running Gamestate -> HERE -> [Gameboard]
-func _on_drone_deploy_request():
-	emit_signal("request_drone_deploy")
+## 
+func request_drone_deploy():
+	emit_signal("deploy_drone_requested")
 
 # =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
@@ -136,20 +154,6 @@ func remove_scrap(amount:int) -> bool:
 		current_scrap -= amount
 		return true
 
-# ----- STATE CHANGES -----
-
-## User input on resume button in pause menu
-func _on_resume_game_requested():
-	gamestate_manager.change_state(GameState.STATE.RUNNING)
-
-## When we want the game to start call this
-func _on_start_game_requested():
-#	gamestate_manager.change_state(GameState.STATE.STARTING)
-	print_debug("No longer in use")
-
-## When the game as finished initializating
-func _on_game_initialized():
-	gamestate_manager.change_state(GameState.STATE.RUNNING)
 
 ## Increments playtime by 1
 func _on_gameplay_timer_timeout():

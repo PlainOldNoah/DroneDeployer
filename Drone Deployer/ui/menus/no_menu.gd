@@ -9,5 +9,8 @@ func input(event: InputEvent) -> MENU:
 		return(MENU.MODIFICATION)
 	elif event.is_action_pressed("ui_cancel"):
 		return(MENU.PAUSE)
+		
+	elif event.is_action_pressed("deploy_drone"):
+		GameplayManager.request_drone_deploy()
 	
 	return MENU.NULL

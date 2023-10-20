@@ -22,7 +22,6 @@ process_mode = 1
 
 [node name="GamestateManager" type="Node" parent="."]
 script = ExtResource("2_cg1ie")
-starting_state = 1
 
 [node name="TitleGamestate" parent="GamestateManager" instance=ExtResource("2_slgt0")]
 

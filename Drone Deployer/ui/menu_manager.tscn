@@ -29,7 +29,7 @@ visible = false
 gamestate = 1
 
 [node name="DebugMenu" parent="." instance=ExtResource("6_lsmdn")]
-visible = false
+exclusive = false
 gamestate = 4
 
 [node name="ModificationMenu" parent="." instance=ExtResource("8_f8efg")]
@@ -37,7 +37,6 @@ visible = false
 gamestate = 4
 
 [node name="DroneOverviewMenu" parent="." instance=ExtResource("8_s8vya")]
-visible = false
 gamestate = 4
 
 [node name="NoMenu" type="Control" parent="."]
@@ -46,6 +45,9 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+mouse_filter = 2
 script = ExtResource("8_6y7g7")
 pause_game = false
+exclusive = null
+toggle = null
 gamestate = 3

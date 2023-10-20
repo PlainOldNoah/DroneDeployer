@@ -11,9 +11,9 @@ extends CanvasLayer
 	Menu.MENU.MAIN: $MainMenu,
 	Menu.MENU.PAUSE: $PauseMenu,
 	Menu.MENU.GAMEOVER: $GameOverMenu,
-	Menu.MENU.DEBUG: $DebugMenu,
 	Menu.MENU.MODIFICATION: $ModificationMenu,
 	Menu.MENU.DRONE_OVERVIEW: $DroneOverviewMenu,
+	Menu.MENU.DEBUG: $DebugMenu,
 }
 
 ## Current menu that the game is in as a SCENE
@@ -23,16 +23,28 @@ var current_menu_enum: Menu.MENU
 
 ## Intialize the state manager with the starting state
 func _ready():
+	for i in get_children():
+		i.hide()
+	
 	change_menu(starting_menu)
 
 
 func _unhandled_input(event):
+	if event.is_action_pressed("toggle_debug_menu"):
+		if current_menu_enum == Menu.MENU.DEBUG:
+			change_menu(Menu.MENU.NONE)
+		elif current_menu_enum == Menu.MENU.MAIN:
+			pass
+		else:
+			change_menu(Menu.MENU.DEBUG)
+	
 	input(event)
 
 
+## Pass the input event along to the current menu
 func input(event:InputEvent) -> void:
 	var new_menu = current_menu.input(event)
-	if new_menu:
+	if new_menu != Menu.MENU.NULL:
 		request_menu(new_menu)
 
 
@@ -45,8 +57,6 @@ func change_menu(new_menu:Menu.MENU):
 	current_menu_enum = new_menu
 	
 	## We can have more dynamic menu swapping here. ie the exclusive menu idea
-	
-	GameplayManager.gamestate_manager.change_state(current_menu.gamestate)
 	
 	current_menu.open()
 
@@ -79,50 +89,3 @@ func request_menu(new_menu:Menu.MENU):
 				change_menu(new_menu)
 		_:
 			print_debug("ERROR: Invalid menu request <", new_menu, ">")
-
-
-
-
-### List of available menus
-#enum MENUS {
-#	NULL, ## No menu selected, typically gameboard
-#	MAIN, ## Title screen
-#	PAUSE, ## Pause menu
-#	GAMEOVER, ## Gameover menu
-#	DEBUG, ## Debug menu
-#	FABRICATOR, ## Fabricator menu
-#	HANGER, ## Hanger menu
-#	}
-#
-#@onready var menus:Dictionary = {
-#	MENUS.MAIN: $MainMenu,
-#	MENUS.PAUSE: $PauseMenu,
-#	MENUS.HANGER: $ModificationMenu,
-#	MENUS.FABRICATOR: $ModificationMenu,
-#	MENUS.GAMEOVER: $GameOverMenu,
-#}
-#
-### The currently selected menu
-#@onready var current_menu:MENUS
-#
-#
-### Hides the current menu and shows the requested menu
-#func request_menu(new_menu:MENUS):
-#	if menus.has(current_menu):
-#		menus[current_menu].hide()
-#
-#	if menus.has(new_menu):
-#		current_menu = new_menu
-#		menus[current_menu].show()
-#
-#		# Fabricator/Hanger share a scene
-#		if new_menu == MENUS.FABRICATOR:
-#			menus[current_menu].set_fabricator_view()
-#		elif new_menu == MENUS.HANGER:
-#			menus[current_menu].set_hanger_view()
-#
-#
-#
-### Returns true if the current_menu matches the check_menu
-#func is_current_menu(check_menu:MENUS):
-#	return current_menu == check_menu

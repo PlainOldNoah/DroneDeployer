@@ -17,6 +17,8 @@ var augmented_drone_stats:DroneData = null
 func input(event: InputEvent) -> MENU:
 	if event.is_action_pressed("ui_cancel") or event.is_action_pressed("toggle_modification_menu"):
 		return MENU.NONE
+	elif event.is_action_pressed("toggle_drone_overview"):
+		return MENU.DRONE_OVERVIEW
 	return MENU.NULL
 
 
