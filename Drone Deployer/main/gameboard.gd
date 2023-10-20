@@ -23,7 +23,7 @@ func _ready():
 	set_process_input(false)
 	DroneManager.drone_created.connect(add_node_to_lvl_obj)
 	EnemyManager.enemy_created.connect(add_enemy_to_map)
-	GameplayManager.request_drone_deploy.connect(ddcc.deploy_next_drone)
+	GameplayManager.deploy_drone_requested.connect(ddcc.deploy_next_drone)
 
 
 ## Adjusts the world borders to the edge of the map
@@ -64,18 +64,6 @@ func _on_enemy_death(enemy:BaseEnemy):
 			drop_inst.global_position = enemy.global_position + offset
 			
 	enemy.queue_free()
-
-
-## Takes a loot item and spawns in in the given location with count/quan and item spread
-#func spawn_loot_to_map(loot_item:String, location:Vector2, value:float=0.0, count:int=1, spread:int=0):
-#	var loot_scene = load(loot_item)
-#	for i in count:
-#		var loot_inst = loot_scene.instantiate()
-#		var offset:Vector2 = Vector2(randf_range(-spread, spread), randf_range(-spread, spread))
-#		loot_inst.global_position = location + offset
-#		loot_inst.scrap_value = value
-#		loot_inst.randomize_sprite()
-#		add_node_to_lvl_obj(loot_inst)
 
 
 ## Return a random position around the gameboard some distance away

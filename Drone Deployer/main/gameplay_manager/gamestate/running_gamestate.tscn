@@ -1,7 +1,0 @@
-[gd_scene load_steps=3 format=3 uid="uid://nt5ecw8wjfe"]
-
-[ext_resource type="PackedScene" uid="uid://bbnte6vksg3yh" path="res://main/gameplay_manager/gamestate/base_gamestate.tscn" id="1_x08ly"]
-[ext_resource type="Script" path="res://main/gameplay_manager/gamestate/running_gamestate.gd" id="2_yrwsv"]
-
-[node name="RunningGamestate" instance=ExtResource("1_x08ly")]
-script = ExtResource("2_yrwsv")
