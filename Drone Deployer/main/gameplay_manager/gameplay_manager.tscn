@@ -1,38 +1,15 @@
-[gd_scene load_steps=9 format=3 uid="uid://bcw6lr1eurkh7"]
+[gd_scene load_steps=2 format=3 uid="uid://bcw6lr1eurkh7"]
 
 [ext_resource type="Script" path="res://main/gameplay_manager/gameplay_manager.gd" id="1_y4rj8"]
-[ext_resource type="Script" path="res://main/gameplay_manager/gamestate/gamestate_manager.gd" id="2_cg1ie"]
-[ext_resource type="PackedScene" path="res://main/gameplay_manager/gamestate/title_gamestate.tscn" id="2_slgt0"]
-[ext_resource type="PackedScene" path="res://main/gameplay_manager/gamestate/running_gamestate.tscn" id="4_dlpur"]
-[ext_resource type="PackedScene" path="res://main/gameplay_manager/gamestate/starting_gamestate.tscn" id="4_efb5o"]
-[ext_resource type="PackedScene" path="res://main/gameplay_manager/gamestate/gameover_gamestate.tscn" id="6_16kc7"]
-[ext_resource type="PackedScene" path="res://main/gameplay_manager/gamestate/paused_gamestate.tscn" id="6_48pie"]
-[ext_resource type="PackedScene" path="res://main/gameplay_manager/gamestate/menu_gamestate.tscn" id="8_bj2b5"]
 
 [node name="GameplayManager" type="Node"]
 process_mode = 3
 editor_description = "Handles all gameplay events such as spawning enemies, controlling difficulty, updating score, taking damage, etc."
 script = ExtResource("1_y4rj8")
-enable_enemy_spawning = false
-ddcc_max_health = 999
+ddcc_max_health = 2
 starting_drones = 5
 
 [node name="GameplayTimer" type="Timer" parent="."]
 process_mode = 1
-
-[node name="GamestateManager" type="Node" parent="."]
-script = ExtResource("2_cg1ie")
-
-[node name="TitleGamestate" parent="GamestateManager" instance=ExtResource("2_slgt0")]
-
-[node name="StartingGamestate" parent="GamestateManager" instance=ExtResource("4_efb5o")]
-
-[node name="RunningGamestate" parent="GamestateManager" instance=ExtResource("4_dlpur")]
-
-[node name="PausedGamestate" parent="GamestateManager" instance=ExtResource("6_48pie")]
-
-[node name="MenuGamestate" parent="GamestateManager" instance=ExtResource("8_bj2b5")]
-
-[node name="GameoverGamestate" parent="GamestateManager" instance=ExtResource("6_16kc7")]
 
 [connection signal="timeout" from="GameplayTimer" to="." method="_on_gameplay_timer_timeout"]

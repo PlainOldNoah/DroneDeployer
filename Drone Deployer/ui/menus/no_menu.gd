@@ -12,5 +12,7 @@ func input(event: InputEvent) -> MENU:
 		
 	elif event.is_action_pressed("deploy_drone"):
 		GameplayManager.request_drone_deploy()
+	elif event.is_action_pressed("skip_drone"):
+		print_debug("TODO: Skip Drone")
 	
 	return MENU.NULL

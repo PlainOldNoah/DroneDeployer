@@ -73,7 +73,7 @@ func request_menu(new_menu:Menu.MENU):
 			if [Menu.MENU.NONE, Menu.MENU.MAIN].has(new_menu):
 				change_menu(new_menu)
 		Menu.MENU.GAMEOVER:
-			if new_menu == Menu.MENU.MAIN:
+			if [Menu.MENU.NONE, Menu.MENU.MAIN].has(new_menu):
 				change_menu(new_menu)
 		Menu.MENU.DEBUG:
 			pass

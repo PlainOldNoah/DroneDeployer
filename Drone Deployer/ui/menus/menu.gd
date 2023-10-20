@@ -21,8 +21,6 @@ enum MENU {
 @export var exclusive:bool = true
 ## If hotkey available, open if closed & close if open
 @export var toggle:bool = true
-## Enter this [GameState] when opening this menu
-@export var gamestate:GameState.STATE
 
 func open():
 	show()
