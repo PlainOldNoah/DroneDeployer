@@ -29,6 +29,10 @@ func _ready():
 #	print(enemy_wave_times)
 
 
+func restart():
+	curr_wave_key = 0
+
+
 ## Create and add an instance of an enemy
 func create_new_enemy(enemy_path:String):
 	var enemy_inst:Node = load(enemy_path).instantiate()

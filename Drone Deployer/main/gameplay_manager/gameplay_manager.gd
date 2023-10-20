@@ -103,6 +103,7 @@ func reset_game():
 	total_collected_scrap = 0
 
 	DroneManager.clear_drone_queue()
+	# Gameboard.clear_all_level_objs()
 
 
 ## Emits the signal for DDCC to launch the next drone

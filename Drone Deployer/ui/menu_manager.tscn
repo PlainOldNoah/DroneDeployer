@@ -18,26 +18,20 @@ starting_menu = 1
 
 [node name="MainMenu" parent="." instance=ExtResource("2_os7te")]
 visible = false
-gamestate = 1
 
 [node name="PauseMenu" parent="." instance=ExtResource("4_qysh2")]
 visible = false
-gamestate = 4
 
 [node name="GameOverMenu" parent="." instance=ExtResource("5_culkg")]
 visible = false
-gamestate = 1
 
 [node name="DebugMenu" parent="." instance=ExtResource("6_lsmdn")]
 exclusive = false
-gamestate = 4
 
 [node name="ModificationMenu" parent="." instance=ExtResource("8_f8efg")]
 visible = false
-gamestate = 4
 
 [node name="DroneOverviewMenu" parent="." instance=ExtResource("8_s8vya")]
-gamestate = 4
 
 [node name="NoMenu" type="Control" parent="."]
 visible = false
@@ -48,4 +42,3 @@ offset_bottom = 40.0
 mouse_filter = 2
 script = ExtResource("8_6y7g7")
 pause_game = false
-gamestate = 3

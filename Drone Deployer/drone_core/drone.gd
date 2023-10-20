@@ -93,9 +93,12 @@ func deploy(deploy_pos:Vector2, deploy_angle:float):
 	
 	drone_state_manager.change_state(DroneState.STATE.PREPARING)
 
-## Puts the drone back into the DDCC as the Idle State
+
+## Puts the drone into the IDLE state if it's not in the PREPARING state
 func collect():
-	drone_state_manager.change_state(DroneState.STATE.IDLE)
+	if get_drone_state() != DroneState.STATE.PREPARING:
+		drone_state_manager.change_state(DroneState.STATE.IDLE)
+
 
 ## Returns the current state the drone is in
 func get_drone_state() -> DroneState.STATE:
@@ -138,8 +141,8 @@ func debug_randomize_values():
 	$Sprite.modulate = data.modulate_color
 	
 	data.max_speed = randi_range(200, 400)
-#	data.damage = randi_range(1,10)
-	data.damage = 1
+	data.damage = randi_range(1,10)
+#	data.damage = 1
 #	data.max_battery = randi_range(100,500)
 
 

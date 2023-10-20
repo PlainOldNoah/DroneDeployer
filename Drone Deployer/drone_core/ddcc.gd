@@ -79,7 +79,6 @@ func _on_shield_area_body_entered(body):
 		body.ddcc_shield_area_entered()
 
 
-
 func _on_receiver_body_entered(body):
 	if body is Drone:
 		body.collect()
