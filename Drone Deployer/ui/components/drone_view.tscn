@@ -23,6 +23,7 @@ offset_right = 90.0
 offset_bottom = 90.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_nrp3a")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
@@ -32,9 +33,14 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
+
+[node name="SelectorButton" type="Button" parent="PanelContainer"]
+layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
@@ -45,12 +51,14 @@ unique_name_in_owner = true
 show_behind_parent = true
 layout_mode = 2
 size_flags_vertical = 1
+mouse_filter = 2
 value = 50.0
 fill_mode = 3
 show_percentage = false
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer"]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/margin_left = 3
 theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 3
@@ -58,6 +66,7 @@ theme_override_constants/margin_bottom = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/MarginContainer"]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="DroneIcon" type="TextureRect" parent="PanelContainer/MarginContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
@@ -65,6 +74,7 @@ custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 10
+mouse_filter = 2
 texture = ExtResource("2_m1dmf")
 expand_mode = 1
 stretch_mode = 5
@@ -82,6 +92,9 @@ custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
+mouse_filter = 2
 texture = SubResource("AtlasTexture_ksx3k")
 expand_mode = 1
 stretch_mode = 4
+
+[connection signal="pressed" from="PanelContainer/SelectorButton" to="." method="_on_selector_button_pressed"]

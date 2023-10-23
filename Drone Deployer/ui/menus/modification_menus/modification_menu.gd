@@ -50,3 +50,4 @@ func _on_upgrade_selected(upgrade:UpgradeDisplay):
 		upgrade.get_parent().remove_child(upgrade)
 		storage.augment_storage.add_child(upgrade)
 		upgrade.owner = storage
+

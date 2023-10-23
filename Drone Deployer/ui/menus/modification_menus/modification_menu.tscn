@@ -27,7 +27,7 @@ default_font = ExtResource("5_lylby")
 default_font_size = 12
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_uq23t")
 
-[sub_resource type="PackedScene" id="PackedScene_6nk2v"]
+[sub_resource type="PackedScene" id="PackedScene_4gp83"]
 resource_local_to_scene = true
 _bundled = {
 "conn_count": 1,
@@ -106,7 +106,7 @@ text = "R"
 [node name="Storage" parent="HBoxContainer" instance=ExtResource("3_e721m")]
 layout_mode = 2
 size_flags_stretch_ratio = 1.4
-augment_display_scene = SubResource("PackedScene_6nk2v")
+augment_display_scene = SubResource("PackedScene_4gp83")
 
 [node name="Fabricator" parent="HBoxContainer" instance=ExtResource("4_1dq3y")]
 layout_mode = 2

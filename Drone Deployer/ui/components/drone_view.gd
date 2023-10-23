@@ -3,6 +3,9 @@ extends Control
 
 ## Mini display that displays basic drone information
 
+## Emitted when the SelectorButton is pressed
+signal pressed(drone_view:DroneView)
+
 ## The size of each sprite in the stats_icon texture atlas
 const STATUS_ICON_SIZE:int = 64
 
@@ -59,3 +62,8 @@ func _on_state_change(state:DroneState.STATE):
 			print_debug("ERROR: Undefined state <", state, ">")
 	
 	status_icon.texture.region.position.x = STATUS_ICON_SIZE * atlas_offset
+
+
+## Emits the 'pressed' signal
+func _on_selector_button_pressed():
+	emit_signal("pressed", self)

@@ -26,12 +26,13 @@ visible = false
 visible = false
 
 [node name="DebugMenu" parent="." instance=ExtResource("6_lsmdn")]
+visible = false
 exclusive = false
 
 [node name="ModificationMenu" parent="." instance=ExtResource("8_f8efg")]
-visible = false
 
 [node name="DroneOverviewMenu" parent="." instance=ExtResource("8_s8vya")]
+visible = false
 
 [node name="NoMenu" type="Control" parent="."]
 visible = false
