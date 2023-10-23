@@ -1,9 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://xjf514n0gujb"]
+[gd_scene load_steps=6 format=3 uid="uid://xjf514n0gujb"]
 
 [ext_resource type="PackedScene" uid="uid://cwwp6l365mm0f" path="res://ui/menus/base_menu.tscn" id="1_7dtce"]
 [ext_resource type="Script" path="res://ui/menus/modification_menus/hanger_menu.gd" id="2_3ppgg"]
 [ext_resource type="PackedScene" uid="uid://dn1lffykcmbgp" path="res://drone_core/drone_mirror.tscn" id="3_6uwb2"]
-[ext_resource type="Script" path="res://ui/menus/modification_menus/drone_selector_popup.gd" id="5_1q42t"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fvqda"]
 bg_color = Color(0, 0, 0, 1)
@@ -28,16 +27,6 @@ corner_radius_top_left = 2
 corner_radius_top_right = 2
 corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s6ubo"]
-bg_color = Color(0.380392, 0.380392, 0.380392, 1)
-
-[sub_resource type="InputEventKey" id="InputEventKey_lisq8"]
-device = -1
-keycode = 4194305
-
-[sub_resource type="Shortcut" id="Shortcut_5o2lo"]
-events = [SubResource("InputEventKey_lisq8")]
 
 [node name="HangerMenu" instance=ExtResource("1_7dtce")]
 anchors_preset = -1
@@ -147,57 +136,9 @@ size_flags_horizontal = 6
 focus_mode = 0
 text = "Clear"
 
-[node name="DroneSelectionPopup" type="MarginContainer" parent="." index="2"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
-script = ExtResource("5_1q42t")
-drone_mirror_scene = ExtResource("3_6uwb2")
-
-[node name="Panel" type="Panel" parent="DroneSelectionPopup" index="0"]
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_s6ubo")
-
-[node name="MarginContainer" type="MarginContainer" parent="DroneSelectionPopup/Panel" index="0"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="VBoxContainer" type="VBoxContainer" parent="DroneSelectionPopup/Panel/MarginContainer" index="0"]
-layout_mode = 2
-
-[node name="GridContainer" type="GridContainer" parent="DroneSelectionPopup/Panel/MarginContainer/VBoxContainer" index="0"]
-layout_mode = 2
-theme_override_constants/h_separation = 10
-theme_override_constants/v_separation = 10
-columns = 5
-
-[node name="CloseBtn" type="Button" parent="DroneSelectionPopup/Panel/MarginContainer/VBoxContainer" index="1"]
-layout_mode = 2
-size_flags_vertical = 10
-shortcut = SubResource("Shortcut_5o2lo")
-text = "Close"
-
 [connection signal="pressed" from="MarginContainer/VBoxContainer/CurrentDrone/VBoxContainer2/FocusDroneIcon" to="." method="_on_focus_drone_icon_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/CurrentDrone/VBoxContainer2/Navigation/PreviousDrone" to="." method="_on_previous_drone_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/CurrentDrone/VBoxContainer2/Navigation/NextDrone" to="." method="_on_next_drone_pressed"]
 [connection signal="text_submitted" from="MarginContainer/VBoxContainer/CurrentDrone/VBoxContainer/DroneName" to="." method="_on_drone_name_text_submitted"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/ControlBtns/AssembleBtn" to="." method="_on_assemble_btn_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/ControlBtns/ClearBtn" to="." method="_on_clear_btn_pressed"]
-[connection signal="pressed" from="DroneSelectionPopup/Panel/MarginContainer/VBoxContainer/CloseBtn" to="DroneSelectionPopup" method="_on_close_btn_pressed"]

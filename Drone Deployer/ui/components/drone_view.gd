@@ -13,6 +13,7 @@ const STATUS_ICON_SIZE:int = 64
 @onready var drone_icon := %DroneIcon
 @onready var drone_name := %DroneName
 @onready var status_icon := %StatusIcon
+@onready var selector_btn := $PanelContainer/SelectorButton
 
 ## [Drone] that this view is tied to
 var linked_drone:Drone:
@@ -44,10 +45,12 @@ func _on_battery_change(new_battery:float):
 ## Sets the 'status_icon' when the 'linked_drone' state changes
 func _on_state_change(state:DroneState.STATE):
 	var atlas_offset = 0
+#	selector_btn.disabled = true
 	
 	match state:
 		DroneState.STATE.IDLE:
 			atlas_offset = 0
+#			selector_btn.disabled = false
 		DroneState.STATE.PREPARING:
 			atlas_offset = 1
 		DroneState.STATE.ACTIVE:

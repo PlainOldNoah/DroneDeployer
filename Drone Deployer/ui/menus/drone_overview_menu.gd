@@ -14,7 +14,7 @@ signal drone_selected(drone_view:DroneView)
 var drone_view_scene := preload("res://ui/components/drone_view.tscn")
 
 ## Reference to the DroneOverview menu
-var hanger_ref:HangerMenu
+#var hanger_ref:HangerMenu
 
 
 func input(event: InputEvent) -> MENU:

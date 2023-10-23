@@ -51,11 +51,13 @@ layout_mode = 2
 [node name="AugmentsBtn" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+focus_mode = 0
 text = "Augment"
 
 [node name="UpgradesBtn" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+focus_mode = 0
 text = "Upgrade"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer"]
@@ -91,22 +93,14 @@ size_flags_horizontal = 3
 [node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="OptionButton" type="OptionButton" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="FilterBtn" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
-item_count = 2
-selected = 0
-popup/item_0/text = "Sort"
-popup/item_0/id = 0
-popup/item_1/text = "Rarity"
-popup/item_1/id = 1
+focus_mode = 0
+text = "Filter"
 
-[node name="OptionButton2" type="OptionButton" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="SortBtn" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
-item_count = 2
-selected = 0
-popup/item_0/text = "Filter"
-popup/item_0/id = 0
-popup/item_1/text = "Rarity"
-popup/item_1/id = 1
+focus_mode = 0
+text = "Sort"

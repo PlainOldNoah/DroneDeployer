@@ -10,7 +10,7 @@ signal augment_selected(augment:AugmentDisplay)
 @onready var icon := %AugmentIcon
 @onready var stat_lbl := %StatLabel
 
-var battery_drain_icon := load("res://assets/visual/battery_drain_icon_x64.png")
+var battery_drain_icon := load("res://assets/visual/icons/battery_drain_icon_x64.png")
 
 ## If the augment is selected or not, used with [StorageMenu]
 var selected:bool = false:
@@ -64,7 +64,7 @@ func clear_display():
 ## Populates display with info from augment_display for FLOATS and INTS
 func update_display():
 #	main_panel.self_modulate = tier_colors[augment_data.tier]
-	icon.texture = load("res://assets/visual/damage_icon.png")
+	icon.texture = load("res://assets/visual/icons/damage_icon.png")
 	icon.self_modulate = tier_colors[augment_data.tier]
 	
 	var sb = main_panel.get_theme_stylebox("panel").duplicate()
@@ -72,7 +72,7 @@ func update_display():
 #	sb.bg_color = tier_colors[augment_data.tier]
 	main_panel.add_theme_stylebox_override("panel", sb)
 	
-	battery_drain_lbl.text = "[img=24]res://assets/visual/battery_drain_icon_x32.png[/img] %2.1f" % augment_data.battery_drain
+	battery_drain_lbl.text = "[img=24]res://assets/visual/icons/battery_drain_icon_x32.png[/img] %2.1f" % augment_data.battery_drain
 #	battery_drain_lbl.text = "🔌 %2.1f" % augment_data.battery_drain
 	
 	for key in augment_data.stats.keys():

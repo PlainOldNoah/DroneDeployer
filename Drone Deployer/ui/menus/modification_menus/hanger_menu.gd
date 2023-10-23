@@ -9,16 +9,17 @@ signal focused_drone_updated()
 signal augment_commit_request()
 
 @onready var drone_name := %DroneName
-@onready var stat_label:Label = %DroneStats
+@onready var stat_label := %DroneStats
 @onready var drone_stats := %DroneStats
 @onready var drone_icon:DroneMirror = %FocusDroneIcon
-@onready var drone_selection_popup := %DroneSelectionPopup
 @onready var added_upgrades := %AddedUpgrades
 
 ## Reference to the DroneOverview menu
 var drone_overview_ref:Menu
+
 ## The [DroneView] linked to the 'focused_drone'
 var focused_drone_view:DroneView
+
 ## Current drone to apply augments & operations to
 var focused_drone:Drone = null:
 	set(new_fd):
@@ -32,17 +33,6 @@ var selected_augments:Array[AugmentDisplay] = []
 
 ## Drone data with augments applied, used in the display
 var staged_drone_data:DroneData
-
-## Current position when cycling though drones in the drone library
-#var library_index:int = 0:
-#	set(new_index):
-#		library_index = new_index
-#		if library_index >= DroneManager.drone_library.size():
-#			library_index = 0
-#		elif library_index < 0:
-#			library_index = DroneManager.drone_library.size() - 1
-#
-#		print("LI: ", library_index, " // ", DroneManager.drone_library.size())
 
 ## How the drone stats are displayed in the window
 var stats_format_string:String = \
@@ -67,13 +57,8 @@ var stats_format_string:String = \
 ## Drones with their added upgrades
 var drone_upgrades:Dictionary = {}
 
-#var augmented_drone_stats:DroneData = null
-#var selected_augments:Array[AugmentDisplay] = []
 
 func _ready():
-#	DroneManager.drone_created.connect(update_drone_list)
-#	drone_selection_popup.d_mirror_selected.connect(_on_new_drone_selected)
-	
 	link_to_drone_overview()
 
 
@@ -81,18 +66,8 @@ func _ready():
 func link_to_drone_overview():
 	await MenuManager.ready
 	drone_overview_ref = MenuManager.menus[Menu.MENU.DRONE_OVERVIEW]
-	drone_overview_ref.hanger_ref = self
+#	drone_overview_ref.hanger_ref = self
 	drone_overview_ref.drone_selected.connect(_on_new_drone_selected)
-
-
-## Recieved when a new drone is created
-#func update_drone_list(drone:Drone):
-#	await drone.ready
-#	drone_selection_popup.add_drone_mirror(drone)
-#
-#	if (focused_drone == null) and (not DroneManager.drone_library.is_empty()):
-#		select_focus_drone(library_index)
-#		update_display()
 
 
 ## Refreshes the display with correct drone-augment data/stats
@@ -204,20 +179,6 @@ func _on_next_drone_pressed():
 		var new_view:DroneView = drone_overview_ref.get_view_from_offset(focused_drone_view, 1)
 		_on_new_drone_selected(new_view)
 
-
-# --- Old stuff ---
-
-
-## Open the drone selector screen
-#func _on_focus_drone_icon_pressed():
-#	drone_selection_popup.show()
-#	print(drone_overview_ref)
-#	MenuManager.request_menu(Menu.MENU.DRONE_OVERVIEW)
-
-## Sets the focused_drone to drone
-#func _on_new_drone_selected(drone:Drone):
-#	focused_drone = drone
-#	library_index = DroneManager.drone_library.find(focused_drone)
 
 ## === Misc Signals ===
 
